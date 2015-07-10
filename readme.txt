@@ -17,7 +17,7 @@ A - INTRODUCTION
       |   `-html             : HTML source code documentation directory
       |`- index.html         : Index of source code dcumentation
       |- src                 : Sources code directory
-	  |   `- readme.txt      : Distrib readme file
+      |   `- readme.txt      : Distrib readme file
       |- tools               : Utilities directory
       |   `- mtkimgtest.sh   : Automatic test suite to check building (Linux/Cygwin only)
       |- cyterm.bat          : Cygwin terminal launcher 
@@ -42,7 +42,8 @@ B - HOW TO BUILD
       
     5 - "mtkimg" (mtkimg.exe) is ready into "build" directory
 
-    6 - You can copy and paste it into your bin directory or the working directory you want.
+    6 - You can copy and paste it into your bin directory or the working directory
+	    you working on.
 
     Look at "src/readme.txt" for more information about using mtkimg.
 
