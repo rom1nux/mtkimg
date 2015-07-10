@@ -1,0 +1,176 @@
+/** ***************************************************************************
+  *                          MTKIMG PROJECT
+  * ***************************************************************************
+  * \file		main.h
+  * \author		rom1nux
+  * \version	1.0
+  * \date		2015-07-09
+  * \brief		Main header
+  * ***************************************************************************  
+  */ 
+#ifndef MAIN_H
+#define MAIN_H
+
+// Standard include
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include <stdarg.h>
+
+// Application constantes
+#define	APP_TITLE						"MTKIMG"				//!< Application title
+#define	APP_NAME						"mtkimg"				//!< Application name
+#define	APP_VERSION						"0.32"					//!< Application version
+#define	APP_AUTHOR						"rom1nux"				//!< Application author
+
+// Detect platform
+#if defined(__WIN32__) || defined(__WIN64__)
+	#define	APP_PLATFORM				"win"					//!< Application platform name
+	#define	APP_WIN						1						//!< Application type
+#elif defined(__CYGWIN__)     	
+	#define	APP_PLATFORM				"cygwin"				//!< Application platform name
+	#define	APP_CYGWIN					1						//!< Application type
+#elif defined(__linux__)     		
+	#define	APP_PLATFORM				"linux"					//!< Application platform name
+	#define	APP_LINUX					1						//!< Application type
+#else
+	#warning "Unsupported platform !"
+#endif
+
+// Detect architecture	
+#if defined(__x86_64__)
+	#define	APP_ARCH					64						//!< Application architecture
+#else
+	#define	APP_ARCH					32						//!< Application architecture
+#endif	
+
+// Usefull common constantes
+#define	PATH_MAX_SIZE					256						//!< Maximum size of path
+#define	STR_MAX_SIZE					256						//!< Maximum size of common string
+#define	CMD_MAX_SIZE					512						//!< Maximum size of command line
+#define	BUFFER_SIZE						1024					//!< Maximum size of common buffer
+
+// Commandes constantes
+#define CMD_HELP						"help"					//!< Help command
+#define CMD_INFO						"info"					//!< Info command
+#define CMD_UNPACK						"unpack"				//!< Unpack command
+#define CMD_REPACK						"repack"				//!< Repack command
+
+// Default
+#define DEFAULT_COMPRESS_RATE			6						//!< Default compression rate
+#define DEFAULT_IMG_FILENAME			"boot.img"				//!< Default input/output filename
+#define DEFAULT_KERNEL_FILENAME			"kernel.img"			//!< Default kernel filename
+#define DEFAULT_KERNEL_MTK_FILENAME		"kernel.img.mtk"		//!< Default kernel filename with MTK header
+#define DEFAULT_RAMDISK_FILENAME		"ramdisk.cpio.gz"		//!< Default ramdisk filename
+#define DEFAULT_RAMDISK_MTK_FILENAME	"ramdisk.cpio.gz.mtk"	//!< Default ramdisk filename with MTK header
+#define DEFAULT_RAMDISK_DIR				"ramdisk.d"				//!< Default ramdisk directory
+#if defined(APP_LINUX)
+	#define DEFAULT_CONFIG_FILENAME		"image.cfg"				//!< Default configuration filename
+#else
+	#define DEFAULT_CONFIG_FILENAME		"image.ini"				//!< Default configuration filename
+#endif
+
+// Usefull constnates
+#define TMP_RAMDISK_FILENAME			"ramdisk-tmp.cpio.gz"	//!< Temporary ramdisk filename
+
+
+// Boolean type definition
+#ifndef bool
+	#define bool int											//!< Boolean type definition
+	#define true 1												//!< Boolean true
+	#define false 0												//!< Boolean false
+#endif
+
+/**
+ * \brief		Convert boolean to string "yes" or "no"
+ * \param		bval	Boolean value to convert
+ */	
+#define bool2yn(bval) (bval ? "yes" : "no")
+
+// Platform specifics
+#if defined(APP_WIN)
+	#define	FILESEP 					'\\'					//!< File path separator
+	#define	FIND_BIN 					"find.exe"				//!< find external utility
+	#define	GZIP_BIN 					"gzip.exe"				//!< gzip external utility
+	#define	CPIO_BIN 					"cpio.exe"				//!< cpio external utility
+#else	
+	#define	FILESEP 					'/'						//!< File path separator
+	#define	FIND_BIN 					"find"					//!< find external utility
+	#define	GZIP_BIN 					"gzip"					//!< gzip external utility
+	#define	CPIO_BIN 					"cpio"					//!< cpio external utility
+	#define	DIR_CHMOD					S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH //!< Directory permission when create
+#endif
+
+/**
+ * \brief		Application data structure
+ */
+typedef struct app_data_t{
+	char			exename[PATH_MAX_SIZE];						//!< Executable filename (without path)
+	char			working_dir[PATH_MAX_SIZE];					//!< Current working directory
+	char			cmd[STR_MAX_SIZE];							//!< Command to execute
+	bool			verbose;									//!< Verbose enable flag
+	bool			debug;										//!< Debug enable flag
+}app_data_t;
+
+/**
+ * \brief		Command arguments structure
+ */
+typedef struct args_t{
+	int				argc;										//!< Arguments count
+	char			**argv;										//!< Arguments strings array
+}args_t;
+
+/**
+ * \brief		Image header structure
+ */
+typedef struct img_header_t{
+	char		signature[8];									//!< Image signature (ex: ANDROID!)
+	uint32_t 	kernel_size;									//!< Kernel size in bytes
+	uint32_t 	kernel_load_addr;								//!< Kernel load address (ex: 0x10008000)
+	uint32_t 	ramdisk_size;									//!< Ramdisk size in bytes
+	uint32_t 	ramdisk_load_addr;								//!< Ramdisk load address (ex: 0x11000000)
+	uint32_t 	second_size;									//!< Second stage size in bytes (Can be 0)
+	uint32_t 	second_load_addr;								//!< Second stage load address (0x10F00000)
+	uint32_t 	tags_addr;										//!< Tags address (ex: 0x10000100)
+	uint32_t 	page_size;										//!< Page size in bytes (ex: 2048)
+	uint32_t 	unused1;										//!< Unused (filled with 0x00)
+	uint32_t 	unused2;										//!< Unused (filled with 0x00)
+	char 		product[16];									//!< Product name (ex: WIKO)
+	char 		cmdline[512];									//!< Kernel command line
+	uint8_t		id[20];											//!< Image ID to differentiate two ROM
+}img_header_t;
+
+/**
+ * \brief		MTK header structure
+ */
+typedef struct mtk_header_t{
+	uint8_t		magic[4];										//!< Header magic (0x88 0x16 0x88 0x58)
+	uint32_t 	size;											//!< Payload size in bytes
+	char 		type[32];										//!< Payload type (ex: KERNEL,ROOTFS,RECOVERY,etc...)
+	char 		unused2[472];									//!< Unused, filled with 0xFF
+}mtk_header_t;
+
+/**
+ * \brief		Image configuration structure
+ */
+typedef struct img_cfg_t{
+	img_header_t	header;										//!< Header inforamtions
+	char 			type[32];									//!< Payload type of ramdisk part
+	uint32_t 		size;										//!< Size of image
+}img_cfg_t;
+
+// Include
+#include "tools.h"
+#include "info.h"
+#include "unpack.h"
+#include "repack.h"
+
+// Global varisables
+app_data_t	app_data;											//!< Global application datas
+
+// Prototypes
+int main(int argc, char** argv);
+void show_usage();
+
+#endif
