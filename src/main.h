@@ -4,7 +4,7 @@
   * \file		main.h
   * \author		rom1nux
   * \version	1.0
-  * \date		2015-07-09
+  * \date		2015-07-11
   * \brief		Main header
   * ***************************************************************************  
   */ 
@@ -21,7 +21,7 @@
 // Application constantes
 #define	APP_TITLE						"MTKIMG"				//!< Application title
 #define	APP_NAME						"mtkimg"				//!< Application name
-#define	APP_VERSION						"0.32"					//!< Application version
+#define	APP_VERSION						"0.33"					//!< Application version
 #define	APP_AUTHOR						"rom1nux"				//!< Application author
 
 // Detect platform

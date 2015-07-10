@@ -1,0 +1,4 @@
+# Ignore this files
+build
+*.o
+*.exe

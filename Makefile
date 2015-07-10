@@ -3,7 +3,7 @@
 # #############################################################################
 # file		Makefile
 # author	rom1nux
-# date 		2015-07-09
+# date 		2015-07-11
 # brief 	Source code builder and management script
 # #############################################################################
 
@@ -37,6 +37,7 @@ ifeq ($(PLATFORM),WINDOWS)
 	CC=gcc
 	RC=windres
 	ZIP=7z a -tzip -r
+	ZIPEX=-xr!*.git*
 	CP=copy
 	MV=move
 	RM=del /F /Q
@@ -53,7 +54,8 @@ else
 	# LINUX/CYGWIN	
 	CC=gcc
 	RC=windres
-	ZIP=zip -r
+	ZIP=zip -r 
+	ZIPEX=--exclude=*.git*
 	CP=cp -p
 	MV=mv
 	RM=rm -f
@@ -174,7 +176,7 @@ srcdist: banner rebuild | $(DISTRO_DIR)
 	$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version > $(DISTRO_DIR)$(FSEP)version.txt)
 	$(MAKE) mrproper
 	$(RM) $(DISTRO_DIR)$(FSEP)$(EXE)-$(word 2,$(subst -, ,$(shell $(CAT) $(DISTRO_DIR)$(FSEP)version.txt)))-src.zip
-	$(ZIP) $(DISTRO_DIR)$(FSEP)$(EXE)-$(word 2,$(subst -, ,$(shell $(CAT) $(DISTRO_DIR)$(FSEP)version.txt)))-src.zip .
+	$(ZIP) $(DISTRO_DIR)$(FSEP)$(EXE)-$(word 2,$(subst -, ,$(shell $(CAT) $(DISTRO_DIR)$(FSEP)version.txt)))-src.zip . $(ZIPEX)
 	$(RM) $(DISTRO_DIR)$(FSEP)version.txt
 	@echo Source distribution ready !	
 	
