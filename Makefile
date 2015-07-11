@@ -88,7 +88,7 @@ endif
 SRC_DIR=src
 BUILD_DIR=build
 BKP_DIR=..$(FSEP)bkp
-DISTRO_DIR=..$(FSEP)distro
+RELEASES_DIR=releases
 TMP_DIR=..$(FSEP)tmp
 
 # Files 
@@ -108,7 +108,7 @@ ifeq ($(PLATFORM),CYGWIN)
 endif
 
 # Phony
-.PHONY: all clean mrproper rebuild doc bindist srcdist backup
+.PHONY: all clean mrproper rebuild doc release distro backup
 
 # ============================================================================
 # TARGET : ALL
@@ -171,30 +171,30 @@ doc: banner
 	@echo Make '$@' done !		
 	
 # ============================================================================
-# TARGET : BINDIST / SRCDIST
+# TARGET : RELEASE / SRCRELEASE
 # ============================================================================
 
-bindist: banner rebuild | $(DISTRO_DIR)
+release: banner rebuild | $(RELEASES_DIR)
 	-$(RMDIR) $(TMP_DIR)
-	-$(RM) $(DISTRO_DIR)$(FSEP)$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version).zip
+	-$(RM) $(RELEASES_DIR)$(FSEP)$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version).zip
 	$(MKDIR) $(TMP_DIR)
 	$(CP) $(BUILD_DIR)$(FSEP)$(EXEC) $(TMP_DIR)
 	$(CP) $(SRC_DIR)$(FSEP)readme.txt $(TMP_DIR)
 	$(CD) $(TMP_DIR) && \
-	$(ZIP) $(DISTRO_DIR)$(FSEP)$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version).zip . && \
+	$(ZIP) $(CWD)$(FSEP)$(RELEASES_DIR)$(FSEP)$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version).zip . && \
 	$(CD) $(CWD)
 	$(RMDIR) $(TMP_DIR)
-	@echo Binary distribution ready !	
+	@echo Binary release package ready !	
 
-srcdist: banner rebuild | $(DISTRO_DIR)
-	$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version > $(DISTRO_DIR)$(FSEP)version.txt)
+distro: banner rebuild | $(RELEASES_DIR)
+	$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version > $(RELEASES_DIR)$(FSEP)version.txt)
 	$(MAKE) mrproper
-	$(RM) $(DISTRO_DIR)$(FSEP)$(EXE)-$(word 2,$(subst -, ,$(shell $(CAT) $(DISTRO_DIR)$(FSEP)version.txt)))-src.zip
-	$(ZIP) $(DISTRO_DIR)$(FSEP)$(EXE)-$(word 2,$(subst -, ,$(shell $(CAT) $(DISTRO_DIR)$(FSEP)version.txt)))-src.zip . $(ZIPEX)
-	$(RM) $(DISTRO_DIR)$(FSEP)version.txt
-	@echo Source distribution ready !	
+	$(RM) $(RELEASES_DIR)$(FSEP)$(EXE)-$(word 2,$(subst -, ,$(shell $(CAT) $(RELEASES_DIR)$(FSEP)version.txt)))-src.zip
+	$(ZIP) $(RELEASES_DIR)$(FSEP)$(EXE)-$(word 2,$(subst -, ,$(shell $(CAT) $(RELEASES_DIR)$(FSEP)version.txt)))-src.zip . $(ZIPEX)
+	$(RM) $(RELEASES_DIR)$(FSEP)version.txt
+	@echo Source distro package ready !	
 	
-$(DISTRO_DIR):
+$(RELEASES_DIR):
 	@echo Create directory '$@' ...
 	@$(MKDIR) $@		
 	

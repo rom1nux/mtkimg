@@ -50,10 +50,11 @@ B - SOURCE CODE
   to build, test, backup and distribute executable.
   
   mtkimg
-    |- build               : Build directory (output of compilation)
+    |- build               : Build directory (output of compilation)	
     |- doc                 : Documents directory
     |   `-html             : HTML source code documentation directory
     |      `- index.html   : Index of source code documentation
+    |- release             : Release packages
     |- src                 : Sources code directory
     |   `- readme.txt      : Distrib readme file
     |- tools               : Utilities directory
@@ -109,8 +110,8 @@ D - MAKEFILE
    make mrproper : Remove the build directory
    make rebuild  : Force rebuild all object files
    make doc      : Invoke Doxygen to build ./doc/html source documentation
-   make bindist  : Create binary distribution zip into ../distro directory
-   make srcdist  : Create source distribution zip into ../distro directory
+   make bindist  : Create binary distribution zip into ./release directory
+   make srcdist  : Create source distribution zip into ./release directory
    make backup   : Create a source zip backup  into ../bkp
    
    
