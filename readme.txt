@@ -53,7 +53,7 @@ B - SOURCE CODE
     |- build               : Build directory (output of compilation)
     |- doc                 : Documents directory
     |   `-html             : HTML source code documentation directory
-    |`- index.html         : Index of source code documentation
+    |      `- index.html   : Index of source code documentation
     |- src                 : Sources code directory
     |   `- readme.txt      : Distrib readme file
     |- tools               : Utilities directory
