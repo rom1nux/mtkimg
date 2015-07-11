@@ -110,8 +110,8 @@ D - MAKEFILE
    make mrproper : Remove the build directory
    make rebuild  : Force rebuild all object files
    make doc      : Invoke Doxygen to build ./doc/html source documentation
-   make bindist  : Create binary distribution zip into ./release directory
-   make srcdist  : Create source distribution zip into ./release directory
+   make release  : Create binary distribution zip into ./release directory
+   make distro   : Create source distribution zip into ./release directory
    make backup   : Create a source zip backup  into ../bkp
    
    
