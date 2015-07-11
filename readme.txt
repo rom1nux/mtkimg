@@ -23,48 +23,102 @@
   
 A - INTRODUCTION
 
-    MTKIMG is a simple and portable utility to manage MTK Android ROM image  
+  MTKIMG is a simple and portable utility to manage MTK Android ROM image file
+  like boot.img or recovery.img. 
+  
+  Characteristics :
+	
+   * Write in C, open-source
+   * Portable (Linux, Cygwin, Windows, dont have MAC)
+   * Only one executable for unpack/repack
+   * Easy to use, all parameters are defaulted
+   * Keep the original image size at repack time
+   * Automatic ramdisk decompression
+   * Option to keep or remove MTK headers
+   * Check for valid "ARM Linux zImage" kernel
+   * Check for valid "GZIP" ramdisk
+   * Check for overflow if kernel or ramdisk is too big at repack time
+   * Option to set compression rate for ramdisk
+   * Got simple test-suite
+   * Easy to build on every platform
+   * Documentation
 
-    mtkimg
-      |- build               : Build directory (output of compilation)
-      |- doc                 : Documents directory
-      |   `-html             : HTML source code documentation directory
-      |`- index.html         : Index of source code dcumentation
-      |- src                 : Sources code directory
-      |   `- readme.txt      : Distrib readme file
-      |- tools               : Utilities directory
-      |   `- mtkimgtest.sh   : Automatic test suite to check building (Linux/Cygwin only)
-      |- .gitignore          : GIT files/directory ignore
-      |- cyterm.bat          : Cygwin terminal launcher
-      |- licence.txt         : GPL3 licence file
-      |- make.bat            : Windows make wrapper
-      |- Makefile            : Source code builder and management script
-      |- readme.txt          : This help file
-      `- winterm.bat         : Windows terminal launcher
 
- 
-B - HOW TO BUILD
+B - SOURCE CODE   
 
-    1 - Uncompress source code
+  Code source is multi-platform (Linux, Cygwin, Windows) and got several utilities
+  to build, test, backup and distribute executable.
+  
+  mtkimg
+    |- build               : Build directory (output of compilation)
+    |- doc                 : Documents directory
+    |   `-html             : HTML source code documentation directory
+    |`- index.html         : Index of source code documentation
+    |- src                 : Sources code directory
+    |   `- readme.txt      : Distrib readme file
+    |- tools               : Utilities directory
+    |   `- mtkimgtest.sh   : Automatic test suite to check building (Linux/Cygwin only)
+    |- .gitignore          : GIT files/directory ignore
+    |- cyterm.bat          : Cygwin terminal launcher
+    |- licence.txt         : GPL3 license file
+    |- make.bat            : Windows make wrapper (invoke 'mink32-make.exe')
+    |- Makefile            : Source code builder and management script
+    |- readme.txt          : This help file
+    `- winterm.bat         : Windows terminal launcher
+
+  
+C - HOW TO BUILD
+
+  First, be sure you got a gcc compiler on your system and /bin directory
+  is in your PATH environement variable.  
+  
+  Note:
+  For Windows you need MinGW32 or MinGW64 :  
+  (MinGW contain a port of 'make' utility named 'ming32-make' invoked by 'make.bat')
+  
+  Here is the few steps to follow to build MTKIMG on your platform :
+
+   1 - Uncompress source code or pull source code from GitHub.
       
-    2 - Open terminal in source code directory
-        Linux   : Open terminal
-        Cygwin  : From Windows click on "cygterm.bat"
-        Windows : Click on "winterm.bat"
+   2 - Open terminal in source code directory
+       Linux   : Open terminal
+       Cygwin  : From Windows click on "cygterm.bat"
+       Windows : Click on "winterm.bat"
 
-    3 - Execute : make
+   3 - Execute : make
       
-    4 - Execute : make clean
+   4 - Execute : make clean
       
-    5 - "mtkimg" (mtkimg.exe) is ready into "build" directory
+   5 - "mtkimg" (mtkimg.exe) is ready into "build" directory
 
-    6 - You can copy and paste it into your bin directory or the working directory
-	    you working on.
+   6 - You can copy and paste it into your bin directory or the working directory
+	   you working on.
 
-    Look at "src/readme.txt" for more information about using mtkimg.
+  Look at "src/readme.txt" for more information about using mtkimg.
 
+  
+D - MAKEFILE
+
+  Makefile is used to manage the source code on all platform.
+  (On Windows make.bat invoke and pass command to mingw32-make)
+  
+  this is Makefile supported command :
+  
+   make          : Build MTKIMG executable in ./build directory
+   make clean    : Remove all object files (.o) from ./build directory
+   make mrproper : Remove the build directory
+   make rebuild  : Force rebuild all object files
+   make doc      : Invoke Doxygen to build ./doc/html source documentation
+   make bindist  : Create binary distribution zip into ../distro directory
+   make srcdist  : Create source distribution zip into ../distro directory
+   make backup   : Create a source zip backup  into ../bkp
    
    
+E - UTILTIES
+
+  * MINGW32 or MINGW64 (Windows GCC port)
+    http://sourceforge.net/projects/mingw-w64
    
-   
+  * DOXYGEN (Source code documentation generator)
+    http://www.doxygen.org  
     
