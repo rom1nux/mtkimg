@@ -23,26 +23,42 @@
 					   
 A - HOW TO USE				   
 					   
-    Be sure "find", "gzip" and "cpio" are installed on your system and are in your PATH.
+  Be sure "find", "gzip" and "cpio" are installed on your system and are in your PATH.
 	
-    Linux   : Use your package manager to download application
-    Cygwin  : Use Cygwin setup.exe to install packages
-    Windows : You can manually download package from gnuwin
-              http://gnuwin32.sourceforge.net/packages/findutils.htm
-              http://gnuwin32.sourceforge.net/packages/gzip.htm
-              http://gnuwin32.sourceforge.net/packages/cpio.htm
+  Linux   : Use your package manager to download application
+  Cygwin  : Use Cygwin setup.exe to install packages
+  Windows : You can manually download package from gnuwin
+            http://gnuwin32.sourceforge.net/packages/findutils.htm
+            http://gnuwin32.sourceforge.net/packages/gzip.htm
+            http://gnuwin32.sourceforge.net/packages/cpio.htm
 			  		  
-    On Linux or Cygwin hit "./mtkimg", on Windows hit "mtkimg.exe" to see full help.
-   
-    To unpack image hit :   ./mtkimg unpack boot.img
-    To repack image hit :   ./mtkimg repack newboot.img
+  To unpack image hit :   ./mtkimg unpack boot.img
+  To repack image hit :   ./mtkimg repack newboot.img
 
+  On Linux or Cygwin hit "./mtkimg", on Windows hit "mtkimg.exe" to see full help.
+  
+
+B - WHERE TO SPEAK ABOUT
+
+  * GitHub official repository
+    https://github.com/rom1nux/mtkimg	
 	
-B - CHANGELOG
+  * XDA Developers forum
+    http://forum.xda-developers.com/android/development/tools-unpack-repack-boot-img-utility-t3154621
+	
+  * FrAndroid forum
+    http://forum.frandroid.com/topic/223380-outils-unpackrepack-bootimg-mediatek
+  
+  
+C - CHANGELOG
 
-	2015-07-10 - rom1nux
-	 * Add 'srcdist' and 'bindist' to Makefile
+  * 2015-07-11 - rom1nux
+    - Create GitHub repository
+    - Add source code under GPL3 license
+
+  * 2015-07-10 - rom1nux
+    - Add 'srcdist' and 'bindist' to Makefile
 	 
-    2015-07-09 - rom1nux
-     * First beta
+  * 2015-07-09 - rom1nux
+    - First beta
 	 
