@@ -26,6 +26,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MTKIMG
    </div>
+   <div id="projectbrief">Unpack and Repack boot.img utility for Mediatek cpu based device</div>
   </td>
  </tr>
  </tbody>
@@ -86,42 +87,42 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <a href="info_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#ifndef INFO_H</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define INFO_H</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// Standard includes</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">// Includes</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="main_8h.html">main.h</a>&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="tools_8h.html">tools.h</a>&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="structinfo__data__t.html">   27</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structinfo__data__t.html">info_data_t</a>{</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="structinfo__data__t.html#acd629882404ffe96c85d356b0eb4090d">   28</a></span>&#160;    <span class="keywordtype">char</span>            <a class="code" href="structinfo__data__t.html#acd629882404ffe96c85d356b0eb4090d">input</a>[<a class="code" href="main_8h.html#a965df5ba2db3f4ad3d1875ce90992b74">PATH_MAX_SIZE</a>];       </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}<a class="code" href="info_8h.html#aabca1888bb079f8c10e0b26b66b6d2fa">info_data_t</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">// Prototypes</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">void</span> <a class="code" href="info_8h.html#a35ddc35443f87c97079afd0b57435090">info</a>(<a class="code" href="structargs__t.html">args_t</a>* args);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> <a class="code" href="info_8h.html#a8c6921829015a370ebd3537d79cd5844">info_parse_args</a>(<a class="code" href="structinfo__data__t.html">info_data_t</a>* data, <a class="code" href="structargs__t.html">args_t</a>* args);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#ifndef INFO_H</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define INFO_H</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">// Standard includes</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">// Includes</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="main_8h.html">main.h</a>&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="tools_8h.html">tools.h</a>&quot;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="structinfo__data__t.html">   40</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structinfo__data__t.html">info_data_t</a>{</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="structinfo__data__t.html#acd629882404ffe96c85d356b0eb4090d">   41</a></span>&#160;    <span class="keywordtype">char</span>            <a class="code" href="structinfo__data__t.html#acd629882404ffe96c85d356b0eb4090d">input</a>[<a class="code" href="main_8h.html#a965df5ba2db3f4ad3d1875ce90992b74">PATH_MAX_SIZE</a>];       </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}<a class="code" href="info_8h.html#aabca1888bb079f8c10e0b26b66b6d2fa">info_data_t</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">// Prototypes</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">void</span> <a class="code" href="info_8h.html#a35ddc35443f87c97079afd0b57435090">info</a>(<a class="code" href="structargs__t.html">args_t</a>* args);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> <a class="code" href="info_8h.html#a8c6921829015a370ebd3537d79cd5844">info_parse_args</a>(<a class="code" href="structinfo__data__t.html">info_data_t</a>* data, <a class="code" href="structargs__t.html">args_t</a>* args);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="info_8h_html_aabca1888bb079f8c10e0b26b66b6d2fa"><div class="ttname"><a href="info_8h.html#aabca1888bb079f8c10e0b26b66b6d2fa">info_data_t</a></div><div class="ttdeci">struct info_data_t info_data_t</div><div class="ttdoc">Info command data. </div></div>
-<div class="ttc" id="main_8h_html"><div class="ttname"><a href="main_8h.html">main.h</a></div><div class="ttdoc">Main file  </div></div>
-<div class="ttc" id="structargs__t_html"><div class="ttname"><a href="structargs__t.html">args_t</a></div><div class="ttdoc">Command arguments structure. </div><div class="ttdef"><b>Definition:</b> main.h:119</div></div>
-<div class="ttc" id="info_8h_html_a35ddc35443f87c97079afd0b57435090"><div class="ttname"><a href="info_8h.html#a35ddc35443f87c97079afd0b57435090">info</a></div><div class="ttdeci">void info(args_t *args)</div><div class="ttdoc">Info command. </div><div class="ttdef"><b>Definition:</b> info.c:17</div></div>
-<div class="ttc" id="info_8h_html_a8c6921829015a370ebd3537d79cd5844"><div class="ttname"><a href="info_8h.html#a8c6921829015a370ebd3537d79cd5844">info_parse_args</a></div><div class="ttdeci">void info_parse_args(info_data_t *data, args_t *args)</div><div class="ttdoc">Info command argument parser. </div><div class="ttdef"><b>Definition:</b> info.c:79</div></div>
-<div class="ttc" id="structinfo__data__t_html_acd629882404ffe96c85d356b0eb4090d"><div class="ttname"><a href="structinfo__data__t.html#acd629882404ffe96c85d356b0eb4090d">info_data_t::input</a></div><div class="ttdeci">char input[PATH_MAX_SIZE]</div><div class="ttdoc">Input file (ex: boot.img) </div><div class="ttdef"><b>Definition:</b> info.h:28</div></div>
-<div class="ttc" id="structinfo__data__t_html"><div class="ttname"><a href="structinfo__data__t.html">info_data_t</a></div><div class="ttdoc">Info command data. </div><div class="ttdef"><b>Definition:</b> info.h:27</div></div>
-<div class="ttc" id="main_8h_html_a965df5ba2db3f4ad3d1875ce90992b74"><div class="ttname"><a href="main_8h.html#a965df5ba2db3f4ad3d1875ce90992b74">PATH_MAX_SIZE</a></div><div class="ttdeci">#define PATH_MAX_SIZE</div><div class="ttdoc">Maximum size of path. </div><div class="ttdef"><b>Definition:</b> main.h:49</div></div>
-<div class="ttc" id="tools_8h_html"><div class="ttname"><a href="tools_8h.html">tools.h</a></div><div class="ttdoc">Utilities header  </div></div>
+<div class="ttc" id="main_8h_html"><div class="ttname"><a href="main_8h.html">main.h</a></div><div class="ttdoc">Main file. </div></div>
+<div class="ttc" id="structargs__t_html"><div class="ttname"><a href="structargs__t.html">args_t</a></div><div class="ttdoc">Command arguments structure. </div><div class="ttdef"><b>Definition:</b> main.h:132</div></div>
+<div class="ttc" id="info_8h_html_a35ddc35443f87c97079afd0b57435090"><div class="ttname"><a href="info_8h.html#a35ddc35443f87c97079afd0b57435090">info</a></div><div class="ttdeci">void info(args_t *args)</div><div class="ttdoc">Info command. </div><div class="ttdef"><b>Definition:</b> info.c:30</div></div>
+<div class="ttc" id="info_8h_html_a8c6921829015a370ebd3537d79cd5844"><div class="ttname"><a href="info_8h.html#a8c6921829015a370ebd3537d79cd5844">info_parse_args</a></div><div class="ttdeci">void info_parse_args(info_data_t *data, args_t *args)</div><div class="ttdoc">Info command argument parser. </div><div class="ttdef"><b>Definition:</b> info.c:92</div></div>
+<div class="ttc" id="structinfo__data__t_html_acd629882404ffe96c85d356b0eb4090d"><div class="ttname"><a href="structinfo__data__t.html#acd629882404ffe96c85d356b0eb4090d">info_data_t::input</a></div><div class="ttdeci">char input[PATH_MAX_SIZE]</div><div class="ttdoc">Input file (ex: boot.img) </div><div class="ttdef"><b>Definition:</b> info.h:41</div></div>
+<div class="ttc" id="structinfo__data__t_html"><div class="ttname"><a href="structinfo__data__t.html">info_data_t</a></div><div class="ttdoc">Info command data. </div><div class="ttdef"><b>Definition:</b> info.h:40</div></div>
+<div class="ttc" id="main_8h_html_a965df5ba2db3f4ad3d1875ce90992b74"><div class="ttname"><a href="main_8h.html#a965df5ba2db3f4ad3d1875ce90992b74">PATH_MAX_SIZE</a></div><div class="ttdeci">#define PATH_MAX_SIZE</div><div class="ttdoc">Maximum size of path. </div><div class="ttdef"><b>Definition:</b> main.h:62</div></div>
+<div class="ttc" id="tools_8h_html"><div class="ttname"><a href="tools_8h.html">tools.h</a></div><div class="ttdoc">Usefull utilities header. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 10 2015 00:51:29 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 11 2015 02:19:33 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>
