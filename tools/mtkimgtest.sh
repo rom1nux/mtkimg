@@ -1,17 +1,31 @@
 #!/bin/bash
-# #############################################################################
+# *****************************************************************************
 #                            MTKIMG PROJECT
-# #############################################################################
-# file		mtkimgtest.sh
-# author	rom1nux
-# date 		2015-07-09
-# brief 	Automatic quick test suite script
-# #############################################################################
+# *****************************************************************************
+# brief 	 Automatic quick test suite script
+# file		 mtkimgtest.sh
+# author	 rom1nux
+# date 		 2015-07-09
+# copyright	 Copyright (C) 2015 rom1nux
+# *****************************************************************************
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# *****************************************************************************
 
 # Script constantes
 APP_TITLE="MTKIMG TEST SCRIPT"
 APP_NAME="mtkimgtest"
-APP_VERSION="0.01"
+APP_VERSION="0.02"
 APP_AUTHOR="rom1nux"
 
 # Script configuration

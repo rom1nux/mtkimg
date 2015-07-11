@@ -34,7 +34,9 @@ A - INTRODUCTION
       |   `- readme.txt      : Distrib readme file
       |- tools               : Utilities directory
       |   `- mtkimgtest.sh   : Automatic test suite to check building (Linux/Cygwin only)
-      |- cyterm.bat          : Cygwin terminal launcher 
+      |- .gitignore          : GIT files/directory ignore
+      |- cyterm.bat          : Cygwin terminal launcher
+      |- licence.txt         : GPL3 licence file
       |- make.bat            : Windows make wrapper
       |- Makefile            : Source code builder and management script
       |- readme.txt          : This help file
