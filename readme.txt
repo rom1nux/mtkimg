@@ -43,11 +43,30 @@ A - INTRODUCTION
    * Easy to build on every platform
    * Documentation
 
+   
+B - HOW TO USE				   
+					   
+  Be sure "find", "gzip" and "cpio" utilities are installed on your system and are 
+  in your PATH environment variable.
+	
+  Linux   : Use your package manager to download application
+  Cygwin  : Use Cygwin setup.exe to install packages
+  Windows : You can manually download package from gnuwin
+            http://gnuwin32.sourceforge.net/packages/findutils.htm
+            http://gnuwin32.sourceforge.net/packages/gzip.htm
+            http://gnuwin32.sourceforge.net/packages/cpio.htm
+			  		  
+  To unpack image hit :   ./mtkimg unpack boot.img
+  To repack image hit :   ./mtkimg repack newboot.img
 
-B - SOURCE CODE   
+  On Linux or Cygwin hit "./mtkimg", on Windows hit "mtkimg.exe" to see full help.   
+
+  
+C - SOURCE CODE   
 
   Code source is multi-platform (Linux, Cygwin, Windows) and got several utilities
-  to build, test, backup and distribute executable.
+  to build, test, backup and distribute executable. It can be download from 
+  https://github.com/rom1nux/mtkimg
   
   mtkimg
     |- build               : Build directory (output of compilation)	
@@ -68,7 +87,7 @@ B - SOURCE CODE
     `- winterm.bat         : Windows terminal launcher
 
   
-C - HOW TO BUILD
+D - HOW TO BUILD SOURCE CODE 
 
   First, be sure you got a gcc compiler on your system and /bin directory
   is in your PATH environement variable.  
@@ -98,7 +117,7 @@ C - HOW TO BUILD
   Look at "src/readme.txt" for more information about using mtkimg.
 
   
-D - MAKEFILE
+E - MAKEFILE COMMANDS
 
   Makefile is used to manage the source code on all platform.
   (On Windows make.bat invoke and pass command to mingw32-make)
@@ -115,7 +134,7 @@ D - MAKEFILE
    make backup   : Create a source zip backup  into ../bkp
    
    
-E - UTILTIES
+F - UTILTIES
 
   * MINGW32 or MINGW64 (Windows GCC port)
     http://sourceforge.net/projects/mingw-w64
@@ -123,3 +142,27 @@ E - UTILTIES
   * DOXYGEN (Source code documentation generator)
     http://www.doxygen.org  
     
+	
+G - WHERE TO SPEAK ABOUT
+
+  * GitHub official repository
+    https://github.com/rom1nux/mtkimg	
+	
+  * XDA Developers forum
+    http://forum.xda-developers.com/android/development/tools-unpack-repack-boot-img-utility-t3154621
+	
+  * FrAndroid forum
+    http://forum.frandroid.com/topic/223380-outils-unpackrepack-bootimg-mediatek
+  
+  
+H - CHANGELOG
+
+  * 2015-07-11 - rom1nux
+    - Create GitHub repository
+    - Add source code under GPL3 license
+
+  * 2015-07-10 - rom1nux
+    - Add 'srcdist' and 'bindist' to Makefile
+	 
+  * 2015-07-09 - rom1nux
+    - First beta	

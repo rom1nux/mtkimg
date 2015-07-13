@@ -1,6 +1,6 @@
 /** 
 \mainpage	MTKIMG Documentation
 
-
+\verbinclude "../readme.txt"
 
 */

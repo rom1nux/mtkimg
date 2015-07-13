@@ -80,10 +80,177 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MTKIMG Documentation </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"></div></div><!-- contents -->
+<div class="textblock"><pre class="fragment">                 __  __ _______ _  _______ __  __  _____ 
+                |  \/  |__   __| |/ /_   _|  \/  |/ ____|
+                | \  / |  | |  |   /  | | | \  / | |  __ 
+                | |\/| |  | |  |  &lt;   | | | |\/| | | |_ |
+                | |  | |  | |  |   \ _| |_| |  | | |__| |
+                |_|  |_|  |_|  |_|\_\_____|_|  |_|\_____|
+                                          
+                       Copyright (c) 2015 rom1nux
+					   
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+ 
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+ 
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.					   
+
+  
+A - INTRODUCTION
+
+  MTKIMG is a simple and portable utility to manage MTK Android ROM image file
+  like boot.img or recovery.img. 
+  
+  Characteristics :
+	
+   * Write in C, open-source
+   * Portable (Linux, Cygwin, Windows, dont have MAC)
+   * Only one executable for unpack/repack
+   * Easy to use, all parameters are defaulted
+   * Keep the original image size at repack time
+   * Automatic ramdisk decompression
+   * Option to keep or remove MTK headers
+   * Check for valid "ARM Linux zImage" kernel
+   * Check for valid "GZIP" ramdisk
+   * Check for overflow if kernel or ramdisk is too big at repack time
+   * Option to set compression rate for ramdisk
+   * Got simple test-suite
+   * Easy to build on every platform
+   * Documentation
+
+   
+B - HOW TO USE				   
+					   
+  Be sure "find", "gzip" and "cpio" utilities are installed on your system and are 
+  in your PATH environment variable.
+	
+  Linux   : Use your package manager to download application
+  Cygwin  : Use Cygwin setup.exe to install packages
+  Windows : You can manually download package from gnuwin
+            http://gnuwin32.sourceforge.net/packages/findutils.htm
+            http://gnuwin32.sourceforge.net/packages/gzip.htm
+            http://gnuwin32.sourceforge.net/packages/cpio.htm
+			  		  
+  To unpack image hit :   ./mtkimg unpack boot.img
+  To repack image hit :   ./mtkimg repack newboot.img
+
+  On Linux or Cygwin hit "./mtkimg", on Windows hit "mtkimg.exe" to see full help.   
+
+  
+C - SOURCE CODE   
+
+  Code source is multi-platform (Linux, Cygwin, Windows) and got several utilities
+  to build, test, backup and distribute executable. It can be download from 
+  https://github.com/rom1nux/mtkimg
+  
+  mtkimg
+    |- build               : Build directory (output of compilation)	
+    |- doc                 : Documents directory
+    |   `-html             : HTML source code documentation directory
+    |      `- index.html   : Index of source code documentation
+    |- release             : Release packages
+    |- src                 : Sources code directory
+    |   `- readme.txt      : Distrib readme file
+    |- tools               : Utilities directory
+    |   `- mtkimgtest.sh   : Automatic test suite to check building (Linux/Cygwin only)
+    |- .gitignore          : GIT files/directory ignore
+    |- cyterm.bat          : Cygwin terminal launcher
+    |- licence.txt         : GPL3 license file
+    |- make.bat            : Windows make wrapper (invoke 'mink32-make.exe')
+    |- Makefile            : Source code builder and management script
+    |- readme.txt          : This help file
+    `- winterm.bat         : Windows terminal launcher
+
+  
+D - HOW TO BUILD SOURCE CODE 
+
+  First, be sure you got a gcc compiler on your system and /bin directory
+  is in your PATH environement variable.  
+  
+  Note:
+  For Windows you need MinGW32 or MinGW64 :  
+  (MinGW contain a port of 'make' utility named 'ming32-make' invoked by 'make.bat')
+  
+  Here is the few steps to follow to build MTKIMG on your platform :
+
+   1 - Uncompress source code or pull source code from GitHub.
+      
+   2 - Open terminal in source code directory
+       Linux   : Open terminal
+       Cygwin  : From Windows click on "cygterm.bat"
+       Windows : Click on "winterm.bat"
+
+   3 - Execute : make
+      
+   4 - Execute : make clean
+      
+   5 - "mtkimg" (mtkimg.exe) is ready into "build" directory
+
+   6 - You can copy and paste it into your bin directory or the working directory
+	   you working on.
+
+  Look at "src/readme.txt" for more information about using mtkimg.
+
+  
+E - MAKEFILE COMMANDS
+
+  Makefile is used to manage the source code on all platform.
+  (On Windows make.bat invoke and pass command to mingw32-make)
+  
+  this is Makefile supported command :
+  
+   make          : Build MTKIMG executable in ./build directory
+   make clean    : Remove all object files (.o) from ./build directory
+   make mrproper : Remove the build directory
+   make rebuild  : Force rebuild all object files
+   make doc      : Invoke Doxygen to build ./doc/html source documentation
+   make release  : Create binary distribution zip into ./release directory
+   make distro   : Create source distribution zip into ./release directory
+   make backup   : Create a source zip backup  into ../bkp
+   
+   
+F - UTILTIES
+
+  * MINGW32 or MINGW64 (Windows GCC port)
+    http://sourceforge.net/projects/mingw-w64
+   
+  * DOXYGEN (Source code documentation generator)
+    http://www.doxygen.org  
+    
+	
+G - WHERE TO SPEAK ABOUT
+
+  * GitHub official repository
+    https://github.com/rom1nux/mtkimg	
+	
+  * XDA Developers forum
+    http://forum.xda-developers.com/android/development/tools-unpack-repack-boot-img-utility-t3154621
+	
+  * FrAndroid forum
+    http://forum.frandroid.com/topic/223380-outils-unpackrepack-bootimg-mediatek
+  
+  
+H - CHANGELOG
+
+  * 2015-07-11 - rom1nux
+    - Create GitHub repository
+    - Add source code under GPL3 license
+
+  * 2015-07-10 - rom1nux
+    - Add 'srcdist' and 'bindist' to Makefile
+	 
+  * 2015-07-09 - rom1nux
+    - First beta	</pre> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 11 2015 03:57:05 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jul 13 2015 22:04:56 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>
