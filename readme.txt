@@ -157,7 +157,7 @@ G - WHERE TO SPEAK ABOUT
   
 H - CHANGELOG
 
-  * 2015-07-11 - V0.34 - rom1nux
+  * 2015-07-13 - V0.34 - rom1nux
     - Start logo unpacking function (not completed yet)
     - Documentation correction	 
 	
