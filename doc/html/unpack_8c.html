@@ -98,6 +98,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a4cd6645f9d878555520b997a7b05e92c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unpack_8c.html#a4cd6645f9d878555520b997a7b05e92c">unpack</a> (<a class="el" href="structargs__t.html">args_t</a> *args)</td></tr>
 <tr class="memdesc:a4cd6645f9d878555520b997a7b05e92c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack command.  <a href="#a4cd6645f9d878555520b997a7b05e92c">More...</a><br /></td></tr>
 <tr class="separator:a4cd6645f9d878555520b997a7b05e92c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43586ae176ae3e83ae3ae8549942bdb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unpack_8c.html#a43586ae176ae3e83ae3ae8549942bdb8">unpack_boot</a> (<a class="el" href="structunpack__data__t.html">unpack_data_t</a> *data)</td></tr>
+<tr class="memdesc:a43586ae176ae3e83ae3ae8549942bdb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack 'boot.img' command.  <a href="#a43586ae176ae3e83ae3ae8549942bdb8">More...</a><br /></td></tr>
+<tr class="separator:a43586ae176ae3e83ae3ae8549942bdb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7e37714083818ae2ab208ba1d95bdc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unpack_8c.html#aa7e37714083818ae2ab208ba1d95bdc4">unpack_logo</a> (<a class="el" href="structunpack__data__t.html">unpack_data_t</a> *data)</td></tr>
+<tr class="memdesc:aa7e37714083818ae2ab208ba1d95bdc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack 'logo.bin' command.  <a href="#aa7e37714083818ae2ab208ba1d95bdc4">More...</a><br /></td></tr>
+<tr class="separator:aa7e37714083818ae2ab208ba1d95bdc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a318292bb8b92bf2d42e8d03416037ee9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unpack_8c.html#a318292bb8b92bf2d42e8d03416037ee9">unpack_parse_args</a> (<a class="el" href="structunpack__data__t.html">unpack_data_t</a> *data, <a class="el" href="structargs__t.html">args_t</a> *args)</td></tr>
 <tr class="memdesc:a318292bb8b92bf2d42e8d03416037ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack command argument parser.  <a href="#a318292bb8b92bf2d42e8d03416037ee9">More...</a><br /></td></tr>
 <tr class="separator:a318292bb8b92bf2d42e8d03416037ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,6 +137,54 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">args</td><td>Command line arguments </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a43586ae176ae3e83ae3ae8549942bdb8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void unpack_boot </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structunpack__data__t.html">unpack_data_t</a> *&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unpack 'boot.img' command. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Unpack command data </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa7e37714083818ae2ab208ba1d95bdc4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void unpack_logo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structunpack__data__t.html">unpack_data_t</a> *&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unpack 'logo.bin' command. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Unpack command data </td></tr>
   </table>
   </dd>
 </dl>
@@ -175,7 +229,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jul 13 2015 22:26:18 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jul 13 2015 23:02:30 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

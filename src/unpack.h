@@ -49,6 +49,8 @@ typedef struct unpack_data_t{
 
 // Prototypes
 void unpack(args_t* args);
+void unpack_boot(unpack_data_t* data);
+void unpack_logo(unpack_data_t* data);
 void unpack_parse_args(unpack_data_t* data, args_t* args);
 
 

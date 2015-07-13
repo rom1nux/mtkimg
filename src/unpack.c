@@ -26,23 +26,13 @@
  /**
  * \brief		Unpack command
  * \param		args 		Command line arguments
- */	
+ */	 
 void unpack(args_t* args)
-{
+{ 
 	unpack_data_t	data;	
-	img_cfg_t		img_cfg;	
-	img_header_t	img_header;
-	mtk_header_t	mtk_header;		
-	FILE*			fs=NULL;	
-	uint32_t		kernel_offset, kernel_size, kernel_pages;
-	uint32_t		ramdisk_offset, ramdisk_size, ramdisk_pages;
-	char*			ramdisk_file;
-	char 			syscmd[CMD_MAX_SIZE];
-	int				res;	
 	
 	// Init
 	memset(&data,0x0,sizeof(unpack_data_t));
-	memset(&img_cfg,0x0,sizeof(img_cfg_t));
 	
 	// Parse data	
 	unpack_parse_args(&data, args);
@@ -78,34 +68,62 @@ void unpack(args_t* args)
 	// Check input file
 	if (!file_exists(data.input)) die("Input file '%s' not found !",data.input);
 	
-	// Get input file size
-	img_cfg.size=file_size(data.input);	
+	// Check for MTK file (logo.bin)
+	if (is_valid_mtk_file(data.input)){
+		// unpack logo.bin
+		unpack_logo(&data);
+	}else{	
+		// Unpack boot.img		
+		unpack_boot(&data);
+	}
+}
+ 
+ 
+ /**
+ * \brief		Unpack 'boot.img' command
+ * \param		data 		Unpack command data
+ */	
+void unpack_boot(unpack_data_t* data)
+{
+	img_cfg_t		img_cfg;	
+	img_header_t	img_header;
+	mtk_header_t	mtk_header;		
+	FILE*			fs=NULL;	
+	uint32_t		kernel_offset, kernel_size, kernel_pages;
+	uint32_t		ramdisk_offset, ramdisk_size, ramdisk_pages;
+	char*			ramdisk_file;
+	char 			syscmd[CMD_MAX_SIZE];
+	int				res;	
+	
+	// Init	
+	memset(&img_cfg,0x0,sizeof(img_cfg_t));
+	img_cfg.size=file_size(data->input);	
 	
 	// Check for existing output files
-	if (!data.overwrite){			
-		if (file_exists(data.kernel)) die("File '%s' already exist !",data.kernel);
-		if (data.no_decompress){
-			if (file_exists(data.ramdisk)) die("File '%s' already exist !",data.ramdisk);
+	if (!data->overwrite){			
+		if (file_exists(data->kernel)) die("File '%s' already exist !",data->kernel);
+		if (data->no_decompress){
+			if (file_exists(data->ramdisk)) die("File '%s' already exist !",data->ramdisk);
 		}else{
-			if (dir_exists(data.ramdisk)) die("Directory '%s' already exist !",data.ramdisk);		
+			if (dir_exists(data->ramdisk)) die("Directory '%s' already exist !",data->ramdisk);		
 		}
-		if (file_exists(data.config)) die("File '%s' already exist !",data.config);		
+		if (file_exists(data->config)) die("File '%s' already exist !",data->config);		
 	}
 	
 	// Clean previous output files or directory	
 	if (!file_remove(TMP_RAMDISK_FILENAME)) die("Could not remove file '%s' !",TMP_RAMDISK_FILENAME);
-	if (!file_remove(data.config)) die("Could not remove file '%s' !",data.config);
-	if (!file_remove(data.kernel)) die("Could not remove file '%s' !",data.kernel);
-	if (data.no_decompress){
-		if (!file_remove(data.ramdisk)) die("Could not remove file '%s' !",data.ramdisk);
+	if (!file_remove(data->config)) die("Could not remove file '%s' !",data->config);
+	if (!file_remove(data->kernel)) die("Could not remove file '%s' !",data->kernel);
+	if (data->no_decompress){
+		if (!file_remove(data->ramdisk)) die("Could not remove file '%s' !",data->ramdisk);
 	}else{
-		if (!dir_remove(data.ramdisk)) die("Could not remove directory '%s' !",data.ramdisk);
+		if (!dir_remove(data->ramdisk)) die("Could not remove directory '%s' !",data->ramdisk);
 	}	
 	
 	// Openning input filename
-	fs=fopen(data.input,"rb");
-	if (fs==NULL) die("Could not open input file '%s' !",data.input);
-	output("Unpacking image '%s'...",data.input);
+	fs=fopen(data->input,"rb");
+	if (fs==NULL) die("Could not open input file '%s' !",data->input);
+	output("Unpacking boot image '%s'...",data->input);
 	
 	// Reading image header	
 	if (!img_header_read(&img_header,fs)) fail("Could not read image header !");	
@@ -138,7 +156,7 @@ void unpack(args_t* args)
 	verbose("Seeking to start of kernel (0x%08X)...",kernel_offset); 
 	if (fseek(fs,kernel_offset,SEEK_SET)) fail("Could not seek to start of kernel !");
 	// Handle MTK header
-	if (!data.keep_mtk_header){
+	if (!data->keep_mtk_header){
 		// Reading MTK header		
 		if (!mtk_header_read(&mtk_header,fs)) fail("Could not read kernel header !");	
 		if (app_data.debug) mtk_header_show(&mtk_header);
@@ -150,11 +168,11 @@ void unpack(args_t* args)
 		kernel_size=mtk_header.size;
 	}
 	// Unpacking
-	output("Unpacking kernel to '%s' (%d bytes)...",data.kernel,kernel_size); 
-	if (!unpack_file(fs,data.kernel,kernel_size)) fail("Could not unpack kernel to file '%s' !",data.kernel);
+	output("Unpacking kernel to '%s' (%d bytes)...",data->kernel,kernel_size); 
+	if (!unpack_file(fs,data->kernel,kernel_size)) fail("Could not unpack kernel to file '%s' !",data->kernel);
 	// Check for valid ARM Linux zImage
-	if (!data.keep_mtk_header){
-		if (!is_valid_zimage_file(data.kernel)) fail("Kernel file '%s' is not a valid ARM Linux zImage file !",data.kernel);
+	if (!data->keep_mtk_header){
+		if (!is_valid_zimage_file(data->kernel)) fail("Kernel file '%s' is not a valid ARM Linux zImage file !",data->kernel);
 	}
 	
 	// RAMDISK
@@ -163,7 +181,7 @@ void unpack(args_t* args)
 	verbose("Seeking to start of ramdisk (0x%08X)...",ramdisk_offset); 
 	if (fseek(fs,ramdisk_offset,SEEK_SET)) fail("Could not seek to start of ramdisk !");
 	// Handle MTK header
-	if (!data.keep_mtk_header){			
+	if (!data->keep_mtk_header){			
 		// Reading MTK header		
 		if (!mtk_header_read(&mtk_header,fs)) fail("Could not read ramdisk header !");	
 		if (app_data.debug) mtk_header_show(&mtk_header);
@@ -177,21 +195,21 @@ void unpack(args_t* args)
 		memcpy(img_cfg.type,mtk_header.type,32);
 	}
 	// Unpacking	
-	ramdisk_file=(data.no_decompress ? data.ramdisk : TMP_RAMDISK_FILENAME);
+	ramdisk_file=(data->no_decompress ? data->ramdisk : TMP_RAMDISK_FILENAME);
 	output("Unpacking ramdisk to '%s' (%d bytes)...",ramdisk_file,ramdisk_size); 
 	if (!unpack_file(fs,ramdisk_file,ramdisk_size)) fail("Could not unpack ramdisk to file '%s' !",ramdisk_file);
 	// Check for valid gzip file
-	if (!data.keep_mtk_header){
+	if (!data->keep_mtk_header){
 		if (!is_valid_gzip_file(ramdisk_file)) fail("Ramdisk file '%s' is not a valid gzip file !",ramdisk_file);
 	}
 	
 	// Unpacking ramdisk content
-	if (!data.no_decompress){
-		output("Unpacking ramdisk content to '%s'...",data.ramdisk); 
+	if (!data->no_decompress){
+		output("Unpacking ramdisk content to '%s'...",data->ramdisk); 
 		// Create directory
-		if (!dir_create(data.ramdisk)) fail("Could not create directory '%s' !",data.ramdisk);
+		if (!dir_create(data->ramdisk)) fail("Could not create directory '%s' !",data->ramdisk);
 		// Entering directoy
-		if (!dir_change(data.ramdisk)) fail("Could change to directory '%s' !",data.ramdisk);
+		if (!dir_change(data->ramdisk)) fail("Could change to directory '%s' !",data->ramdisk);
 		// Create decompress command line
 		sprintf(syscmd,"%s -d -c ..%c%s | %s -i --quiet",GZIP_BIN,FILESEP,TMP_RAMDISK_FILENAME,CPIO_BIN); 			
 		// Decompression
@@ -199,19 +217,19 @@ void unpack(args_t* args)
 		verbose("%s",syscmd);
 		res=system(syscmd);
 		// Returning to previous directory
-		if (!dir_change(app_data.working_dir)) fail("Could change to directory '%s' !",data.ramdisk);	
-		if (res) fail("Could not unpack ramdisk content to directory '%s' !",data.ramdisk);			
+		if (!dir_change(app_data.working_dir)) fail("Could change to directory '%s' !",data->ramdisk);	
+		if (res) fail("Could not unpack ramdisk content to directory '%s' !",data->ramdisk);			
 		// Remove ramdisk file
 		if (!file_remove(TMP_RAMDISK_FILENAME)) fail("Could not remove file '%s' !",TMP_RAMDISK_FILENAME);		
 	}
 	
 	// Writing image configuration		
-	if (!img_cfg_write(&img_cfg,data.config)) fail("Could not write image configuration file '%s' !",data.config);
+	if (!img_cfg_write(&img_cfg,data->config)) fail("Could not write image configuration file '%s' !",data->config);
 		
 	// Closing input filename
 	fclose(fs);
 	
-	output("Image successfully unpacked !");	
+	output("Boot image successfully unpacked !");	
 	return;
 	
 failed:
@@ -219,15 +237,69 @@ failed:
 	// Closing input filename
 	if (fs) fclose(fs);
 	// Cleaning outputs	
-	if (!file_remove(data.kernel)) error("Could not remove file '%s' !",data.kernel);
-	if (data.no_decompress){
-		if (!file_remove(data.ramdisk)) error("Could not remove file '%s' !",data.ramdisk);
+	if (!file_remove(data->kernel)) error("Could not remove file '%s' !",data->kernel);
+	if (data->no_decompress){
+		if (!file_remove(data->ramdisk)) error("Could not remove file '%s' !",data->ramdisk);
 	}else{
-		if (!dir_remove(data.ramdisk)) error("Could not remove directory '%s' !",data.ramdisk);
+		if (!dir_remove(data->ramdisk)) error("Could not remove directory '%s' !",data->ramdisk);
 	}
-	if (!file_remove(data.config)) error("Could not remove file '%s' !",data.config);
+	if (!file_remove(data->config)) error("Could not remove file '%s' !",data->config);
 	if (!file_remove(TMP_RAMDISK_FILENAME)) error("Could not remove file '%s' !",TMP_RAMDISK_FILENAME);
 	exit(1);
+}
+
+ /**
+ * \brief		Unpack 'logo.bin' command
+ * \param		data 		Unpack command data
+ */	
+void unpack_logo(unpack_data_t* data)
+{
+	img_cfg_t		img_cfg;	
+	mtk_header_t	mtk_header;		
+	FILE*			fs=NULL;
+	uint32_t		logo_count, bloc_size;
+		
+	// Init	
+	memset(&img_cfg,0x0,sizeof(img_cfg_t));
+	img_cfg.size=file_size(data->input);
+	
+	// Openning input filename
+	fs=fopen(data->input,"rb");
+	if (fs==NULL) die("Could not open input file '%s' !",data->input);
+	output("Unpacking logo image '%s'...",data->input);
+	
+	// Reading MTK header		
+	if (!mtk_header_read(&mtk_header,fs)) fail("Could not read logo header !");	
+	if (app_data.debug) mtk_header_show(&mtk_header);
+	
+	// Checking MTK header
+	if (!mtk_header_check_magic(&mtk_header)) fail("Logo header magic is not valid !");
+	if (!mtk_header_check_type(&mtk_header,"LOGO")) fail("Logo header type is not valid !");
+	//if (!mtk_header_check_size(&mtk_header,img_cfg.size)) fail("Logo header size not consistent with image size !");	
+	
+	// Reading logo count
+	verbose("Reading logo count (%d bytes)...",sizeof(uint32_t));
+	if (fread(&logo_count,1,sizeof(uint32_t),fs)!=sizeof(uint32_t)) die("Could not read logo count !");
+	output("%d logo found !",logo_count);
+	
+	// Reading bloc size
+	verbose("Reading block size (%d bytes)...",sizeof(uint32_t));
+	if (fread(&bloc_size,1,sizeof(uint32_t),fs)!=sizeof(uint32_t)) die("Could not read bloc size !");
+	verbose("Bloc size : %d bytes !",bloc_size);
+	if (bloc_size!=mtk_header.size) fail("Bloc size is not consistent with MTK header size !");	
+	
+	// Closing input filename
+	fclose(fs);
+	
+	//output("Logo image successfully unpacked !");	
+	warning("Sorry unpack_logo() function is not completed yet !");
+	return;
+	
+failed:
+	// FAILED
+	// Closing input filename
+	if (fs) fclose(fs);	
+	exit(1);	
 }
 
 /**

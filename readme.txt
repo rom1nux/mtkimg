@@ -158,7 +158,8 @@ G - WHERE TO SPEAK ABOUT
 H - CHANGELOG
 
   * 2015-07-11 - V0.34 - rom1nux
-    - Documentation correction
+    - Start logo unpacking function (not completed yet)
+    - Documentation correction	 
 	
   * 2015-07-11 - V0.33 - rom1nux
     - Create GitHub repository
