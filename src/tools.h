@@ -34,11 +34,26 @@
 #include <errno.h>	
 #include <unistd.h>
 #include <dirent.h>
+#ifdef LOGO_SUPPORT
+	#include <zlib.h>
+	#include <png.h>
+#endif
 
 // Includes
 #include "main.h"
 
-// Fies recognition
+#ifdef LOGO_SUPPORT
+// Image convertion
+bool rgb565_to_png(char* src, char *dest, unsigned int width, unsigned int height);
+
+// Inflate/Deflate
+bool inflate_file(char* src, char *dest);
+#endif
+
+// Helper
+const char* cmd_type_to_str(cmd_type_t type);
+
+// Files recognition
 bool is_valid_zimage_file(char* filename);
 bool is_valid_gzip_file(char* filename);
 bool is_valid_mtk_file(char* filename);

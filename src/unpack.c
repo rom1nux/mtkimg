@@ -36,45 +36,17 @@ void unpack(args_t* args)
 	
 	// Parse data	
 	unpack_parse_args(&data, args);
-	
-	// Early options check
-	if ((data.keep_mtk_header) && (!data.no_decompress)){
-		warning("Option '--keep-mtk-header' implies '--no-zip' !");
-		data.no_decompress=true;
-	}
-		
+
 	// Defaulting
-	if (!data.input[0])	strcpy(data.input,DEFAULT_IMG_FILENAME);			
-	if (!data.config[0]) strcpy(data.config,DEFAULT_CONFIG_FILENAME);	
-	if (data.keep_mtk_header){		
-		if (!data.kernel[0]) strcpy(data.kernel,DEFAULT_KERNEL_MTK_FILENAME);
-		if (!data.ramdisk[0]) strcpy(data.ramdisk,DEFAULT_RAMDISK_MTK_FILENAME);		
-	}else{
-		if (!data.kernel[0]) strcpy(data.kernel,DEFAULT_KERNEL_FILENAME);		
-		if (!data.ramdisk[0]) strcpy(data.ramdisk,( data.no_decompress ? DEFAULT_RAMDISK_FILENAME : DEFAULT_RAMDISK_DIR ));
-	}
+	if (data.type==CMD_TYPE_UNKNOWN) data.type=CMD_TYPE_BOOT;
 	
-	// Debug parsing/defaulting
-	debug("%-20s : %s","verbose",bool2yn(app_data.verbose));
-	debug("%-20s : %s","debug",bool2yn(app_data.debug));	
-	debug("%-20s : %s","overwrite",bool2yn(data.overwrite));
-	debug("%-20s : %s","input",data.input);
-	debug("%-20s : %s","kernel",data.kernel);
-	debug("%-20s : %s","ramdisk",data.ramdisk);
-	debug("%-20s : %s","config",data.config);	
-	debug("%-20s : %s","no-decompress",bool2yn(data.no_decompress));	
-	debug("%-20s : %s","keep-mtk-header",bool2yn(data.keep_mtk_header));	
-		
-	// Check input file
-	if (!file_exists(data.input)) die("Input file '%s' not found !",data.input);
-	
-	// Check for MTK file (logo.bin)
-	if (is_valid_mtk_file(data.input)){
-		// unpack logo.bin
-		unpack_logo(&data);
-	}else{	
+	// Dispatch command
+	if (data.type==CMD_TYPE_BOOT){
 		// Unpack boot.img		
 		unpack_boot(&data);
+	}else{	
+		// unpack logo.bin
+		unpack_logo(&data);		
 	}
 }
  
@@ -96,7 +68,41 @@ void unpack_boot(unpack_data_t* data)
 	int				res;	
 	
 	// Init	
-	memset(&img_cfg,0x0,sizeof(img_cfg_t));
+	memset(&img_cfg,0x0,sizeof(img_cfg_t));	
+		
+	// Early options check
+	if ((data->keep_mtk_header) && (!data->no_decompress)){
+		warning("Option '--keep-mtk-header' implies '--no-zip' !");
+		data->no_decompress=true;
+	}
+	
+	// Defaulting
+	if (!data->input[0]) strcpy(data->input,DEFAULT_BOOT_IMG_FILENAME);				
+	if (!data->config[0]) strcpy(data->config,DEFAULT_CONFIG_FILENAME);	
+	if (data->keep_mtk_header){		
+		if (!data->kernel[0]) strcpy(data->kernel,DEFAULT_KERNEL_MTK_FILENAME);
+		if (!data->ramdisk[0]) strcpy(data->ramdisk,DEFAULT_RAMDISK_MTK_FILENAME);		
+	}else{
+		if (!data->kernel[0]) strcpy(data->kernel,DEFAULT_KERNEL_FILENAME);		
+		if (!data->ramdisk[0]) strcpy(data->ramdisk,( data->no_decompress ? DEFAULT_RAMDISK_FILENAME : DEFAULT_RAMDISK_DIR ));
+	}
+	
+	// Debug parsing/defaulting
+	debug("%-20s : %s","verbose",bool2yn(app_data.verbose));
+	debug("%-20s : %s","debug",bool2yn(app_data.debug));	
+	debug("%-20s : %s","type",cmd_type_to_str(data->type));	
+	debug("%-20s : %s","input",data->input);
+	debug("%-20s : %s","overwrite",bool2yn(data->overwrite));
+	debug("%-20s : %s","kernel",data->kernel);
+	debug("%-20s : %s","ramdisk",data->ramdisk);
+	debug("%-20s : %s","config",data->config);	
+	debug("%-20s : %s","no-decompress",bool2yn(data->no_decompress));	
+	debug("%-20s : %s","keep-mtk-header",bool2yn(data->keep_mtk_header));	
+	
+	// Check input file
+	if (!file_exists(data->input)) die("Input file '%s' not found !",data->input);
+	
+	// Get image size
 	img_cfg.size=file_size(data->input);	
 	
 	// Check for existing output files
@@ -254,14 +260,50 @@ failed:
  */	
 void unpack_logo(unpack_data_t* data)
 {
+#ifndef LOGO_SUPPORT	
+	warning("Logo support is not enabled !");
+#else
 	img_cfg_t		img_cfg;	
 	mtk_header_t	mtk_header;		
 	FILE*			fs=NULL;
-	uint32_t		logo_count, bloc_size;
+	uint32_t		i,bytes,offset,logo_count, bloc_size;
+	uint32_t*		offsets;
+	uint32_t*		sizes;
+	char			src[PATH_MAX_SIZE];
+	char			dest[PATH_MAX_SIZE];
 		
 	// Init	
 	memset(&img_cfg,0x0,sizeof(img_cfg_t));
+	
+	// Defaulting
+	if (!data->input[0]) strcpy(data->input,DEFAULT_LOGO_IMG_FILENAME);				
+	if (!data->config[0]) strcpy(data->config,DEFAULT_CONFIG_FILENAME);	
+	if (!data->logos[0]) strcpy(data->logos,DEFAULT_LOGOS_DIR);
+	
+	// Debug parsing/defaulting
+	debug("%-20s : %s","verbose",bool2yn(app_data.verbose));
+	debug("%-20s : %s","debug",bool2yn(app_data.debug));	
+	debug("%-20s : %s","type",cmd_type_to_str(data->type));	
+	debug("%-20s : %s","input",data->input);
+	debug("%-20s : %s","overwrite",bool2yn(data->overwrite));
+	debug("%-20s : %s","logos",data->logos);
+	debug("%-20s : %s","no-decompress",bool2yn(data->no_decompress));	
+	
+	// Check input file
+	if (!file_exists(data->input)) die("Input file '%s' not found !",data->input);
+	
+	// Get image size
 	img_cfg.size=file_size(data->input);
+	
+	// Check for existing output files
+	if (!data->overwrite){
+		if (dir_exists(data->logos)) die("Directory '%s' already exist !",data->logos);
+		if (file_exists(data->config)) die("File '%s' already exist !",data->config);
+	}
+	
+	// Clean previous output files or directory	
+	if (!dir_remove(data->logos)) die("Could not remove directory '%s' !",data->logos);		
+	if (!file_remove(data->config)) die("Could not remove file '%s' !",data->config);	
 	
 	// Openning input filename
 	fs=fopen(data->input,"rb");
@@ -278,28 +320,93 @@ void unpack_logo(unpack_data_t* data)
 	//if (!mtk_header_check_size(&mtk_header,img_cfg.size)) fail("Logo header size not consistent with image size !");	
 	
 	// Reading logo count
-	verbose("Reading logo count (%d bytes)...",sizeof(uint32_t));
-	if (fread(&logo_count,1,sizeof(uint32_t),fs)!=sizeof(uint32_t)) die("Could not read logo count !");
+	verbose("Reading picture count (%d bytes)...",sizeof(uint32_t));
+	if (fread(&logo_count,1,sizeof(uint32_t),fs)!=sizeof(uint32_t)) fail("Could not read picture count !");
 	output("%d logo found !",logo_count);
-	
+	if (!logo_count) fail("No logo found !");
+		
 	// Reading bloc size
-	verbose("Reading block size (%d bytes)...",sizeof(uint32_t));
-	if (fread(&bloc_size,1,sizeof(uint32_t),fs)!=sizeof(uint32_t)) die("Could not read bloc size !");
-	verbose("Bloc size : %d bytes !",bloc_size);
+	verbose("Reading picture block size (%d bytes)...",sizeof(uint32_t));
+	if (fread(&bloc_size,1,sizeof(uint32_t),fs)!=sizeof(uint32_t)) fail("Could not read block size !");
+	verbose("Picture block size : %d bytes !",bloc_size);
 	if (bloc_size!=mtk_header.size) fail("Bloc size is not consistent with MTK header size !");	
+	
+	// Reading offsets map
+	bytes=sizeof(uint32_t)*logo_count;
+	verbose("Reading offsets map (%d bytes)...",bytes);
+	offsets=malloc(bytes);
+	if (offsets==NULL) fail("Could not allocate %d bytes !",bytes);
+	memset(offsets,0x0,bytes);	
+	if (fread(offsets,sizeof(uint32_t),logo_count,fs)!=logo_count) fail("Could not read offset map !");
+	
+	// Compute map sizes
+	sizes=malloc(bytes);
+	if (sizes==NULL) fail("Could not allocate %d bytes !",bytes);
+	memset(sizes,0x0,bytes);	
+	for(i=0;i<logo_count-1;i++)	sizes[i]=offsets[i+1]-offsets[i];
+	sizes[i]=bloc_size-offsets[i];
+	if (app_data.debug){
+		printf(" picture |   offset   | size (bytes)\n");
+		printf(" -----------------------------------\n");
+		for(i=0;i<logo_count;i++){
+			printf("    %.2d   | 0x%08X |   %.8d  \n",i+1,offsets[i],sizes[i]);
+		}
+		printf(" -----------------------------------\n");
+	}
+		
+		
+	// Unpack all images
+	output("Unpack logo content to '%s'...",data->logos);
+	// Create directory
+	if (!dir_create(data->logos)) fail("Could not create directory '%s' !",data->logos);
+	for(i=0;i<logo_count-1;i++){
+		verbose("Upacking image %d...",i+1);
+		sprintf(src,"%s%cimg-%02d.bin",data->logos,FILESEP,(i+1));
+		sprintf(dest,"%s%cimg-%02d.rgb565",data->logos,FILESEP,(i+1));
+		offset=offsets[i]+512;		
+		// Extracting image
+		verbose("Seeking to start of image (0x%08X)...",offset); 
+		if (fseek(fs,offset,SEEK_SET)) fail("Could not seek to start of image !");
+		verbose("Unpacking image to '%s' (%d bytes)...",src,sizes[i]); 
+		if (!unpack_file(fs,src,sizes[i])) fail("Could not unpack logo image to file '%s' !",src);
+		verbose("Inflating image to '%s'...",dest); 
+		// Inflating image
+		if (!inflate_file(src,dest)) fail("Could not inflate logo image file '%s' !",src);
+		if (!file_remove(src)) die("Could not remove file '%s' !",src);	
+		verbose("Searching size..."); 
+		unsigned long h,w,t,s=(file_size(dest)/2);
+		for(w=1;w<2000;w++){
+			for(h=1;h<2000;h++){
+				t=(w*h);
+				if (t==s) break;
+			}
+		}
+		if ((h==2000) && (w==2000)){ error("Could not find logo image size for '%s' !",dest); continue; }
+		verbose("Image size found : %dx%d = %d (%d)",w,h,t,s);
+		// Converting to PNG
+		sprintf(src,"%s%cimg-%02d.rgb565",data->logos,FILESEP,(i+1));
+		sprintf(dest,"%s%cimg-%02d.png",data->logos,FILESEP,(i+1));		
+		verbose("Converting to PNG to '%s'...",dest); 
+		if (!rgb565_to_png(src,dest,w,h)){ error("Could not convert logo image '%s' to PNG !",src); continue; }
+		if (!file_remove(src)) die("Could not remove file '%s' !",src);	
+	}
+	
+		
 	
 	// Closing input filename
 	fclose(fs);
 	
-	//output("Logo image successfully unpacked !");	
-	warning("Sorry unpack_logo() function is not completed yet !");
+	output("Logo image successfully unpacked !");		
 	return;
 	
 failed:
 	// FAILED
 	// Closing input filename
 	if (fs) fclose(fs);	
+	//if (!dir_remove(data->logos)) error("Could not remove directory '%s' !",data->logos);	
+	//if (!file_remove(data->config)) error("Could not remove file '%s' !",data->config);	
 	exit(1);	
+#endif	
 }
 
 /**
@@ -315,7 +422,13 @@ void unpack_parse_args(unpack_data_t* data, args_t* args)
 	for(i=0;i<args->argc;i++){
 		if (args->argv[i][0]=='-'){
 			// Options
-			if ((!strcmp(args->argv[i],"--overwrite")) || (!strcmp(args->argv[i],"-o"))){
+			if ((!strcmp(args->argv[i],"--type")) || (!strcmp(args->argv[i],"-t"))){
+				if ((i+1)>=args->argc) die("Argument needed after option '%s' !",args->argv[i]);
+				if (!strcmp(args->argv[i+1],"boot")) data->type=CMD_TYPE_BOOT;
+				else if (!strcmp(args->argv[i+1],"logo")) data->type=CMD_TYPE_LOGO;
+				else die("Unknown --type '%s' !",args->argv[i+1]);				
+				i++;
+			}else if ((!strcmp(args->argv[i],"--overwrite")) || (!strcmp(args->argv[i],"-o"))){
 				data->overwrite=true;
 			}else if ((!strcmp(args->argv[i],"--kernel")) || (!strcmp(args->argv[i],"-k"))){
 				if ((i+1)>=args->argc) die("Argument needed after option '%s' !",args->argv[i]);
@@ -326,17 +439,20 @@ void unpack_parse_args(unpack_data_t* data, args_t* args)
 			}else if ((!strcmp(args->argv[i],"--config")) || (!strcmp(args->argv[i],"-c"))){
 				if ((i+1)>=args->argc) die("Argument needed after option '%s' !",args->argv[i]);
 				strcpy(data->config,args->argv[++i]);
+			}else if ((!strcmp(args->argv[i],"--logos")) || (!strcmp(args->argv[i],"-l"))){
+				if ((i+1)>=args->argc) die("Argument needed after option '%s' !",args->argv[i]);
+				strcpy(data->logos,args->argv[++i]);
 			}else if ((!strcmp(args->argv[i],"--no-decompress")) || (!strcmp(args->argv[i],"-n"))){
 				data->no_decompress=true;					
 			}else if ((!strcmp(args->argv[i],"--keep-mtk-header")) || (!strcmp(args->argv[i],"-m"))){
 				data->keep_mtk_header=true;				
 			}else{
-				die("Unknown option '%s' (%d) for command '%s' !",args->argv[i],i,CMD_UNPACK);
+				die("Unknown option '%s' for command '%s' !",args->argv[i],CMD_UNPACK);
 			}
 		}else{
 			// Arguments
 			if (nargs==1) strcpy(data->input,args->argv[i]);		
-			else die("Unknown argument '%s' (%d) !",args->argv[i],i);
+			else die("Unknown argument '%s' !",args->argv[i]);
 			nargs++;
 		}
 	}

@@ -43,7 +43,7 @@ void info(args_t* args)
 	info_parse_args(&data, args);
 	
 	// Defaulting
-	if (!data.input[0])	strcpy(data.input,DEFAULT_IMG_FILENAME);
+	if (!data.input[0])	strcpy(data.input,DEFAULT_BOOT_IMG_FILENAME);
 
 	// Debug parsing/defaulting
 	debug("%-20s : %s","verbose",bool2yn(app_data.verbose));
@@ -97,11 +97,11 @@ void info_parse_args(info_data_t* data, args_t* args)
 	for(i=0;i<args->argc;i++){
 		if (args->argv[i][0]=='-'){
 			// Options
-			die("Unknown option '%s' (%d) for command '%s' !",args->argv[i],i,CMD_INFO);
+			die("Unknown option '%s' for command '%s' !",args->argv[i],CMD_INFO);
 		}else{
 			// Arguments
 			if (nargs==1) strcpy(data->input,args->argv[i]);				
-			else die("Unknown argument '%s' (%d) !",args->argv[i],i);
+			else die("Unknown argument '%s' !",args->argv[i]);
 			nargs++;
 		}
 	}

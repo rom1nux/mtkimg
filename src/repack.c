@@ -53,7 +53,7 @@ void repack(args_t* args)
 	
 	// Defaulting
 	if (!data.compress_rate) data.compress_rate=DEFAULT_COMPRESS_RATE;
-	if (!data.output[0]) strcpy(data.output,DEFAULT_IMG_FILENAME);			
+	if (!data.output[0]) strcpy(data.output,DEFAULT_BOOT_IMG_FILENAME);			
 	if (!data.config[0]) strcpy(data.config,DEFAULT_CONFIG_FILENAME);	
 	if (!data.kernel[0]) strcpy(data.kernel,DEFAULT_KERNEL_FILENAME);		
 	if (!data.ramdisk[0]) strcpy(data.ramdisk,( data.no_compress ? DEFAULT_RAMDISK_FILENAME : DEFAULT_RAMDISK_DIR ));
@@ -254,12 +254,12 @@ void repack_parse_args(repack_data_t* data, args_t* args)
 				if ((i+1)>=args->argc) die("Argument needed after option '%s' !",args->argv[i]);
 				data->compress_rate=strtol(args->argv[++i],NULL,10);				
 			}else{
-				die("Unknown option '%s' (%d) for command '%s' !",args->argv[i],i,CMD_UNPACK);
+				die("Unknown option '%s' for command '%s' !",args->argv[i],CMD_UNPACK);
 			}
 		}else{
 			// Arguments
 			if (nargs==1) strcpy(data->output,args->argv[i]);		
-			else die("Unknown argument '%s' (%d) !",args->argv[i],i);
+			else die("Unknown argument '%s' !",args->argv[i]);
 			nargs++;
 		}
 	}

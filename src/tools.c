@@ -23,6 +23,145 @@
   */ 
 #include "tools.h"
 
+#ifdef LOGO_SUPPORT
+/**
+ * \brief		Convert RGB565 file to png 
+ * \param		src		Source file
+ * \param		dest	Destination file
+ * \return 		Operation status
+ * \retval 		true			Success
+ * \retval 		false			Error
+ */	
+bool rgb565_to_png(char* src, char *dest, unsigned int width, unsigned int height)
+{
+	FILE* fs;
+	FILE* fd;
+	uint32_t i,nread;
+	uint8_t* srcbuff;	
+	uint8_t* destbuff;	
+	uint16_t* srcptr=NULL;
+	uint8_t* destptr=NULL;
+	bool success=false;		
+	png_structp png_s;
+	png_infop png_i;
+	
+	srcbuff=malloc(width*2);
+	if (srcbuff==NULL){ error("Could not allocate %d bytes !",width*2); return false; }
+	destbuff=malloc(width*3);
+	if (destbuff==NULL){ error("Could not allocate %d bytes !",width*3); return false; }	
+	
+	fs=fopen(src,"rb");
+	if (!fs){ error("Could not open file '%s' !",src); goto failed; }
+	fd=fopen(dest,"wb");
+	if (!fd){ fclose(fs); error("Could not open file '%s' !",dest); goto failed; }
+	
+	png_s = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    if (!png_s){ fclose(fs); fclose(fs); error("png_create_write_struct failed !"); goto failed; }
+	png_i = png_create_info_struct(png_s);
+    if (!png_i){ fclose(fs); fclose(fs); error("png_create_info_struct failed !"); goto failed; }
+    if (setjmp(png_jmpbuf(png_s))){ fclose(fs); fclose(fs); error("png_init_io failed !"); goto failed; }
+    png_init_io(png_s, fd);            
+	
+	if (setjmp(png_jmpbuf(png_s))){ fclose(fs); fclose(fs); error("png_set_IHDR failed !"); goto failed; }
+    png_set_IHDR(png_s, png_i, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+	if (setjmp(png_jmpbuf(png_s))){ fclose(fs); fclose(fs); error("png_write_info failed !"); goto failed; }
+    png_write_info(png_s, png_i);
+	
+
+	
+	while(!feof(fs)){
+		nread=fread(srcbuff,2,width,fs);
+		if ((nread!=width) && (nread!=0)){ error("Could not read from '%s' !",src); goto failed; }
+		srcptr=(uint16_t *)srcbuff;
+		destptr=destbuff;
+		for(i=0;i<nread;i++){		
+			destptr[0] = (uint8_t)((*srcptr & 0xF800) >> 11)<<3;
+			destptr[1] = (uint8_t)((*srcptr & 0x07E0) >> 5)<<2;
+			destptr[2] = (uint8_t)(*srcptr & 0x001F)<<3;	
+			
+			srcptr++;
+			destptr+=3;
+		}		
+		if (setjmp(png_jmpbuf(png_s))){ fclose(fs); fclose(fs); error("png_write_row failed !"); goto failed; }
+		png_write_row(png_s, destbuff);
+	}
+	
+	if (setjmp(png_jmpbuf(png_s))){ error("png_write_end failed !"); goto failed; }
+	png_write_end(png_s, NULL);
+	success=true;
+		
+failed:
+	png_destroy_write_struct(&png_s, &png_i);
+	//if (srcptr) free(srcptr);
+	//if (destptr) free(destptr);		
+	fclose(fd);
+	fclose(fs);		
+	if (success==false) file_remove(dest);
+	return success;
+
+}
+
+/**
+ * \brief		Decompress file
+ * \param		src		Source file
+ * \param		dest	Destination file
+ * \return 		Operation status
+ * \retval 		true			Success
+ * \retval 		false			Error
+ */	
+bool inflate_file(char* src, char *dest)
+{
+	z_stream strm;
+	FILE* fs;
+	FILE* fd;
+	uint8_t srcbuff[BUFFER_SIZE];
+	uint8_t destbuff[BUFFER_SIZE];
+	unsigned int towrite, flag;
+	bool sucess=true;
+    strm.zalloc = Z_NULL;
+    strm.zfree = Z_NULL;
+    strm.opaque = Z_NULL;
+    strm.avail_in = 0;
+    strm.next_in = Z_NULL;
+    if (inflateInit(&strm) != Z_OK){ error("Could not init zlib !"); return false; }
+	fs=fopen(src,"rb");
+	if (!fs){ error("Could not open file '%s' !",src); return false; }
+	fd=fopen(dest,"wb");
+	if (!fd){ fclose(fs); error("Could not open file '%s' !",dest); return false; }
+	while(!feof(fs)){
+		strm.avail_in = fread(srcbuff,1,BUFFER_SIZE,fs);
+		strm.next_in = srcbuff;
+		do{
+            strm.avail_out=BUFFER_SIZE;
+            strm.next_out=destbuff;
+			flag=(feof(fs) ? Z_FINISH : Z_NO_FLUSH);
+            if (inflate(&strm, flag)==Z_STREAM_ERROR){ sucess=false; error("Error during inflate !"); break; }
+            towrite=BUFFER_SIZE-strm.avail_out;
+            if (fwrite(destbuff,1,towrite,fd)!=towrite){ sucess=false; error("Could not write to '%s' file !",dest); break; }               
+        }while (strm.avail_out == 0);
+	}	
+	deflateEnd(&strm);
+	fclose(fd);
+	fclose(fs);
+	return sucess;
+}
+#endif
+
+/**
+ * \brief		Convert command type to string
+ * \param		type			Command type
+ * \return 		String representation of type 
+ */	
+const char* cmd_type_to_str(cmd_type_t type)
+{
+	switch(type){		
+		case CMD_TYPE_UNKNOWN: 	return "unknown"; 	break;
+		case CMD_TYPE_BOOT: 	return "boot"; 		break;
+		case CMD_TYPE_LOGO: 	return "logo"; 		break;
+	}
+	return "???"; 	
+}
+
 /**
  * \brief		Check for valid ARM Linux zImage file
  * \param		filename		Filename to check
@@ -103,6 +242,9 @@ bool img_cfg_write(img_cfg_t* cfg, char* filename)
 	fd=fopen(filename,"wt");
 	if (!fd) return false;
 	fprintf(fd,"; Image configuration file - Write by %s V%s(%s%d)\n",app_data.exename,APP_VERSION,APP_PLATFORM,APP_ARCH);	
+	fprintf(fd,"\n; Layout\n\n"); 
+	fprintf(fd,"size=%d\n",cfg->size);
+	fprintf(fd,"type="); fputnchar(fd,cfg->type,8); putc('\n',fd);
 	fprintf(fd,"\n; Header\n\n"); 
 	fprintf(fd,"signature="); fputnchar(fd,cfg->header.signature,8); putc('\n',fd);
 	fprintf(fd,"kernel-load-addr=0x%08X\n",cfg->header.kernel_load_addr);
@@ -112,10 +254,7 @@ bool img_cfg_write(img_cfg_t* cfg, char* filename)
 	fprintf(fd,"page-size=%d\n",cfg->header.page_size);
 	fprintf(fd,"product="); fputnchar(fd,cfg->header.product,16); putc('\n',fd);
 	fprintf(fd,"cmdline="); fputnchar(fd,cfg->header.cmdline,512); putc('\n',fd);
-	fprintf(fd,"id="); for(i=0;i<20;i++) fprintf(fd,"%02X",cfg->header.id[i]); putc('\n',fd);
-	fprintf(fd,"\n; Layout\n\n"); 
-	fprintf(fd,"size=%d\n",cfg->size);
-	fprintf(fd,"type="); fputnchar(fd,cfg->type,8); putc('\n',fd);
+	fprintf(fd,"id="); for(i=0;i<20;i++) fprintf(fd,"%02X",cfg->header.id[i]); putc('\n',fd);	
 	fclose(fd);
 	return true;
 }

@@ -38,11 +38,13 @@
  * \brief		Unpack command data
  */
 typedef struct unpack_data_t{
+	cmd_type_t		type;							//!< Type of command
 	char			input[PATH_MAX_SIZE];			//!< Input file (ex: boot.img)
 	bool			overwrite;						//!< Can overwrite output file/directory
 	char			kernel[PATH_MAX_SIZE];			//!< Kernel output filename
 	char			ramdisk[PATH_MAX_SIZE];			//!< Ramdisk output filename/directory
 	char			config[PATH_MAX_SIZE];			//!< Configuration output filename
+	char			logos[PATH_MAX_SIZE];			//!< Logos output directory
 	bool			no_decompress;					//!< Do not decompress ramdisk
 	bool			keep_mtk_header;				//!< Keep MTK head on kernel and ramdisk files
 }unpack_data_t;

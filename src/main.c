@@ -104,9 +104,11 @@ void show_usage()
 	printf(" --verbose         -v        : Show details\n");
 	printf(" --debug           -d        : Show debug messages\n");
 	printf(" --overwrite       -o        : Overwrite existing file and directory\n");
+	printf(" --type            -t <type> : Set command type, can be : boot|logo\n");
 	printf(" --kernel          -k <file> : Set kernel filename\n");
 	printf(" --ramdisk         -r <dir>  : Set ramdisk directory (or filename, see -n)\n");
 	printf(" --config          -c <file> : Set configuration filename\n");
+	printf(" --logos           -l <dir>  : Set logos directory\n");
 	printf(" --no-compress     -n        : Do not compress ramdisk (use --ramdisk as file)\n");
 	printf(" --no-decompress   -n        : Do not decompress ramdisk (use --ramdisk as file)\n");
 	printf(" --compress-rate   -z <rate> : Compression level (1-9)\n");

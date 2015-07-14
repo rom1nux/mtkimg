@@ -34,7 +34,7 @@
 // Application constantes
 #define	APP_TITLE						"MTKIMG"				//!< Application title
 #define	APP_NAME						"mtkimg"				//!< Application name
-#define	APP_VERSION						"0.34"					//!< Application version
+#define	APP_VERSION						"0.35"					//!< Application version
 #define	APP_AUTHOR						"rom1nux"				//!< Application author
 
 // Detect platform
@@ -62,7 +62,7 @@
 #define	PATH_MAX_SIZE					256						//!< Maximum size of path
 #define	STR_MAX_SIZE					256						//!< Maximum size of common string
 #define	CMD_MAX_SIZE					512						//!< Maximum size of command line
-#define	BUFFER_SIZE						1024					//!< Maximum size of common buffer
+#define	BUFFER_SIZE						4096					//!< Maximum size of common buffer
 
 // Commandes constantes
 #define CMD_HELP						"help"					//!< Help command
@@ -70,14 +70,21 @@
 #define CMD_UNPACK						"unpack"				//!< Unpack command
 #define CMD_REPACK						"repack"				//!< Repack command
 
+/**
+ * \brief		Command type
+ */
+typedef enum cmd_type_t{CMD_TYPE_UNKNOWN, CMD_TYPE_BOOT, CMD_TYPE_LOGO}cmd_type_t;
+
 // Default
 #define DEFAULT_COMPRESS_RATE			6						//!< Default compression rate
-#define DEFAULT_IMG_FILENAME			"boot.img"				//!< Default input/output filename
+#define DEFAULT_BOOT_IMG_FILENAME		"boot.img"				//!< Default boot input/output filename
+#define DEFAULT_LOGO_IMG_FILENAME		"logo.bin"				//!< Default logo input/output filename
 #define DEFAULT_KERNEL_FILENAME			"kernel.img"			//!< Default kernel filename
 #define DEFAULT_KERNEL_MTK_FILENAME		"kernel.img.mtk"		//!< Default kernel filename with MTK header
 #define DEFAULT_RAMDISK_FILENAME		"ramdisk.cpio.gz"		//!< Default ramdisk filename
 #define DEFAULT_RAMDISK_MTK_FILENAME	"ramdisk.cpio.gz.mtk"	//!< Default ramdisk filename with MTK header
 #define DEFAULT_RAMDISK_DIR				"ramdisk.d"				//!< Default ramdisk directory
+#define DEFAULT_LOGOS_DIR				"logos.d"				//!< Default logos directory
 #if defined(APP_LINUX)
 	#define DEFAULT_CONFIG_FILENAME		"image.cfg"				//!< Default configuration filename
 #else
@@ -114,6 +121,8 @@
 	#define	CPIO_BIN 					"cpio"					//!< cpio external utility
 	#define	DIR_CHMOD					S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH //!< Directory permission when create
 #endif
+
+
 
 /**
  * \brief		Application data structure

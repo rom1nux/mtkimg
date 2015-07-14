@@ -64,6 +64,7 @@ ifeq ($(PLATFORM),WINDOWS)
 	FSEP=\\
 	TIMESTAMP=$(subst $(SPACE),0,$(shell echo %date:~6,4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%))
 	CWD=$(shell echo %CD%)
+	LOGO_SUPPORT=0
 else
 	# LINUX/CYGWIN	
 	CC=gcc
@@ -82,6 +83,7 @@ else
 	FSEP=/
 	TIMESTAMP=$(shell date +'%Y%m%d_%H%M%S')
 	CWD=$(shell pwd)
+	LOGO_SUPPORT=1
 endif
 
 # Directories
@@ -93,6 +95,13 @@ TMP_DIR=..$(FSEP)tmp
 
 # Files 
 BKP_FILE=$(BKP_DIR)$(FSEP)$(EXE)-$(TIMESTAMP).zip
+
+# Options
+ifeq ($(LOGO_SUPPORT),1)
+	DEFINE=-DLOGO_SUPPORT
+	CFLAGS+=-I/usr/include/libpng16 $(DEFINE)
+	LDFLAGS+=-lz -lpng16
+endif
 
 # Getting sources files
 VPATH=$(SRC_DIR)
