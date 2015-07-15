@@ -48,7 +48,12 @@ ifeq ($(OS),Windows_NT)
 		PLATFORM=WINDOWS
 	endif
 else
-	PLATFORM=LINUX
+	UNAME=$(shell uname -s)
+	ifeq ($(UNAME),Darwin)
+		PLATFORM=OSX
+	else
+		PLATFORM=LINUX
+	endif
 endif
 
 # Platform specifics
@@ -72,7 +77,7 @@ ifeq ($(PLATFORM),WINDOWS)
 	CWD=$(shell echo %CD%)
 	LOGO_SUPPORT=0
 else
-	# LINUX/CYGWIN	
+	# LINUX/CYGWIN/OSX	
 	CC=gcc
 	RC=windres
 	ZIP=zip -r 
