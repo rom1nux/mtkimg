@@ -19,7 +19,12 @@
   * 
   * You should have received a copy of the GNU General Public License
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.  
-  * ***************************************************************************   
+  * ***************************************************************************  
+  * Note for porting :
+  *  - Add/correct platform detection mechanism after "Detect platform" comment
+  *  - Add/correct arch detection mechanism after "Detect architecture" comment
+  *  - Add/correct platform specificities after "Platform specifics" comment
+  * ***************************************************************************    
   */ 
 #ifndef MAIN_H
 #define MAIN_H
@@ -34,17 +39,20 @@
 // Application constantes
 #define	APP_TITLE						"MTKIMG"				//!< Application title
 #define	APP_NAME						"mtkimg"				//!< Application name
-#define	APP_VERSION						"0.35"					//!< Application version
+#define	APP_VERSION						"0.36"					//!< Application version
 #define	APP_AUTHOR						"rom1nux"				//!< Application author
 
 // Detect platform
 #if defined(__WIN32__) || defined(__WIN64__)
 	#define	APP_PLATFORM				"win"					//!< Application platform name
 	#define	APP_WIN						1						//!< Application type
-#elif defined(__CYGWIN__)     	
+#elif defined(__CYGWIN__)
 	#define	APP_PLATFORM				"cygwin"				//!< Application platform name
 	#define	APP_CYGWIN					1						//!< Application type
-#elif defined(__linux__)     		
+#elif defined(__APPLE__) || defined(__MACH__)
+	#define	APP_PLATFORM				"mac"					//!< Application platform name
+	#define	APP_MAC						1						//!< Application type	
+#elif defined(__linux__)
 	#define	APP_PLATFORM				"linux"					//!< Application platform name
 	#define	APP_LINUX					1						//!< Application type
 #else
@@ -57,6 +65,20 @@
 #else
 	#define	APP_ARCH					32						//!< Application architecture
 #endif	
+
+// Platform specifics
+#if defined(APP_WIN)
+	#define	FILESEP 					'\\'					//!< File path separator
+	#define	FIND_BIN 					"find.exe"				//!< find external utility
+	#define	GZIP_BIN 					"gzip.exe"				//!< gzip external utility
+	#define	CPIO_BIN 					"cpio.exe"				//!< cpio external utility
+#else	
+	#define	FILESEP 					'/'						//!< File path separator
+	#define	FIND_BIN 					"find"					//!< find external utility
+	#define	GZIP_BIN 					"gzip"					//!< gzip external utility
+	#define	CPIO_BIN 					"cpio"					//!< cpio external utility
+	#define	DIR_CHMOD					S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH //!< Directory permission when create
+#endif
 
 // Usefull common constantes
 #define	PATH_MAX_SIZE					256						//!< Maximum size of path
@@ -107,22 +129,6 @@ typedef enum cmd_type_t{CMD_TYPE_UNKNOWN, CMD_TYPE_BOOT, CMD_TYPE_LOGO}cmd_type_
  * \param		bval	Boolean value to convert
  */	
 #define bool2yn(bval) (bval ? "yes" : "no")
-
-// Platform specifics
-#if defined(APP_WIN)
-	#define	FILESEP 					'\\'					//!< File path separator
-	#define	FIND_BIN 					"find.exe"				//!< find external utility
-	#define	GZIP_BIN 					"gzip.exe"				//!< gzip external utility
-	#define	CPIO_BIN 					"cpio.exe"				//!< cpio external utility
-#else	
-	#define	FILESEP 					'/'						//!< File path separator
-	#define	FIND_BIN 					"find"					//!< find external utility
-	#define	GZIP_BIN 					"gzip"					//!< gzip external utility
-	#define	CPIO_BIN 					"cpio"					//!< cpio external utility
-	#define	DIR_CHMOD					S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH //!< Directory permission when create
-#endif
-
-
 
 /**
  * \brief		Application data structure

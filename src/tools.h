@@ -42,7 +42,11 @@
 // Includes
 #include "main.h"
 
+
 #ifdef LOGO_SUPPORT
+// Search for logo size database
+bool find_logo_size(unsigned int npixels, unsigned int* width, unsigned int* height);
+
 // Image convertion
 bool rgb565_to_png(char* src, char *dest, unsigned int width, unsigned int height);
 

@@ -134,14 +134,17 @@ E - MAKEFILE COMMANDS
    make backup   : Create a source zip backup  into ../bkp
    
    
-F - UTILTIES
+F - UTILTIES FOR BUILDING SOURCE CODE
 
   * MINGW32 or MINGW64 (Windows GCC port)
     http://sourceforge.net/projects/mingw-w64
    
-  * DOXYGEN (Source code documentation generator)
+  * DOXYGEN (Multiplatform source code documentation generator)
     http://www.doxygen.org  
-    
+	
+  * 7-ZIP (Windows compression/decompression utilities)	
+    http://http://www.7-zip.org/
+	
 	
 G - WHERE TO SPEAK ABOUT
 
@@ -157,6 +160,9 @@ G - WHERE TO SPEAK ABOUT
   
 H - CHANGELOG
 
+  * 2015-07-15 - V0.36 - rom1nux
+    - Begin to start Apple MAC port support (Thanks sambwel for your help)
+  
   * 2015-07-13 - V0.34 - rom1nux
     - Start logo unpacking function (not completed yet)
     - Documentation correction	 

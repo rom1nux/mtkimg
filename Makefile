@@ -20,6 +20,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # *****************************************************************************
+# Note for porting :
+#  - Add/correct platform detection mechanism after "Detect platform" comment
+#  - Add/correct platform specificities after "Platform specifics" comment
+#  - Disable 'LOGO_SUPPORT' (LOGO_SUPPORT=0) if you dont have zlib and 
+#    libpng1.6 available on your platform.
+# *****************************************************************************
 
 # Project 
 TITLE=MTKIMG

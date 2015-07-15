@@ -24,6 +24,43 @@
 #include "tools.h"
 
 #ifdef LOGO_SUPPORT
+
+// FIXME : Add external file support (with default hardcoded)
+typedef struct logo_size_t{
+	unsigned int width;
+	unsigned int height;
+}logo_size_t;
+			
+#define LOGO_SIZE_DB_COUNT 0		
+logo_size_t logo_size_db[LOGO_SIZE_DB_COUNT]={}; /*{ 	{480,	800}, \
+												{38,	54}, \
+												{48,	54}, \
+												{135,	24}, \
+												{135,	1} };*/
+						
+/**
+ * \brief		Search into logo size database
+ * \param		npixels		Pixel count in file
+ * \param		width		Width of the logo
+ * \param		height		Height of the logo
+ * \return 		Operation status
+ * \retval 		true			Found
+ * \retval 		false			Not found
+ */	
+bool find_logo_size(unsigned int npixels, unsigned int* width, unsigned int* height)
+{
+	unsigned int i;
+	for(i=0;i<LOGO_SIZE_DB_COUNT;i++){
+		if ((logo_size_db[i].width*logo_size_db[i].height)==npixels)
+		{
+			*width=logo_size_db[i].width;
+			*height=logo_size_db[i].height;
+			return true;
+		}
+	}
+	return false;
+}
+
 /**
  * \brief		Convert RGB565 file to png 
  * \param		src		Source file

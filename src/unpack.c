@@ -271,6 +271,7 @@ void unpack_logo(unpack_data_t* data)
 	uint32_t*		sizes;
 	char			src[PATH_MAX_SIZE];
 	char			dest[PATH_MAX_SIZE];
+	unsigned int 	npixels,width,height;
 		
 	// Init	
 	memset(&img_cfg,0x0,sizeof(img_cfg_t));
@@ -359,7 +360,7 @@ void unpack_logo(unpack_data_t* data)
 	output("Unpack logo content to '%s'...",data->logos);
 	// Create directory
 	if (!dir_create(data->logos)) fail("Could not create directory '%s' !",data->logos);
-	for(i=0;i<logo_count-1;i++){
+	for(i=0;i<logo_count;i++){
 		verbose("Upacking image %d...",i+1);
 		sprintf(src,"%s%cimg-%02d.bin",data->logos,FILESEP,(i+1));
 		sprintf(dest,"%s%cimg-%02d.rgb565",data->logos,FILESEP,(i+1));
@@ -374,20 +375,25 @@ void unpack_logo(unpack_data_t* data)
 		if (!inflate_file(src,dest)) fail("Could not inflate logo image file '%s' !",src);
 		if (!file_remove(src)) die("Could not remove file '%s' !",src);	
 		verbose("Searching size..."); 
-		unsigned long h,w,t,s=(file_size(dest)/2);
-		for(w=1;w<2000;w++){
-			for(h=1;h<2000;h++){
-				t=(w*h);
-				if (t==s) break;
+		npixels=file_size(dest)/2;
+		if (!find_logo_size(npixels,&width,&height)){ 
+			warning("Could not find logo image size for '%s' !",dest); 
+			output("Possible size can be :");
+			for(width=1;width<2000;width++){
+				for(height=1;height<2000;height++){
+					if ((width*height)==npixels){
+						output(" %d x %d",width,height);
+					}
+				}
 			}
+			continue;
 		}
-		if ((h==2000) && (w==2000)){ error("Could not find logo image size for '%s' !",dest); continue; }
-		verbose("Image size found : %dx%d = %d (%d)",w,h,t,s);
+		verbose("Image size found : %dx%d px",width,height);
 		// Converting to PNG
 		sprintf(src,"%s%cimg-%02d.rgb565",data->logos,FILESEP,(i+1));
 		sprintf(dest,"%s%cimg-%02d.png",data->logos,FILESEP,(i+1));		
 		verbose("Converting to PNG to '%s'...",dest); 
-		if (!rgb565_to_png(src,dest,w,h)){ error("Could not convert logo image '%s' to PNG !",src); continue; }
+		if (!rgb565_to_png(src,dest,width,height)){ error("Could not convert logo image '%s' to PNG !",src); continue; }
 		if (!file_remove(src)) die("Could not remove file '%s' !",src);	
 	}
 	
@@ -408,6 +414,8 @@ failed:
 	exit(1);	
 #endif	
 }
+
+
 
 /**
  * \brief		Unpack command argument parser
