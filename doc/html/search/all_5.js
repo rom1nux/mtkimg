@@ -7,5 +7,6 @@ var searchData=
   ['file_5fsize',['file_size',['../tools_8c.html#ab9ebc769c22b326b51f8bf9feee076bb',1,'file_size(char *filename):&#160;tools.c'],['../tools_8h.html#ab9ebc769c22b326b51f8bf9feee076bb',1,'file_size(char *filename):&#160;tools.c']]],
   ['filesep',['FILESEP',['../main_8h.html#a77031e1d2add2bfa07e04e0280fad374',1,'main.h']]],
   ['find_5fbin',['FIND_BIN',['../main_8h.html#a458e36f75dce3074ee9e515c3fc6239b',1,'main.h']]],
+  ['flip_5flogo_5fsize',['flip_logo_size',['../structunpack__data__t.html#ad3b3d6cd0d8f711bbf5c8a89ce2955ad',1,'unpack_data_t']]],
   ['fputnchar',['fputnchar',['../tools_8c.html#a67c7660aee7b4b818e64aefec2981cd4',1,'fputnchar(FILE *fd, char *str, int nchar):&#160;tools.c'],['../tools_8h.html#a67c7660aee7b4b818e64aefec2981cd4',1,'fputnchar(FILE *fd, char *str, int nchar):&#160;tools.c']]]
 ];

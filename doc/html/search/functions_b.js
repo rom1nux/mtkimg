@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['verbose',['verbose',['../tools_8c.html#a79ae98299946ec9fcc50fdafb8c044ef',1,'verbose(const char *fmt,...):&#160;tools.c'],['../tools_8h.html#a79ae98299946ec9fcc50fdafb8c044ef',1,'verbose(const char *fmt,...):&#160;tools.c']]]
+  ['show_5fusage',['show_usage',['../main_8h.html#a78bf8646c074be1959943f73bd7458c0',1,'main.c']]]
 ];

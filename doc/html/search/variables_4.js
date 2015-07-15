@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['header',['header',['../structimg__cfg__t.html#aaeabce5e7347809240d875b975b6ea69',1,'img_cfg_t']]]
+  ['flip_5flogo_5fsize',['flip_logo_size',['../structunpack__data__t.html#ad3b3d6cd0d8f711bbf5c8a89ce2955ad',1,'unpack_data_t']]]
 ];

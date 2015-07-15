@@ -98,7 +98,7 @@ void repack(args_t* args)
 		// Create compress command line
 		sprintf(syscmd,"%s . | %s -o -H newc --quiet | %s -%d -n > ..%c%s",FIND_BIN,CPIO_BIN,GZIP_BIN,data.compress_rate,FILESEP,TMP_RAMDISK_FILENAME); 
 		// Decompression
-		verbose("Packing ramdisk content...");
+		verbose("Packing ramdisk content (compression rate : %d)...",data.compress_rate);
 		verbose("%s",syscmd);
 		res=system(syscmd);
 		// Returning to previous directory

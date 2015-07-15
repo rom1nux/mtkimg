@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['page_5fsize',['page_size',['../structimg__header__t.html#a9dd3e47e968a8f6beb5d88c6d1b7ebe9',1,'img_header_t']]],
-  ['product',['product',['../structimg__header__t.html#aebb211a61d95ebad6d168737e0d5c4eb',1,'img_header_t']]]
+  ['nitems',['nitems',['../structlogo__db__t.html#a155d2f7c2171367e9a3800c5a190df18',1,'logo_db_t']]],
+  ['no_5fcompress',['no_compress',['../structrepack__data__t.html#a025857c19ece5323b31b41dff6d870d9',1,'repack_data_t']]],
+  ['no_5fdecompress',['no_decompress',['../structunpack__data__t.html#a63936c0bec3f69261d6b8a07492a8dbf',1,'unpack_data_t']]]
 ];

@@ -25,42 +25,6 @@
 
 #ifdef LOGO_SUPPORT
 
-// FIXME : Add external file support (with default hardcoded)
-typedef struct logo_size_t{
-	unsigned int width;
-	unsigned int height;
-}logo_size_t;
-			
-#define LOGO_SIZE_DB_COUNT 0		
-logo_size_t logo_size_db[LOGO_SIZE_DB_COUNT]={}; /*{ 	{480,	800}, \
-												{38,	54}, \
-												{48,	54}, \
-												{135,	24}, \
-												{135,	1} };*/
-						
-/**
- * \brief		Search into logo size database
- * \param		npixels		Pixel count in file
- * \param		width		Width of the logo
- * \param		height		Height of the logo
- * \return 		Operation status
- * \retval 		true			Found
- * \retval 		false			Not found
- */	
-bool find_logo_size(unsigned int npixels, unsigned int* width, unsigned int* height)
-{
-	unsigned int i;
-	for(i=0;i<LOGO_SIZE_DB_COUNT;i++){
-		if ((logo_size_db[i].width*logo_size_db[i].height)==npixels)
-		{
-			*width=logo_size_db[i].width;
-			*height=logo_size_db[i].height;
-			return true;
-		}
-	}
-	return false;
-}
-
 /**
  * \brief		Convert RGB565 file to png 
  * \param		src		Source file
@@ -185,6 +149,353 @@ bool inflate_file(char* src, char *dest)
 #endif
 
 /**
+ * \brief		Initialize logo database
+ * \param		db				Logo database
+ * \return 		Operation status
+ * \retval 		true			Success
+ * \retval 		false			Error
+ */
+bool logo_db_init(logo_db_t* db)
+{
+	db->nitems=0;
+	db->items=NULL;	
+	// Load file if exist
+	if (file_exists(LOGO_DB_FILENAME))	return logo_db_read(db,LOGO_DB_FILENAME);
+	// Init database
+	
+	// [Video Graphics Array]
+	logo_db_add_comment(db,"; Video Graphics Array");
+	// QQVGA
+	logo_db_add(db,"QQVGA",		160,	120);	// 4:3	
+	// HQVGA
+	logo_db_add(db,"HQVGA",		240,	160);	// 3:2	
+	// QVGA
+	logo_db_add(db,"QVGA",		320,	240);	// 4:3	
+	// WQVGA
+	logo_db_add(db,"WQVGA",		360,	240); 	// 3:2
+	logo_db_add(db,"WQVGA",		376,	240); 	// 4.7:3
+	logo_db_add(db,"WQVGA",		384,	240);	// 16:10
+	logo_db_add(db,"WQVGA",		400,	240);	// 5:3
+	logo_db_add(db,"WQVGA",		428,	240);	// 16:9
+	logo_db_add(db,"WQVGA",		432,	240);	// 16:9
+	//logo_db_add(db,"WQVGA",	480,	270);	// 16:9		=> Already define in HVGA
+	//logo_db_add(db,"WQVGA",	480,	272);	// 16:9		=> Already define in HVGA
+	// HVGA
+	logo_db_add(db,"HVGA",		480,	270);	// 16:9
+	logo_db_add(db,"HVGA",		480,	272);	// 16:9
+	logo_db_add(db,"HVGA",		480,	320);	// 3:2	
+	logo_db_add(db,"HVGA",		640,	240);	// 8:3	
+	logo_db_add(db,"HVGA",		480,	360);	// 4:3	
+	// VGA
+	logo_db_add(db,"VGA",		640,	480);	// 4:3
+	// WVGA
+	//logo_db_add(db,"WVGA",	640,	360);	// 16:9		=> Already define in nHD
+	logo_db_add(db,"WVGA",		640,	384);	// 5:3
+	logo_db_add(db,"WVGA",		720,	480);	// 15:10
+	logo_db_add(db,"WVGA",		768,	480);	// 16:10
+	logo_db_add(db,"WVGA",		800,	480);	// 5:3
+	logo_db_add(db,"WVGA",		848,	480);	// 16:9
+	logo_db_add(db,"WVGA",		852,	480);	// 16:9
+	logo_db_add(db,"WVGA",		853,	480);	// 16:9
+	//logo_db_add(db,"WVGA",	854,	480);	// 16:9		=> Already define in FWVGA
+	// FWVGA
+	logo_db_add(db,"FWVGA",		854,	480);	// 16:9
+	// SVGA
+	logo_db_add(db,"SVGA",		800,	600);	// 4:3
+	// DVGA
+	logo_db_add(db,"DVGA",		960,	640);	// 3:2
+	// WSVGA
+	logo_db_add(db,"WSVGA",		1024,	576);	// 16:9
+	logo_db_add(db,"WSVGA",		1024,	600);	// 15:9
+	
+	// [Extended Graphics Array]
+	logo_db_add_comment(db,"; Extended Graphics Array");
+	// XGA
+	logo_db_add(db,"XGA",		1024,	768);	// 4:3
+	// WXGA
+	logo_db_add(db,"WXGA",		1152,	768);	// 15:10
+	//logo_db_add(db,"WXGA",	1280,	720);	// 16:9		=> Already define in HD
+	logo_db_add(db,"WXGA",		1280,	768);	// 5:3
+	logo_db_add(db,"WXGA",		1280,	800);	// 16:10
+	logo_db_add(db,"WXGA",		1360,	768);	// 16:9
+	//logo_db_add(db,"WXGA",	1366,	768);	// 16:9		=> Already define in FWXGA
+	// FWXGA
+	logo_db_add(db,"FWXGA",		1366,	768);	// 16:9
+	// XGA+
+	logo_db_add(db,"XGA+",		1152,	864);	// 4:3
+	logo_db_add(db,"XGA+",		1152,	900);	// 1.28:1
+	logo_db_add(db,"XGA+",		1152,	870);	// 1.32:1
+	logo_db_add(db,"XGA+",		1120,	832);	// 11:8
+	// WXGA+
+	logo_db_add(db,"WXGA+",		1440,	900);	// 16:10
+	// WSXGA
+	logo_db_add(db,"WSXGA",		1440,	960);	// 3:2
+	// SXGA
+	logo_db_add(db,"SXGA",		1280,	1024);	// 5:4
+	// SXGA-
+	logo_db_add(db,"SXGA-",		1280,	960);	// 4:3
+	// SXGA+
+	logo_db_add(db,"SXGA+",		1400,	1050);	// 4:3	
+	// WSXGA+
+	logo_db_add(db,"WSXGA",		1680,	1050);	// 16:10
+	// UXGA
+	logo_db_add(db,"UXGA",		1600,	1200);	// 4:3
+	// WUXGA
+	logo_db_add(db,"WUXGA",		1920,	1200);	// 16:10
+
+	// [Quad Extended Graphics Array]
+	logo_db_add_comment(db,"; Quad Extended Graphics Array");
+	// QWXGA
+	logo_db_add(db,"QWXGA",		2048,	1152);	// 16:9
+	// QXGA
+	logo_db_add(db,"QXGA",		2048,	1536);	// 4:3
+	// WQXGA
+	logo_db_add(db,"WQXGA",		2560,	1600);	// 16:10
+	logo_db_add(db,"WQXGA",		2880,	1600);	// 16:10
+	// QSXGA
+	logo_db_add(db,"QSXGA",		2560,	2048);	// 5:4
+	// WQSXGA
+	logo_db_add(db,"WQSXGA",	3200,	2048);	// 25:16
+	// QUXGA
+	logo_db_add(db,"QUXGA",		3200,	2400);	// 4:3
+	// WQUXGA
+	logo_db_add(db,"WQUXGA",	3840,	2400);	// 16:10
+	
+	// [Hyper Extended Graphics Array]
+	logo_db_add_comment(db,"; Hyper Extended Graphics Array");
+	// HXGA
+	logo_db_add(db,"HXGA",		4096,	3072);	// 4:3
+	// WHXGA
+	logo_db_add(db,"WHXGA",		5120,	3200);	// 16:10
+	// HSXGA
+	logo_db_add(db,"HSXGA",		5120,	4096);	// 5:4
+	// WHSXGA
+	logo_db_add(db,"WHSXGA",	6400,	4096);	// 25:16
+	// HUXGA
+	logo_db_add(db,"HUXGA",		6400,	4800);	// 4:3
+	// WHUXGA
+	logo_db_add(db,"WHUXGA",	7680,	4800);	// 16:10
+	
+	// [High Definition]
+	logo_db_add_comment(db,"; High Definition");
+	// nHD
+	logo_db_add(db,"nHD",		640,	360);	// 16:9
+	// qHD
+	logo_db_add(db,"qHD",		960,	540);	// 16:9
+	// HD
+	logo_db_add(db,"HD",		1280,	720);	// 16:9
+	// HD+
+	logo_db_add(db,"HD+",		1600,	900);	// 16:9
+	// FHD
+	logo_db_add(db,"FHD",		1920,	1080);	// 16:9
+	// QHD
+	logo_db_add(db,"QHD",		2560,	1440);	// 16:9
+	// WQXGA+
+	logo_db_add(db,"WQXGA+",	3200,	1800);	// 16:9
+	// UHD
+	logo_db_add(db,"UHD",		3840,	2160);	// 16:9
+	// UHD+
+	logo_db_add(db,"UHD+",		5120,	2880);	// 16:9
+	// FUHD
+	logo_db_add(db,"FUHD",		7680,	4320);	// 16:9
+	// QUHD
+	logo_db_add(db,"QUHD",		15360,	8640);	// 16:9
+	
+	// [Miscellaneous]
+	logo_db_add_comment(db,"; Miscellaneous");
+	logo_db_add(db,"MISC",		54,		38);
+	logo_db_add(db,"MISC",		54,		48);
+	logo_db_add(db,"MISC",		24,		135);
+	logo_db_add(db,"MISC",		1,		135);
+		
+	// Write file
+	return logo_db_write(db,LOGO_DB_FILENAME);
+}
+
+/**
+ * \brief		Add resolution to logo database
+ * \param		db				Logo database
+ * \param		label			Resolution label
+ * \param		width			Resolution width
+ * \param		height			Resolution height
+ * \return 		Operation status
+ * \retval 		true			Success
+ * \retval 		false			Error
+ */
+bool logo_db_add(logo_db_t* db, char* label, unsigned int width, unsigned int height)
+{
+	if ((width>0) && (height>0) && (logo_db_exist(db,width,height))){ warning("Resolution %d x %d already exist in database !",width,height); return true;}
+	size_t labelsz=strlen(label)+1;
+	if (!db->nitems)
+		db->items=malloc(sizeof(logo_db_item_t));
+	else
+		db->items=realloc(db->items,sizeof(logo_db_item_t)*(db->nitems+1));
+	if (db->items==NULL){ error("Could not allocate %d bytes !",sizeof(logo_db_item_t)); return false; }
+	db->items[db->nitems].label=malloc(labelsz);
+	if (db->items[db->nitems].label==NULL){ error("Could not allocate %d bytes !",labelsz); return false; }
+	strcpy(db->items[db->nitems].label,label);	
+	db->items[db->nitems].width=width;
+	db->items[db->nitems].height=height;
+	db->nitems++;
+	return true;
+}
+
+/**
+ * \brief		Check if resolution already exist in database
+ * \param		db				Logo database
+ * \param		width			Resolution width
+ * \param		height			Resolution height
+ * \return 		Operation status
+ * \retval 		true			Exist
+ * \retval 		false			Not exist
+ */
+bool logo_db_exist(logo_db_t* db, unsigned int width, unsigned int height)
+{
+	unsigned int i;
+	for(i=0;i<db->nitems;i++){
+		if ((db->items[i].width==width) && (db->items[i].height==height)) return true;
+	}
+	return false;
+}
+
+/**
+ * \brief		Clear logo database
+ * \param		db				Logo database
+ * \return 		Operation status
+ * \retval 		true			Success
+ * \retval 		false			Error
+ */
+bool logo_db_clear(logo_db_t* db)
+{
+	unsigned int i;
+	for(i=0;i<db->nitems;i++) free(db->items[i].label);
+	if (db->nitems) free(db->items);
+	db->nitems=0;
+	db->items=NULL;
+	return true;
+}
+
+/**
+ * \brief		Write logo database to file
+ * \param		db				Logo database
+ * \param		filename		Filename to write database 
+ * \return 		Operation status
+ * \retval 		true			Success
+ * \retval 		false			Error
+ */
+bool logo_db_write(logo_db_t* db, char* filename)
+{
+	unsigned int i;
+	FILE* fd;
+	verbose("Writing logo database to file '%s'...",filename);
+	fd=fopen(filename,"wt");
+	if (!fd) return false;
+	fprintf(fd,"; Logo database - Write by %s V%s(%s%d)\n",app_data.exename,APP_VERSION,APP_PLATFORM,APP_ARCH);	
+	fprintf(fd,"; (Source from https://en.wikipedia.org/wiki/Graphics_display_resolution )\n");
+	fprintf(fd,"; Format : <label>=<width> x <height>\n");
+	for(i=0;i<db->nitems;i++){
+		if (db->items[i].label[0]==';'){
+			fprintf(fd,"\n%s\n",db->items[i].label);
+		}else{
+			fprintf(fd,"%s=%d x %d\n",db->items[i].label,db->items[i].width,db->items[i].height);
+		}
+	}
+	fclose(fd);
+	return true;
+}
+
+/**
+ * \brief		Read logo database from file
+ * \param		db				Logo database
+ * \param		filename		Filename to read database 
+ * \return 		Operation status
+ * \retval 		true			Success
+ * \retval 		false			Error
+ */
+bool logo_db_read(logo_db_t* db, char* filename)
+{	
+	FILE* fs;
+	unsigned int linesz,nline=0;
+	char line[BUFFER_SIZE];
+	char* label;
+	char* width;
+	char* height;
+	logo_db_clear(db);
+	verbose("Loading logo database from file '%s'...",filename);
+	fs=fopen(filename,"rt");
+	if (!fs) return false;
+	while(!feof(fs)){
+		line[0]=0;
+		if ((!fgets(line,BUFFER_SIZE,fs)) && (!feof(fs))){ error("Could not read line %d !",nline+1); return false; }
+		nline++;
+		linesz=strlen(line);
+		if (!linesz) continue;
+		if (line[linesz-1]==10) line[linesz-1]=0;
+		if ((line[0]==';') || (line[0]==0)) continue;
+		// Parse line 
+		label=line;
+		width=strchr(line,'=');
+		if (width==NULL){ error("Bad format at line %d !",nline); return false; }
+		*width=0; width++;
+		height=strchr(width,'x');		
+		if (height==NULL){ error("Bad format at line %d !",nline); return false; }
+		*height=0; height++;
+		// Adding		
+		if (!logo_db_add(db,label,strtoul(width,NULL,0), strtoul(height,NULL,0))){ error("Could not add size from line %d !",nline+1); return false; }
+		
+	}
+	fclose(fs);
+	return true;
+}
+
+/**
+ * \brief		Search resolution by pixels count (Width x Height)
+ * \param		db				Logo database
+ * \param		npixels			Pixels count
+ * \param		label			Label of resolution found
+ * \param		width			Width of resolution found
+ * \param		height			Height of resolution found
+ * \return 		Operation status
+ * \retval 		true			Success
+ * \retval 		false			Error
+ */
+bool logo_db_find(logo_db_t* db, unsigned int npixels, char* label, unsigned int* width, unsigned int* height)
+{
+	unsigned int i;
+	for(i=0;i<db->nitems;i++){
+		if (db->items[i].label[0]==';') continue;
+		if ((db->items[i].width*db->items[i].height)==npixels){
+			strcpy(label,db->items[i].label);
+			*width=db->items[i].width;
+			*height=db->items[i].height;
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * \brief		Show database content
+ * \param		db				Logo database
+ * \return 		Operation status
+ * \retval 		true			Success
+ * \retval 		false			Error
+ */
+void logo_db_debug(logo_db_t* db)
+{
+	unsigned int i;
+	debug("LOGO DATABASE (%d items)",db->nitems);
+	debug(" -------------------------");
+	debug("  label  | width | height");
+	debug(" -------------------------");
+	for(i=0;i<db->nitems;i++){
+		debug("  %-6s | %5d | %5d",db->items[i].label,db->items[i].width,db->items[i].height);
+	}
+	debug(" -------------------------");
+}
+
+
+/**
  * \brief		Convert command type to string
  * \param		type			Command type
  * \return 		String representation of type 
@@ -281,8 +592,8 @@ bool img_cfg_write(img_cfg_t* cfg, char* filename)
 	fprintf(fd,"; Image configuration file - Write by %s V%s(%s%d)\n",app_data.exename,APP_VERSION,APP_PLATFORM,APP_ARCH);	
 	fprintf(fd,"\n; Layout\n\n"); 
 	fprintf(fd,"size=%d\n",cfg->size);
-	fprintf(fd,"type="); fputnchar(fd,cfg->type,8); putc('\n',fd);
-	fprintf(fd,"\n; Header\n\n"); 
+	fprintf(fd,"type="); fputnchar(fd,cfg->type,32); putc('\n',fd);
+	fprintf(fd,"\n; Header (Only used by ROOTFS or RECOVERY image type)\n\n"); 
 	fprintf(fd,"signature="); fputnchar(fd,cfg->header.signature,8); putc('\n',fd);
 	fprintf(fd,"kernel-load-addr=0x%08X\n",cfg->header.kernel_load_addr);
 	fprintf(fd,"ramdisk-load-addr=0x%08X\n",cfg->header.ramdisk_load_addr);
@@ -291,7 +602,7 @@ bool img_cfg_write(img_cfg_t* cfg, char* filename)
 	fprintf(fd,"page-size=%d\n",cfg->header.page_size);
 	fprintf(fd,"product="); fputnchar(fd,cfg->header.product,16); putc('\n',fd);
 	fprintf(fd,"cmdline="); fputnchar(fd,cfg->header.cmdline,512); putc('\n',fd);
-	fprintf(fd,"id="); for(i=0;i<20;i++) fprintf(fd,"%02X",cfg->header.id[i]); putc('\n',fd);	
+	fprintf(fd,"id="); for(i=0;i<20;i++) fprintf(fd,"%02X",cfg->header.id[i]); putc('\n',fd);		
 	fclose(fd);
 	return true;
 }
@@ -643,7 +954,7 @@ void args_free(args_t* args)
 {
 	int i;
 	for(i=0;i<args->argc;i++) free(args->argv[i]);
-	free(args->argv);
+	if (args->argc) free(args->argv);
 	args->argc=0;
 	args->argv=NULL;	
 }

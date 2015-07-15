@@ -44,15 +44,28 @@
 
 
 #ifdef LOGO_SUPPORT
-// Search for logo size database
-bool find_logo_size(unsigned int npixels, unsigned int* width, unsigned int* height);
-
 // Image convertion
 bool rgb565_to_png(char* src, char *dest, unsigned int width, unsigned int height);
 
 // Inflate/Deflate
 bool inflate_file(char* src, char *dest);
 #endif
+
+// Logo size database management
+bool logo_db_init(logo_db_t* db);
+bool logo_db_add(logo_db_t* db, char* label, unsigned int width, unsigned int height);
+bool logo_db_exist(logo_db_t* db, unsigned int width, unsigned int height);
+bool logo_db_clear(logo_db_t* db);
+bool logo_db_write(logo_db_t* db, char* filename);
+bool logo_db_read(logo_db_t* db, char* filename);
+bool logo_db_find(logo_db_t* db, unsigned int npixels, char* label, unsigned int* width, unsigned int* height);
+void logo_db_debug(logo_db_t* db);
+/**
+ * \brief		Add comment to logo database
+ * \param		db			Logo database
+  * \param		comment		Comment to add
+ */	
+#define logo_db_add_comment(db,comment) (logo_db_add(db,comment,0,0))
 
 // Helper
 const char* cmd_type_to_str(cmd_type_t type);

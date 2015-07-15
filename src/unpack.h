@@ -47,6 +47,7 @@ typedef struct unpack_data_t{
 	char			logos[PATH_MAX_SIZE];			//!< Logos output directory
 	bool			no_decompress;					//!< Do not decompress ramdisk
 	bool			keep_mtk_header;				//!< Keep MTK head on kernel and ramdisk files
+	bool			flip_logo_size;					//!< Reverse the logo size (height x width to width x height)
 }unpack_data_t;
 
 // Prototypes

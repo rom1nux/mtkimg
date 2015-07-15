@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['str_5fmax_5fsize',['STR_MAX_SIZE',['../main_8h.html#a4a5ae9e2ea352380175b1aec9a5d6d1b',1,'main.h']]]
+  ['path_5fmax_5fsize',['PATH_MAX_SIZE',['../main_8h.html#a965df5ba2db3f4ad3d1875ce90992b74',1,'main.h']]]
 ];

@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="globals_func.html"><span>Functions</span></a></li>
       <li><a href="globals_vars.html"><span>Variables</span></a></li>
       <li><a href="globals_type.html"><span>Typedefs</span></a></li>
+      <li><a href="globals_enum.html"><span>Enumerations</span></a></li>
       <li><a href="globals_defs.html"><span>Macros</span></a></li>
     </ul>
   </div>
@@ -85,6 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_f"><span>f</span></a></li>
       <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
+      <li><a href="#index_l"><span>l</span></a></li>
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
@@ -145,12 +147,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="tools_8h.html#abf159a0d699564797b3ff38e9870f5a0">tools.h</a>
 </li>
 <li>args_free()
-: <a class="el" href="tools_8h.html#a24eceec5dfec53989d435de16dd0c832">tools.h</a>
-, <a class="el" href="tools_8c.html#a24eceec5dfec53989d435de16dd0c832">tools.c</a>
+: <a class="el" href="tools_8c.html#a24eceec5dfec53989d435de16dd0c832">tools.c</a>
+, <a class="el" href="tools_8h.html#a24eceec5dfec53989d435de16dd0c832">tools.h</a>
 </li>
 <li>args_init()
-: <a class="el" href="tools_8h.html#a897d6d7a4c007139b4a7ba970ba41ba7">tools.h</a>
-, <a class="el" href="tools_8c.html#a897d6d7a4c007139b4a7ba970ba41ba7">tools.c</a>
+: <a class="el" href="tools_8c.html#a897d6d7a4c007139b4a7ba970ba41ba7">tools.c</a>
+, <a class="el" href="tools_8h.html#a897d6d7a4c007139b4a7ba970ba41ba7">tools.h</a>
 </li>
 <li>args_t
 : <a class="el" href="main_8h.html#a3e4e4434394af00b6501b60acfe570c0">main.h</a>
@@ -184,6 +186,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>CMD_REPACK
 : <a class="el" href="main_8h.html#a336f84ffa00d7616be64011734257099">main.h</a>
 </li>
+<li>cmd_type_t
+: <a class="el" href="main_8h.html#a07a6a91973814c0c577756f699c1e34b">main.h</a>
+</li>
+<li>cmd_type_to_str()
+: <a class="el" href="tools_8c.html#a2cea0a5df13777191dcc9ef57ad8db84">tools.c</a>
+, <a class="el" href="tools_8h.html#a2cea0a5df13777191dcc9ef57ad8db84">tools.h</a>
+</li>
 <li>CMD_UNPACK
 : <a class="el" href="main_8h.html#a025862eb7e8570616f33879d878eaf43">main.h</a>
 </li>
@@ -198,20 +207,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="tools_8c.html#a30654c55dca96c720074d096a749999a">tools.c</a>
 , <a class="el" href="tools_8h.html#a30654c55dca96c720074d096a749999a">tools.h</a>
 </li>
+<li>DEFAULT_BOOT_IMG_FILENAME
+: <a class="el" href="main_8h.html#acc85b27c67583cf4352b9f0c73cbddce">main.h</a>
+</li>
 <li>DEFAULT_COMPRESS_RATE
 : <a class="el" href="main_8h.html#a67ece6aafbb2ea9606195856761dd595">main.h</a>
 </li>
 <li>DEFAULT_CONFIG_FILENAME
 : <a class="el" href="main_8h.html#a2a97e742f32ed43aed0b56831f084eea">main.h</a>
 </li>
-<li>DEFAULT_IMG_FILENAME
-: <a class="el" href="main_8h.html#a9e2f4a86ca3c2cc1dbf051433f49eae0">main.h</a>
-</li>
 <li>DEFAULT_KERNEL_FILENAME
 : <a class="el" href="main_8h.html#a12871b68ab9a1d74d83b16a481a30bc8">main.h</a>
 </li>
 <li>DEFAULT_KERNEL_MTK_FILENAME
 : <a class="el" href="main_8h.html#a7efef6b049db19ceced8e9bc36a61f70">main.h</a>
+</li>
+<li>DEFAULT_LOGO_IMG_FILENAME
+: <a class="el" href="main_8h.html#a47e98aff0c7726feb004ee5cb4f17001">main.h</a>
+</li>
+<li>DEFAULT_LOGOS_DIR
+: <a class="el" href="main_8h.html#adabdafaf046bfd43cf3d1daec37d0acb">main.h</a>
 </li>
 <li>DEFAULT_RAMDISK_DIR
 : <a class="el" href="main_8h.html#a59a6a5600d89f39aa546a6da4de69fd0">main.h</a>
@@ -234,20 +249,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="main_8h.html#a02812b5f7c32e84a3f79bd374a7a09ed">main.h</a>
 </li>
 <li>dir_create()
-: <a class="el" href="tools_8h.html#aea8951fee77e769a5453f2ca5252fe0f">tools.h</a>
-, <a class="el" href="tools_8c.html#aea8951fee77e769a5453f2ca5252fe0f">tools.c</a>
+: <a class="el" href="tools_8c.html#aea8951fee77e769a5453f2ca5252fe0f">tools.c</a>
+, <a class="el" href="tools_8h.html#aea8951fee77e769a5453f2ca5252fe0f">tools.h</a>
 </li>
 <li>dir_exists()
 : <a class="el" href="tools_8c.html#a45ce2eae0edaff2ef1bdc882a37e687a">tools.c</a>
 , <a class="el" href="tools_8h.html#a45ce2eae0edaff2ef1bdc882a37e687a">tools.h</a>
 </li>
 <li>dir_get_current()
-: <a class="el" href="tools_8h.html#a85a2f5ba0007ba0887e0049c3ce86a73">tools.h</a>
-, <a class="el" href="tools_8c.html#a85a2f5ba0007ba0887e0049c3ce86a73">tools.c</a>
+: <a class="el" href="tools_8c.html#a85a2f5ba0007ba0887e0049c3ce86a73">tools.c</a>
+, <a class="el" href="tools_8h.html#a85a2f5ba0007ba0887e0049c3ce86a73">tools.h</a>
 </li>
 <li>dir_remove()
-: <a class="el" href="tools_8h.html#a5aa643a3ebdbb3d7ac25e2e562965882">tools.h</a>
-, <a class="el" href="tools_8c.html#a5aa643a3ebdbb3d7ac25e2e562965882">tools.c</a>
+: <a class="el" href="tools_8c.html#a5aa643a3ebdbb3d7ac25e2e562965882">tools.c</a>
+, <a class="el" href="tools_8h.html#a5aa643a3ebdbb3d7ac25e2e562965882">tools.h</a>
 </li>
 </ul>
 
@@ -268,16 +283,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="main_8h.html#a65e9886d74aaee76545e83dd09011727">main.h</a>
 </li>
 <li>file_exists()
-: <a class="el" href="tools_8h.html#a8c903afd953c52af7d662e85e1f370d3">tools.h</a>
-, <a class="el" href="tools_8c.html#a8c903afd953c52af7d662e85e1f370d3">tools.c</a>
+: <a class="el" href="tools_8c.html#a8c903afd953c52af7d662e85e1f370d3">tools.c</a>
+, <a class="el" href="tools_8h.html#a8c903afd953c52af7d662e85e1f370d3">tools.h</a>
 </li>
 <li>file_remove()
 : <a class="el" href="tools_8c.html#a26d0b1e84d8695cdae56fc613baa89bf">tools.c</a>
 , <a class="el" href="tools_8h.html#a26d0b1e84d8695cdae56fc613baa89bf">tools.h</a>
 </li>
 <li>file_size()
-: <a class="el" href="tools_8h.html#ab9ebc769c22b326b51f8bf9feee076bb">tools.h</a>
-, <a class="el" href="tools_8c.html#ab9ebc769c22b326b51f8bf9feee076bb">tools.c</a>
+: <a class="el" href="tools_8c.html#ab9ebc769c22b326b51f8bf9feee076bb">tools.c</a>
+, <a class="el" href="tools_8h.html#ab9ebc769c22b326b51f8bf9feee076bb">tools.h</a>
 </li>
 <li>FILESEP
 : <a class="el" href="main_8h.html#a77031e1d2add2bfa07e04e0280fad374">main.h</a>
@@ -305,8 +320,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="tools_8h.html#aa560c0f1332afbc3ddb6b632c731621d">tools.h</a>
 </li>
 <li>img_cfg_read_line()
-: <a class="el" href="tools_8h.html#a7773c7a897868d8125a9f1ccd02abf1a">tools.h</a>
-, <a class="el" href="tools_8c.html#a7773c7a897868d8125a9f1ccd02abf1a">tools.c</a>
+: <a class="el" href="tools_8c.html#a7773c7a897868d8125a9f1ccd02abf1a">tools.c</a>
+, <a class="el" href="tools_8h.html#a7773c7a897868d8125a9f1ccd02abf1a">tools.h</a>
 </li>
 <li>img_cfg_show()
 : <a class="el" href="tools_8c.html#ad18ecc6584f0e42fb6db5195f821022e">tools.c</a>
@@ -358,16 +373,64 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="tools_8h.html#a05be2de6cca7f663a2b2335f683a081e">tools.h</a>
 </li>
 <li>is_valid_gzip_file()
-: <a class="el" href="tools_8h.html#a77d3e36b0c4564eb80e22aebf966a470">tools.h</a>
-, <a class="el" href="tools_8c.html#a77d3e36b0c4564eb80e22aebf966a470">tools.c</a>
+: <a class="el" href="tools_8c.html#a77d3e36b0c4564eb80e22aebf966a470">tools.c</a>
+, <a class="el" href="tools_8h.html#a77d3e36b0c4564eb80e22aebf966a470">tools.h</a>
 </li>
 <li>is_valid_mtk_file()
-: <a class="el" href="tools_8h.html#a2395c7f6d06bae525e93083aeed5bb46">tools.h</a>
-, <a class="el" href="tools_8c.html#a2395c7f6d06bae525e93083aeed5bb46">tools.c</a>
+: <a class="el" href="tools_8c.html#a2395c7f6d06bae525e93083aeed5bb46">tools.c</a>
+, <a class="el" href="tools_8h.html#a2395c7f6d06bae525e93083aeed5bb46">tools.h</a>
 </li>
 <li>is_valid_zimage_file()
 : <a class="el" href="tools_8c.html#ab62e5fa1e690890f4eb93724a0721317">tools.c</a>
 , <a class="el" href="tools_8h.html#ab62e5fa1e690890f4eb93724a0721317">tools.h</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
+<li>logo_db_add()
+: <a class="el" href="tools_8c.html#a59b550b719abc40627d6b19116863c05">tools.c</a>
+, <a class="el" href="tools_8h.html#a59b550b719abc40627d6b19116863c05">tools.h</a>
+</li>
+<li>logo_db_add_comment
+: <a class="el" href="tools_8h.html#a99c31cf193a1f93fae7e7cb0b77c20a8">tools.h</a>
+</li>
+<li>logo_db_clear()
+: <a class="el" href="tools_8c.html#a6c37d50b916b5f0e275317b7823e9764">tools.c</a>
+, <a class="el" href="tools_8h.html#a6c37d50b916b5f0e275317b7823e9764">tools.h</a>
+</li>
+<li>logo_db_debug()
+: <a class="el" href="tools_8c.html#abb9b53edec2857473ae0c921c0ac657d">tools.c</a>
+, <a class="el" href="tools_8h.html#abb9b53edec2857473ae0c921c0ac657d">tools.h</a>
+</li>
+<li>logo_db_exist()
+: <a class="el" href="tools_8c.html#a556cd72a7f9c4ec4c6508f432e279d30">tools.c</a>
+, <a class="el" href="tools_8h.html#a556cd72a7f9c4ec4c6508f432e279d30">tools.h</a>
+</li>
+<li>LOGO_DB_FILENAME
+: <a class="el" href="main_8h.html#a73941f5c8c7542a11e226d905f6e3487">main.h</a>
+</li>
+<li>logo_db_find()
+: <a class="el" href="tools_8c.html#a2dfd67e8c8e46e0fe60ec54777f21a4b">tools.c</a>
+, <a class="el" href="tools_8h.html#a2dfd67e8c8e46e0fe60ec54777f21a4b">tools.h</a>
+</li>
+<li>logo_db_init()
+: <a class="el" href="tools_8c.html#ab2e3bae5fdc9db28d50b5c50e2c850f6">tools.c</a>
+, <a class="el" href="tools_8h.html#ab2e3bae5fdc9db28d50b5c50e2c850f6">tools.h</a>
+</li>
+<li>logo_db_item_t
+: <a class="el" href="main_8h.html#ac07fc20fdba600e0477743f12aa2b97d">main.h</a>
+</li>
+<li>logo_db_read()
+: <a class="el" href="tools_8c.html#a70bf9f80aaba3582356ae73c4b99a889">tools.c</a>
+, <a class="el" href="tools_8h.html#a70bf9f80aaba3582356ae73c4b99a889">tools.h</a>
+</li>
+<li>logo_db_t
+: <a class="el" href="main_8h.html#ae813f0cc2d8bc033868e6bbbfd242e36">main.h</a>
+</li>
+<li>logo_db_write()
+: <a class="el" href="tools_8c.html#ab0ef34d574c2ade4d7c0a697409eb1ab">tools.c</a>
+, <a class="el" href="tools_8h.html#ab0ef34d574c2ade4d7c0a697409eb1ab">tools.h</a>
 </li>
 </ul>
 
@@ -438,8 +501,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="repack_8h.html#a58fb804fee225bbcdf36a4cdd098aa80">repack.h</a>
 </li>
 <li>repack_file()
-: <a class="el" href="tools_8h.html#a298ec6c3443472d58d2c09801b1fbedc">tools.h</a>
-, <a class="el" href="tools_8c.html#a298ec6c3443472d58d2c09801b1fbedc">tools.c</a>
+: <a class="el" href="tools_8c.html#a298ec6c3443472d58d2c09801b1fbedc">tools.c</a>
+, <a class="el" href="tools_8h.html#a298ec6c3443472d58d2c09801b1fbedc">tools.h</a>
 </li>
 <li>repack_parse_args()
 : <a class="el" href="repack_8c.html#a2dcb46d0a4b49e860425f6380d738844">repack.c</a>
@@ -474,23 +537,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="unpack_8h.html#a4cd6645f9d878555520b997a7b05e92c">unpack.h</a>
 </li>
 <li>unpack_boot()
-: <a class="el" href="unpack_8h.html#a43586ae176ae3e83ae3ae8549942bdb8">unpack.h</a>
-, <a class="el" href="unpack_8c.html#a43586ae176ae3e83ae3ae8549942bdb8">unpack.c</a>
+: <a class="el" href="unpack_8c.html#a43586ae176ae3e83ae3ae8549942bdb8">unpack.c</a>
+, <a class="el" href="unpack_8h.html#a43586ae176ae3e83ae3ae8549942bdb8">unpack.h</a>
 </li>
 <li>unpack_data_t
 : <a class="el" href="unpack_8h.html#a8889396311abb29d87ee850df6b5fa93">unpack.h</a>
 </li>
 <li>unpack_file()
-: <a class="el" href="tools_8h.html#a73a2cf3993fc080a0aabaf656a3dcec0">tools.h</a>
-, <a class="el" href="tools_8c.html#a73a2cf3993fc080a0aabaf656a3dcec0">tools.c</a>
+: <a class="el" href="tools_8c.html#a73a2cf3993fc080a0aabaf656a3dcec0">tools.c</a>
+, <a class="el" href="tools_8h.html#a73a2cf3993fc080a0aabaf656a3dcec0">tools.h</a>
 </li>
 <li>unpack_logo()
 : <a class="el" href="unpack_8c.html#aa7e37714083818ae2ab208ba1d95bdc4">unpack.c</a>
 , <a class="el" href="unpack_8h.html#aa7e37714083818ae2ab208ba1d95bdc4">unpack.h</a>
 </li>
 <li>unpack_parse_args()
-: <a class="el" href="unpack_8h.html#a318292bb8b92bf2d42e8d03416037ee9">unpack.h</a>
-, <a class="el" href="unpack_8c.html#a318292bb8b92bf2d42e8d03416037ee9">unpack.c</a>
+: <a class="el" href="unpack_8c.html#a318292bb8b92bf2d42e8d03416037ee9">unpack.c</a>
+, <a class="el" href="unpack_8h.html#a318292bb8b92bf2d42e8d03416037ee9">unpack.h</a>
 </li>
 </ul>
 
@@ -512,7 +575,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jul 13 2015 23:05:05 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jul 16 2015 00:23:15 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

@@ -271,10 +271,12 @@ void unpack_logo(unpack_data_t* data)
 	uint32_t*		sizes;
 	char			src[PATH_MAX_SIZE];
 	char			dest[PATH_MAX_SIZE];
-	unsigned int 	npixels,width,height;
-		
+	logo_db_t 		logo_db;
+	char			label[STR_MAX_SIZE];
+	unsigned int 	npixels,tmp,width,height;
+			
 	// Init	
-	memset(&img_cfg,0x0,sizeof(img_cfg_t));
+	memset(&img_cfg,0x0,sizeof(img_cfg_t));	
 	
 	// Defaulting
 	if (!data->input[0]) strcpy(data->input,DEFAULT_LOGO_IMG_FILENAME);				
@@ -306,6 +308,10 @@ void unpack_logo(unpack_data_t* data)
 	if (!dir_remove(data->logos)) die("Could not remove directory '%s' !",data->logos);		
 	if (!file_remove(data->config)) die("Could not remove file '%s' !",data->config);	
 	
+	// Init logo resolution database
+	if (!logo_db_init(&logo_db)) die("Could not initialize logo database !");
+	if (app_data.debug) logo_db_debug(&logo_db); 
+	
 	// Openning input filename
 	fs=fopen(data->input,"rb");
 	if (fs==NULL) die("Could not open input file '%s' !",data->input);
@@ -318,7 +324,8 @@ void unpack_logo(unpack_data_t* data)
 	// Checking MTK header
 	if (!mtk_header_check_magic(&mtk_header)) fail("Logo header magic is not valid !");
 	if (!mtk_header_check_type(&mtk_header,"LOGO")) fail("Logo header type is not valid !");
-	//if (!mtk_header_check_size(&mtk_header,img_cfg.size)) fail("Logo header size not consistent with image size !");	
+	//if (!mtk_header_check_size(&mtk_header,img_cfg.size)) fail("Logo header size not consistent with image size !");
+	memcpy(img_cfg.type,mtk_header.type,32);	
 	
 	// Reading logo count
 	verbose("Reading picture count (%d bytes)...",sizeof(uint32_t));
@@ -347,12 +354,13 @@ void unpack_logo(unpack_data_t* data)
 	for(i=0;i<logo_count-1;i++)	sizes[i]=offsets[i+1]-offsets[i];
 	sizes[i]=bloc_size-offsets[i];
 	if (app_data.debug){
-		printf(" picture |   offset   | size (bytes)\n");
-		printf(" -----------------------------------\n");
+		debug("IMAGE MAP (%d items)",logo_count);
+		debug("  picture |   offset   | size (bytes)");
+		debug(" -------------------------------------");
 		for(i=0;i<logo_count;i++){
-			printf("    %.2d   | 0x%08X |   %.8d  \n",i+1,offsets[i],sizes[i]);
+			debug("     %.2d   | 0x%08X |   %8d",i+1,offsets[i],sizes[i]);
 		}
-		printf(" -----------------------------------\n");
+		debug(" -------------------------------------");
 	}
 		
 		
@@ -374,21 +382,27 @@ void unpack_logo(unpack_data_t* data)
 		// Inflating image
 		if (!inflate_file(src,dest)) fail("Could not inflate logo image file '%s' !",src);
 		if (!file_remove(src)) die("Could not remove file '%s' !",src);	
-		verbose("Searching size..."); 
-		npixels=file_size(dest)/2;
-		if (!find_logo_size(npixels,&width,&height)){ 
+		verbose("Searching image size in database..."); 
+		npixels=file_size(dest)/2;		
+		if (!logo_db_find(&logo_db,npixels,label,&width,&height)){ 
 			warning("Could not find logo image size for '%s' !",dest); 
-			output("Possible size can be :");
-			for(width=1;width<2000;width++){
-				for(height=1;height<2000;height++){
+			output("Possible size can be (Add one to '%s' file) :",LOGO_DB_FILENAME);
+			for(height=1;height<2000;height++){
+				for(width=1;width<2000;width++){				
 					if ((width*height)==npixels){
-						output(" %d x %d",width,height);
+						output(" %4d x %4d",width,height);
 					}
 				}
 			}
 			continue;
 		}
-		verbose("Image size found : %dx%d px",width,height);
+		// Flip logo size if need
+		if (!data->flip_logo_size){
+			tmp=width;
+			width=height;
+			height=tmp;
+		}
+		verbose("Image size '%s' found (%d x %d) !",label,width,height);
 		// Converting to PNG
 		sprintf(src,"%s%cimg-%02d.rgb565",data->logos,FILESEP,(i+1));
 		sprintf(dest,"%s%cimg-%02d.png",data->logos,FILESEP,(i+1));		
@@ -397,7 +411,8 @@ void unpack_logo(unpack_data_t* data)
 		if (!file_remove(src)) die("Could not remove file '%s' !",src);	
 	}
 	
-		
+	// Writing image configuration		
+	if (!img_cfg_write(&img_cfg,data->config)) fail("Could not write image configuration file '%s' !",data->config);	
 	
 	// Closing input filename
 	fclose(fs);
@@ -453,7 +468,9 @@ void unpack_parse_args(unpack_data_t* data, args_t* args)
 			}else if ((!strcmp(args->argv[i],"--no-decompress")) || (!strcmp(args->argv[i],"-n"))){
 				data->no_decompress=true;					
 			}else if ((!strcmp(args->argv[i],"--keep-mtk-header")) || (!strcmp(args->argv[i],"-m"))){
-				data->keep_mtk_header=true;				
+				data->keep_mtk_header=true;			
+			}else if ((!strcmp(args->argv[i],"--flip-logo-size")) || (!strcmp(args->argv[i],"-f"))){
+				data->flip_logo_size=true;	
 			}else{
 				die("Unknown option '%s' for command '%s' !",args->argv[i],CMD_UNPACK);
 			}

@@ -109,10 +109,12 @@ void show_usage()
 	printf(" --ramdisk         -r <dir>  : Set ramdisk directory (or filename, see -n)\n");
 	printf(" --config          -c <file> : Set configuration filename\n");
 	printf(" --logos           -l <dir>  : Set logos directory\n");
+	printf(" --compress-rate   -z <rate> : Compression level (1-9)\n");	
 	printf(" --no-compress     -n        : Do not compress ramdisk (use --ramdisk as file)\n");
 	printf(" --no-decompress   -n        : Do not decompress ramdisk (use --ramdisk as file)\n");
-	printf(" --compress-rate   -z <rate> : Compression level (1-9)\n");
 	printf(" --keep-mtk-header -m        : Keep MTK header \n");
+	printf(" --flip-logo-size  -f        : Flip logo size (WxH become HxW)\n");
+	
 	printf("\nNotes :\n\n"); 
 	printf(" * If you use '--no-decompress', unpacked ramdisk is not decompressed\n");
 	printf("   and '--ramdisk' must be a file instead of directory.\n\n");

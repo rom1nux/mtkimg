@@ -86,6 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -124,6 +125,12 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structimg__cfg__t.html">img_cfg_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Image configuration structure.  <a href="structimg__cfg__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlogo__db__item__t.html">logo_db_item_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logo size database item.  <a href="structlogo__db__item__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlogo__db__t.html">logo_db_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logo size database.  <a href="structlogo__db__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -136,7 +143,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:af0b5cfa4242ae7f98ba80fd23ef8afa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application name. <br /></td></tr>
 <tr class="separator:af0b5cfa4242ae7f98ba80fd23ef8afa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92673e33f27532767749b79edb8ef806"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92673e33f27532767749b79edb8ef806"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a92673e33f27532767749b79edb8ef806">APP_VERSION</a>&#160;&#160;&#160;&quot;0.34&quot;</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a92673e33f27532767749b79edb8ef806">APP_VERSION</a>&#160;&#160;&#160;&quot;0.37&quot;</td></tr>
 <tr class="memdesc:a92673e33f27532767749b79edb8ef806"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application version. <br /></td></tr>
 <tr class="separator:a92673e33f27532767749b79edb8ef806"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87832488ddb61266f75ab21e1b6402cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87832488ddb61266f75ab21e1b6402cb"></a>
@@ -147,6 +154,26 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a0f79edc628fc148c9ac2a0607f02920f">APP_ARCH</a>&#160;&#160;&#160;32</td></tr>
 <tr class="memdesc:a0f79edc628fc148c9ac2a0607f02920f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application architecture. <br /></td></tr>
 <tr class="separator:a0f79edc628fc148c9ac2a0607f02920f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77031e1d2add2bfa07e04e0280fad374"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a77031e1d2add2bfa07e04e0280fad374"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a77031e1d2add2bfa07e04e0280fad374">FILESEP</a>&#160;&#160;&#160;'/'</td></tr>
+<tr class="memdesc:a77031e1d2add2bfa07e04e0280fad374"><td class="mdescLeft">&#160;</td><td class="mdescRight">File path separator. <br /></td></tr>
+<tr class="separator:a77031e1d2add2bfa07e04e0280fad374"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a458e36f75dce3074ee9e515c3fc6239b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a458e36f75dce3074ee9e515c3fc6239b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a458e36f75dce3074ee9e515c3fc6239b">FIND_BIN</a>&#160;&#160;&#160;&quot;find&quot;</td></tr>
+<tr class="memdesc:a458e36f75dce3074ee9e515c3fc6239b"><td class="mdescLeft">&#160;</td><td class="mdescRight">find external utility <br /></td></tr>
+<tr class="separator:a458e36f75dce3074ee9e515c3fc6239b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a779f6e839309b3ddc52963ba8283319b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a779f6e839309b3ddc52963ba8283319b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a779f6e839309b3ddc52963ba8283319b">GZIP_BIN</a>&#160;&#160;&#160;&quot;gzip&quot;</td></tr>
+<tr class="memdesc:a779f6e839309b3ddc52963ba8283319b"><td class="mdescLeft">&#160;</td><td class="mdescRight">gzip external utility <br /></td></tr>
+<tr class="separator:a779f6e839309b3ddc52963ba8283319b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92307827150af01a80ecb3a972ab2caf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92307827150af01a80ecb3a972ab2caf"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a92307827150af01a80ecb3a972ab2caf">CPIO_BIN</a>&#160;&#160;&#160;&quot;cpio&quot;</td></tr>
+<tr class="memdesc:a92307827150af01a80ecb3a972ab2caf"><td class="mdescLeft">&#160;</td><td class="mdescRight">cpio external utility <br /></td></tr>
+<tr class="separator:a92307827150af01a80ecb3a972ab2caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02812b5f7c32e84a3f79bd374a7a09ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02812b5f7c32e84a3f79bd374a7a09ed"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a02812b5f7c32e84a3f79bd374a7a09ed">DIR_CHMOD</a>&#160;&#160;&#160;S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH</td></tr>
+<tr class="memdesc:a02812b5f7c32e84a3f79bd374a7a09ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Directory permission when create. <br /></td></tr>
+<tr class="separator:a02812b5f7c32e84a3f79bd374a7a09ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a965df5ba2db3f4ad3d1875ce90992b74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a965df5ba2db3f4ad3d1875ce90992b74"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a965df5ba2db3f4ad3d1875ce90992b74">PATH_MAX_SIZE</a>&#160;&#160;&#160;256</td></tr>
 <tr class="memdesc:a965df5ba2db3f4ad3d1875ce90992b74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum size of path. <br /></td></tr>
@@ -160,7 +187,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:a0dee5da5b9d201c7443ebf5495189537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum size of command line. <br /></td></tr>
 <tr class="separator:a0dee5da5b9d201c7443ebf5495189537"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b20d41d6252e9871430c242cb1a56e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b20d41d6252e9871430c242cb1a56e7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>&#160;&#160;&#160;1024</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>&#160;&#160;&#160;4096</td></tr>
 <tr class="memdesc:a6b20d41d6252e9871430c242cb1a56e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum size of common buffer. <br /></td></tr>
 <tr class="separator:a6b20d41d6252e9871430c242cb1a56e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42553adbbb23a03ca876697c00ea44b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42553adbbb23a03ca876697c00ea44b1"></a>
@@ -183,10 +210,14 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a67ece6aafbb2ea9606195856761dd595">DEFAULT_COMPRESS_RATE</a>&#160;&#160;&#160;6</td></tr>
 <tr class="memdesc:a67ece6aafbb2ea9606195856761dd595"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default compression rate. <br /></td></tr>
 <tr class="separator:a67ece6aafbb2ea9606195856761dd595"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e2f4a86ca3c2cc1dbf051433f49eae0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e2f4a86ca3c2cc1dbf051433f49eae0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a9e2f4a86ca3c2cc1dbf051433f49eae0">DEFAULT_IMG_FILENAME</a>&#160;&#160;&#160;&quot;boot.img&quot;</td></tr>
-<tr class="memdesc:a9e2f4a86ca3c2cc1dbf051433f49eae0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default input/output filename. <br /></td></tr>
-<tr class="separator:a9e2f4a86ca3c2cc1dbf051433f49eae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc85b27c67583cf4352b9f0c73cbddce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc85b27c67583cf4352b9f0c73cbddce"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#acc85b27c67583cf4352b9f0c73cbddce">DEFAULT_BOOT_IMG_FILENAME</a>&#160;&#160;&#160;&quot;boot.img&quot;</td></tr>
+<tr class="memdesc:acc85b27c67583cf4352b9f0c73cbddce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default boot input/output filename. <br /></td></tr>
+<tr class="separator:acc85b27c67583cf4352b9f0c73cbddce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47e98aff0c7726feb004ee5cb4f17001"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47e98aff0c7726feb004ee5cb4f17001"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a47e98aff0c7726feb004ee5cb4f17001">DEFAULT_LOGO_IMG_FILENAME</a>&#160;&#160;&#160;&quot;logo.bin&quot;</td></tr>
+<tr class="memdesc:a47e98aff0c7726feb004ee5cb4f17001"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default logo input/output filename. <br /></td></tr>
+<tr class="separator:a47e98aff0c7726feb004ee5cb4f17001"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12871b68ab9a1d74d83b16a481a30bc8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12871b68ab9a1d74d83b16a481a30bc8"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a12871b68ab9a1d74d83b16a481a30bc8">DEFAULT_KERNEL_FILENAME</a>&#160;&#160;&#160;&quot;kernel.img&quot;</td></tr>
 <tr class="memdesc:a12871b68ab9a1d74d83b16a481a30bc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default kernel filename. <br /></td></tr>
@@ -207,6 +238,10 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a59a6a5600d89f39aa546a6da4de69fd0">DEFAULT_RAMDISK_DIR</a>&#160;&#160;&#160;&quot;ramdisk.d&quot;</td></tr>
 <tr class="memdesc:a59a6a5600d89f39aa546a6da4de69fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default ramdisk directory. <br /></td></tr>
 <tr class="separator:a59a6a5600d89f39aa546a6da4de69fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adabdafaf046bfd43cf3d1daec37d0acb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adabdafaf046bfd43cf3d1daec37d0acb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#adabdafaf046bfd43cf3d1daec37d0acb">DEFAULT_LOGOS_DIR</a>&#160;&#160;&#160;&quot;logos.d&quot;</td></tr>
+<tr class="memdesc:adabdafaf046bfd43cf3d1daec37d0acb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default logos directory. <br /></td></tr>
+<tr class="separator:adabdafaf046bfd43cf3d1daec37d0acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a97e742f32ed43aed0b56831f084eea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a97e742f32ed43aed0b56831f084eea"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a2a97e742f32ed43aed0b56831f084eea">DEFAULT_CONFIG_FILENAME</a>&#160;&#160;&#160;&quot;image.ini&quot;</td></tr>
 <tr class="memdesc:a2a97e742f32ed43aed0b56831f084eea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default configuration filename. <br /></td></tr>
@@ -215,6 +250,10 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#af05732fdfe566f43ab9a7d20fe6578a7">TMP_RAMDISK_FILENAME</a>&#160;&#160;&#160;&quot;ramdisk-tmp.cpio.gz&quot;</td></tr>
 <tr class="memdesc:af05732fdfe566f43ab9a7d20fe6578a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temporary ramdisk filename. <br /></td></tr>
 <tr class="separator:af05732fdfe566f43ab9a7d20fe6578a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73941f5c8c7542a11e226d905f6e3487"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73941f5c8c7542a11e226d905f6e3487"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a73941f5c8c7542a11e226d905f6e3487">LOGO_DB_FILENAME</a>&#160;&#160;&#160;&quot;mtkimg-logos.ini&quot;</td></tr>
+<tr class="memdesc:a73941f5c8c7542a11e226d905f6e3487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logo database filename. <br /></td></tr>
+<tr class="separator:a73941f5c8c7542a11e226d905f6e3487"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb452686968e48b67397da5f97445f5b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb452686968e48b67397da5f97445f5b"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#abb452686968e48b67397da5f97445f5b">bool</a>&#160;&#160;&#160;int</td></tr>
 <tr class="memdesc:abb452686968e48b67397da5f97445f5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boolean type definition. <br /></td></tr>
@@ -230,29 +269,13 @@ Macros</h2></td></tr>
 <tr class="memitem:a4e3de9d1f4cd6783348ea0cd0e815d25"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a4e3de9d1f4cd6783348ea0cd0e815d25">bool2yn</a>(bval)&#160;&#160;&#160;(bval ? &quot;yes&quot; : &quot;no&quot;)</td></tr>
 <tr class="memdesc:a4e3de9d1f4cd6783348ea0cd0e815d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert boolean to string "yes" or "no".  <a href="#a4e3de9d1f4cd6783348ea0cd0e815d25">More...</a><br /></td></tr>
 <tr class="separator:a4e3de9d1f4cd6783348ea0cd0e815d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77031e1d2add2bfa07e04e0280fad374"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a77031e1d2add2bfa07e04e0280fad374"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a77031e1d2add2bfa07e04e0280fad374">FILESEP</a>&#160;&#160;&#160;'/'</td></tr>
-<tr class="memdesc:a77031e1d2add2bfa07e04e0280fad374"><td class="mdescLeft">&#160;</td><td class="mdescRight">File path separator. <br /></td></tr>
-<tr class="separator:a77031e1d2add2bfa07e04e0280fad374"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a458e36f75dce3074ee9e515c3fc6239b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a458e36f75dce3074ee9e515c3fc6239b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a458e36f75dce3074ee9e515c3fc6239b">FIND_BIN</a>&#160;&#160;&#160;&quot;find&quot;</td></tr>
-<tr class="memdesc:a458e36f75dce3074ee9e515c3fc6239b"><td class="mdescLeft">&#160;</td><td class="mdescRight">find external utility <br /></td></tr>
-<tr class="separator:a458e36f75dce3074ee9e515c3fc6239b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a779f6e839309b3ddc52963ba8283319b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a779f6e839309b3ddc52963ba8283319b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a779f6e839309b3ddc52963ba8283319b">GZIP_BIN</a>&#160;&#160;&#160;&quot;gzip&quot;</td></tr>
-<tr class="memdesc:a779f6e839309b3ddc52963ba8283319b"><td class="mdescLeft">&#160;</td><td class="mdescRight">gzip external utility <br /></td></tr>
-<tr class="separator:a779f6e839309b3ddc52963ba8283319b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92307827150af01a80ecb3a972ab2caf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92307827150af01a80ecb3a972ab2caf"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a92307827150af01a80ecb3a972ab2caf">CPIO_BIN</a>&#160;&#160;&#160;&quot;cpio&quot;</td></tr>
-<tr class="memdesc:a92307827150af01a80ecb3a972ab2caf"><td class="mdescLeft">&#160;</td><td class="mdescRight">cpio external utility <br /></td></tr>
-<tr class="separator:a92307827150af01a80ecb3a972ab2caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02812b5f7c32e84a3f79bd374a7a09ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02812b5f7c32e84a3f79bd374a7a09ed"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a02812b5f7c32e84a3f79bd374a7a09ed">DIR_CHMOD</a>&#160;&#160;&#160;S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH</td></tr>
-<tr class="memdesc:a02812b5f7c32e84a3f79bd374a7a09ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Directory permission when create. <br /></td></tr>
-<tr class="separator:a02812b5f7c32e84a3f79bd374a7a09ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:ab026691a57bf3f99c3278ba97ce5466f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab026691a57bf3f99c3278ba97ce5466f"></a>
+typedef enum <a class="el" href="main_8h.html#a07a6a91973814c0c577756f699c1e34b">cmd_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#ab026691a57bf3f99c3278ba97ce5466f">cmd_type_t</a></td></tr>
+<tr class="memdesc:ab026691a57bf3f99c3278ba97ce5466f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Command type. <br /></td></tr>
+<tr class="separator:ab026691a57bf3f99c3278ba97ce5466f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae632651387aca056132e177306de9af5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae632651387aca056132e177306de9af5"></a>
 typedef struct <a class="el" href="structapp__data__t.html">app_data_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#ae632651387aca056132e177306de9af5">app_data_t</a></td></tr>
 <tr class="memdesc:ae632651387aca056132e177306de9af5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application data structure. <br /></td></tr>
@@ -273,6 +296,23 @@ typedef struct <a class="el" href="structmtk__header__t.html">mtk_header_t</a>&#
 typedef struct <a class="el" href="structimg__cfg__t.html">img_cfg_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a4ae428b999c307214d10245f0b0fddfb">img_cfg_t</a></td></tr>
 <tr class="memdesc:a4ae428b999c307214d10245f0b0fddfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Image configuration structure. <br /></td></tr>
 <tr class="separator:a4ae428b999c307214d10245f0b0fddfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac07fc20fdba600e0477743f12aa2b97d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac07fc20fdba600e0477743f12aa2b97d"></a>
+typedef struct <a class="el" href="structlogo__db__item__t.html">logo_db_item_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#ac07fc20fdba600e0477743f12aa2b97d">logo_db_item_t</a></td></tr>
+<tr class="memdesc:ac07fc20fdba600e0477743f12aa2b97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logo size database item. <br /></td></tr>
+<tr class="separator:ac07fc20fdba600e0477743f12aa2b97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae813f0cc2d8bc033868e6bbbfd242e36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae813f0cc2d8bc033868e6bbbfd242e36"></a>
+typedef struct <a class="el" href="structlogo__db__t.html">logo_db_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#ae813f0cc2d8bc033868e6bbbfd242e36">logo_db_t</a></td></tr>
+<tr class="memdesc:ae813f0cc2d8bc033868e6bbbfd242e36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logo size database. <br /></td></tr>
+<tr class="separator:ae813f0cc2d8bc033868e6bbbfd242e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a07a6a91973814c0c577756f699c1e34b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07a6a91973814c0c577756f699c1e34b"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a07a6a91973814c0c577756f699c1e34b">cmd_type_t</a> { <b>CMD_TYPE_UNKNOWN</b>, 
+<b>CMD_TYPE_BOOT</b>, 
+<b>CMD_TYPE_LOGO</b>
+ }<tr class="memdesc:a07a6a91973814c0c577756f699c1e34b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Command type. <br /></td></tr>
+<tr class="separator:a07a6a91973814c0c577756f699c1e34b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -310,6 +350,12 @@ Variables</h2></td></tr>
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</dd></dl>
 <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
 <p>You should have received a copy of the GNU General Public License along with this program. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>. </p><hr/>
+<p> Note for porting :</p><ul>
+<li>Add/correct platform detection mechanism after "Detect platform" comment</li>
+<li>Add/correct arch detection mechanism after "Detect architecture" comment</li>
+<li>Add/correct platform specificities after "Platform specifics" comment <hr/>
+</li>
+</ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a4e3de9d1f4cd6783348ea0cd0e815d25"></a>
 <div class="memitem">
@@ -382,7 +428,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jul 13 2015 23:05:05 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jul 16 2015 00:23:15 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

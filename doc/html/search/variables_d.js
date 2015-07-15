@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['tags_5faddr',['tags_addr',['../structimg__header__t.html#a79bc4044043abf4e87c8ced5ea4db847',1,'img_header_t']]],
-  ['type',['type',['../structmtk__header__t.html#a9acf1fefc6ac2287c48bfac44b8f3b81',1,'mtk_header_t::type()'],['../structimg__cfg__t.html#a9acf1fefc6ac2287c48bfac44b8f3b81',1,'img_cfg_t::type()']]]
+  ['ramdisk',['ramdisk',['../structrepack__data__t.html#ab7aad48ae23d02c540a5b4b03fd93ae2',1,'repack_data_t::ramdisk()'],['../structunpack__data__t.html#ab7aad48ae23d02c540a5b4b03fd93ae2',1,'unpack_data_t::ramdisk()']]],
+  ['ramdisk_5fload_5faddr',['ramdisk_load_addr',['../structimg__header__t.html#a499a636d133db16b69450ea7502dd6cb',1,'img_header_t']]],
+  ['ramdisk_5fsize',['ramdisk_size',['../structimg__header__t.html#af2c640e99f79fac40e17a3a55a70797f',1,'img_header_t']]]
 ];

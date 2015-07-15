@@ -39,7 +39,7 @@
 // Application constantes
 #define	APP_TITLE						"MTKIMG"				//!< Application title
 #define	APP_NAME						"mtkimg"				//!< Application name
-#define	APP_VERSION						"0.36"					//!< Application version
+#define	APP_VERSION						"0.37"					//!< Application version
 #define	APP_AUTHOR						"rom1nux"				//!< Application author
 
 // Detect platform
@@ -113,8 +113,14 @@ typedef enum cmd_type_t{CMD_TYPE_UNKNOWN, CMD_TYPE_BOOT, CMD_TYPE_LOGO}cmd_type_
 	#define DEFAULT_CONFIG_FILENAME		"image.ini"				//!< Default configuration filename
 #endif
 
-// Usefull constnates
+// Usefull constantes
 #define TMP_RAMDISK_FILENAME			"ramdisk-tmp.cpio.gz"	//!< Temporary ramdisk filename
+#if defined(APP_LINUX)
+	#define LOGO_DB_FILENAME			"mtkimg-logos.cfg"		//!< Logo database filename
+#else
+	#define LOGO_DB_FILENAME			"mtkimg-logos.ini"		//!< Logo database filename
+#endif
+
 
 
 // Boolean type definition
@@ -146,7 +152,7 @@ typedef struct app_data_t{
  */
 typedef struct args_t{
 	int				argc;										//!< Arguments count
-	char			**argv;										//!< Arguments strings array
+	char**			argv;										//!< Arguments strings array
 }args_t;
 
 /**
@@ -183,11 +189,29 @@ typedef struct mtk_header_t{
  * \brief		Image configuration structure
  */
 typedef struct img_cfg_t{
-	img_header_t	header;										//!< Header inforamtions
+	img_header_t	header;										//!< Header informations
 	char 			type[32];									//!< Payload type of ramdisk part
 	uint32_t 		size;										//!< Size of image
 }img_cfg_t;
 
+/**
+ * \brief		Logo size database item
+ */
+typedef struct logo_db_item_t{
+	char*			label;										//!< Label of resolution
+	unsigned int	width;										//!< Resolution width
+	unsigned int	height;										//!< Resolution height
+}logo_db_item_t;
+
+/**
+ * \brief		Logo size database
+ */
+typedef struct logo_db_t{
+	logo_db_item_t*	items;										//!< Resolutions array
+	unsigned int	nitems;										//!< Resolutions count
+}logo_db_t	;
+	
+	
 // Include
 #include "tools.h"
 #include "info.h"
