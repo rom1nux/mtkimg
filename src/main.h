@@ -51,7 +51,7 @@
 	#define	APP_CYGWIN					1						//!< Application type
 #elif defined(__APPLE__) || defined(__MACH__)
 	#define	APP_PLATFORM				"osx"					//!< Application platform name
-	#define	APP_MAC						1						//!< Application type	
+	#define	APP_OSX						1						//!< Application type	
 #elif defined(__linux__)
 	#define	APP_PLATFORM				"linux"					//!< Application platform name
 	#define	APP_LINUX					1						//!< Application type
