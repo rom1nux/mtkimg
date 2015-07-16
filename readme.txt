@@ -6,7 +6,7 @@
                 |_|  |_|  |_|  |_|\_\_____|_|  |_|\_____|
                                           
                        Copyright (c) 2015 rom1nux
-					   
+
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
@@ -18,7 +18,7 @@
   GNU General Public License for more details.
  
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.					   
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.   
 
   
 A - INTRODUCTION
@@ -27,7 +27,7 @@ A - INTRODUCTION
   like boot.img or recovery.img. 
   
   Characteristics :
-	
+
    * Write in C, open-source.
    * Portable (Linux, Cygwin, Windows, dont have MAC).
    * Only one executable for unpack/repack.
@@ -44,18 +44,18 @@ A - INTRODUCTION
    * Documentation available.
 
    
-B - HOW TO USE				   
-					   
+B - HOW TO USE   
+
   Be sure "find", "gzip" and "cpio" utilities are installed on your system and are 
   in your PATH environment variable.
-	
+
   Linux   : Use your package manager to download application
   Cygwin  : Use Cygwin setup.exe to install packages
   Windows : You can manually download package from gnuwin
             http://gnuwin32.sourceforge.net/packages/findutils.htm
             http://gnuwin32.sourceforge.net/packages/gzip.htm
             http://gnuwin32.sourceforge.net/packages/cpio.htm
-			  		  
+  
   To unpack image hit :   ./mtkimg unpack boot.img
   To repack image hit :   ./mtkimg repack newboot.img
 
@@ -69,7 +69,7 @@ C - SOURCE CODE
   https://github.com/rom1nux/mtkimg
   
   mtkimg
-    |- build               : Build directory (output of compilation)	
+    |- build               : Build directory (output of compilation)
     |- doc                 : Documents directory
     |   `-html             : HTML source code documentation directory
     |      `- index.html   : Index of source code documentation
@@ -81,7 +81,7 @@ C - SOURCE CODE
     |- .gitignore          : GIT files/directory ignore
     |- cyterm.bat          : Cygwin terminal launcher
     |- licence.txt         : GPL3 license file
-    |- make.bat            : Windows make wrapper (invoke 'mink32-make.exe')
+    |- make.bat            : Windows make wrapper (invoke "mink32-make.exe')
     |- Makefile            : Source code builder and management script
     |- readme.txt          : This help file
     `- winterm.bat         : Windows terminal launcher
@@ -89,12 +89,17 @@ C - SOURCE CODE
   
 D - HOW TO BUILD SOURCE CODE 
 
-  First, be sure you got a gcc compiler on your system and /bin directory
-  is in your PATH environement variable.  
+  First, be sure you got a "gcc" compiler and "make" utility are installed on your system 
+  and be sure /bin directory is in your PATH environment variable.  
   
-  Note:
-  For Windows you need MinGW32 or MinGW64 :  
-  (MinGW contain a port of 'make' utility named 'ming32-make' invoked by 'make.bat')
+  Second, MTKIMG use "zlib" and "libpng" for logo unpack/repack to work.
+  Be sure "zlib-devel" and "libpng-devel" are installed on your system.
+  
+  Note for Windows:
+   You need MinGW32 or MinGW64 (See UTILTIES FOR BUILDING SOURCE CODE section). 
+   MinGW contain a port of "make" utility named "ming32-make" invoked by "make.bat'. 
+   You need to manually build "zlib" and "libpng" first before building MTKIM.
+   (see HOW TO BUILD ZLIB AND LIBPNG ON WINDOWS section) .
   
   Here is the few steps to follow to build MTKIMG on your platform :
 
@@ -117,12 +122,34 @@ D - HOW TO BUILD SOURCE CODE
   Look at "src/readme.txt" for more information about using mtkimg.
 
   
+E - HOW TO BUILD ZLIB AND LIBPNG ON WINDOWS
+
+  For zlib :
+  
+   1 - Download and unpack the latest "zlib" into "externals/zlib" directory (rename the directory)
+   2 - Click on "winterm.bat"
+   3 - Execute : cd externals/zlib
+   4 - Execute : make-ming32 -f win32/Makefile.gcc
+   5 - "zlib.h" and "libz.a" are ready into "externals/zlib" directory
+   
+  For libpng :
+
+   1 - Download and unpack the latest "libpng" into "externals/libpng" directory (rename the directory)
+   2 - Edit "externals/libpng/scripts/Makefile.gcc" with text editor
+       At line ~19 : Change "CP = cp" to "CP = copy" 
+       At line ~35 : Change "scripts/pnglibconf.h.prebuilt" to "scripts\pnglibconf.h.prebuilt"
+   3 - Click on "winterm.bat"
+   4 - Execute : cd externals/libpng
+   5 - Execute : make-ming32 -f scripts/Makefile.gcc   
+   6 - "png.h" and "libpng.a" are ready into "externals/libpng" directory
+  
+  
 E - MAKEFILE COMMANDS
 
   Makefile is used to manage the source code on all platform.
   (On Windows make.bat invoke and pass command to mingw32-make)
   
-  this is Makefile supported command :
+  This is Makefile supported command :
   
    make          : Build MTKIMG executable in ./build directory
    make clean    : Remove all object files (.o) from ./build directory
@@ -136,24 +163,30 @@ E - MAKEFILE COMMANDS
    
 F - UTILTIES FOR BUILDING SOURCE CODE
 
-  * MINGW32 or MINGW64 (Windows GCC port)
+  * MINGW32 or MINGW64 (Windows GCC compiler port)
     http://sourceforge.net/projects/mingw-w64
+
+  * ZLIB (Compression library)
+    http://www.zlib.net
+
+  * LIBPNG (Compression library)
+    http://www.libpng.org	
    
   * DOXYGEN (Multiplatform source code documentation generator)
     http://www.doxygen.org  
-	
+
   * 7-ZIP (Windows compression/decompression utilities)	
-    http://http://www.7-zip.org/
-	
-	
+    http://http://www.7-zip.org
+
+
 G - WHERE TO SPEAK ABOUT
 
   * GitHub official repository
     https://github.com/rom1nux/mtkimg	
-	
+
   * XDA Developers forum
     http://forum.xda-developers.com/android/development/tools-unpack-repack-boot-img-utility-t3154621
-	
+
   * FrAndroid forum
     http://forum.frandroid.com/topic/223380-outils-unpackrepack-bootimg-mediatek
   
@@ -161,18 +194,18 @@ G - WHERE TO SPEAK ABOUT
 H - CHANGELOG
 
   * 2015-07-15 - V0.36 - rom1nux
-    - Begin to start Apple MAC port support (Thanks sambwel for your help)
+    - Begin to start Apple OSX port support (Thanks sambwel for your help)
   
   * 2015-07-13 - V0.34 - rom1nux
     - Start logo unpacking function (not completed yet)
     - Documentation correction	 
-	
+
   * 2015-07-11 - V0.33 - rom1nux
     - Create GitHub repository
     - Add source code under GPL3 license
 
   * 2015-07-10 - V0.32 - rom1nux
-    - Add 'srcdist' and 'bindist' to Makefile
-	 
+    - Add "srcdist" and "bindist" to Makefile
+ 
   * 2015-07-09 - V0.31 - rom1nux
-    - First beta	
+    - First beta

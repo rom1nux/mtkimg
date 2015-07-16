@@ -23,5 +23,6 @@
 
 # Git will ignore this files/directory
 build
+externals
 *.o
 *.exe

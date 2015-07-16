@@ -110,17 +110,17 @@ void show_usage()
 	printf(" --config          -c <file> : Set configuration filename\n");
 	printf(" --logos           -l <dir>  : Set logos directory\n");
 	printf(" --compress-rate   -z <rate> : Compression level (1-9)\n");	
-	printf(" --no-compress     -n        : Do not compress ramdisk (use --ramdisk as file)\n");
-	printf(" --no-decompress   -n        : Do not decompress ramdisk (use --ramdisk as file)\n");
+	printf(" --no-compress     -n        : Do not compress ramdisk (Use -r as a file)\n");
+	printf(" --no-decompress   -n        : Do not decompress ramdisk (Use -r as a file)\n");
 	printf(" --keep-mtk-header -m        : Keep MTK header \n");
-	printf(" --flip-logo-size  -f        : Flip logo size (WxH become HxW)\n");
+	printf(" --flip-logo-size  -f        : Flip logo size (W x H become H x W)\n");
 	
 	printf("\nNotes :\n\n"); 
 	printf(" * If you use '--no-decompress', unpacked ramdisk is not decompressed\n");
 	printf("   and '--ramdisk' must be a file instead of directory.\n\n");
 	printf(" * If you use '--no-compress', '--ramdisk' must be a file instead of directory\n");
 	printf("   and it will be packed directly to output image.\n\n");
-	printf(" * Using '--keep-mtk-header' implies using '--no-decompress' option when unpack.\n\n");
+	printf(" * Using '--keep-mtk-header' implies using '--no-decompress' when unpack.\n\n");
 	printf(" * Unpack command automatically detect if kernel or ramdisk got MTK header.\n\n");
 	printf("Examples :\n\n"); 
 	printf(" %s info myboot.img\n",app_data.exename);
@@ -128,7 +128,10 @@ void show_usage()
 	printf(" %s unpack myboot.img -v\n",app_data.exename);
 	printf(" %s unpack myboot.img -k mykernel.img -r myramdisk\n",app_data.exename);
 	printf(" %s unpack myboot.img -n -k mykernel.img -r myramdisk.cpio.gz\n",app_data.exename);
-	printf(" %s unpack myboot.img -n -m -k mykernel.img.mtk -r myramdisk.cpio.gz.mtk\n",app_data.exename);
+	printf(" %s unpack myboot.img -n -m -k mykernel.mtk -r myramdisk.mtk\n",app_data.exename);
+	printf(" %s unpack -t logo\n",app_data.exename);
+	printf(" %s unpack -t logo mylogo.bin\n",app_data.exename);
+	printf(" %s unpack -t logo mylogo.bin -l mylogos\n",app_data.exename);
 	printf(" %s repack\n",app_data.exename);
 	printf(" %s repack newboot.img -v\n",app_data.exename);
 	printf(" %s repack newboot.img -k mykernel.img -r myramdisk\n",app_data.exename);

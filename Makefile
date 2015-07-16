@@ -32,6 +32,9 @@ TITLE=MTKIMG
 EXE=mtkimg
 AUTHOR=rom1nux
 
+# Project options
+LOGO_SUPPORT=1
+
 # Compiler options
 CFLAGS=-Wall
 LDFLAGS=-lm
@@ -75,7 +78,8 @@ ifeq ($(PLATFORM),WINDOWS)
 	FSEP=\\
 	TIMESTAMP=$(subst $(SPACE),0,$(shell echo %date:~6,4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%))
 	CWD=$(shell echo %CD%)
-	LOGO_SUPPORT=0
+	CFLAGS+=-Iexternals/zlib -Iexternals/libpng
+	LDFLAGS+=-Lexternals/zlib -Lexternals/libpng --static
 else
 	# LINUX/CYGWIN/OSX	
 	CC=gcc
@@ -94,7 +98,6 @@ else
 	FSEP=/
 	TIMESTAMP=$(shell date +'%Y%m%d_%H%M%S')
 	CWD=$(shell pwd)
-	LOGO_SUPPORT=1
 endif
 
 # Directories
@@ -109,9 +112,8 @@ BKP_FILE=$(BKP_DIR)$(FSEP)$(EXE)-$(TIMESTAMP).zip
 
 # Options
 ifeq ($(LOGO_SUPPORT),1)
-	DEFINE=-DLOGO_SUPPORT
-	CFLAGS+=-I/usr/include/libpng16 $(DEFINE)
-	LDFLAGS+=-lz -lpng16
+	CFLAGS+=-DLOGO_SUPPORT
+	LDFLAGS+=-lpng -lz
 endif
 
 # Getting sources files
@@ -199,7 +201,7 @@ release: banner rebuild | $(RELEASES_DIR)
 	-$(RM) $(RELEASES_DIR)$(FSEP)$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version).zip
 	$(MKDIR) $(TMP_DIR)
 	$(CP) $(BUILD_DIR)$(FSEP)$(EXEC) $(TMP_DIR)
-	$(CP) $(SRC_DIR)$(FSEP)readme.txt $(TMP_DIR)
+	$(CP) readme.txt $(TMP_DIR)
 	$(CD) $(TMP_DIR) && \
 	$(ZIP) $(CWD)$(FSEP)$(RELEASES_DIR)$(FSEP)$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version).zip . && \
 	$(CD) $(CWD)

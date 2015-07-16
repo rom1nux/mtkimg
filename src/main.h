@@ -39,7 +39,7 @@
 // Application constantes
 #define	APP_TITLE						"MTKIMG"				//!< Application title
 #define	APP_NAME						"mtkimg"				//!< Application name
-#define	APP_VERSION						"0.37"					//!< Application version
+#define	APP_VERSION						"0.38"					//!< Application version
 #define	APP_AUTHOR						"rom1nux"				//!< Application author
 
 // Detect platform
