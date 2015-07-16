@@ -21,4 +21,4 @@
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.  
   * *************************************************************************** 
   */
-id ICON "mtkimg.ico"
+id ICON "resources/mtkimg.ico"

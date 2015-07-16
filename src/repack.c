@@ -36,7 +36,7 @@ void repack(args_t* args)
 	FILE*			fd=NULL;	
 	uint32_t		kernel_offset, kernel_size, kernel_pages;
 	uint32_t		ramdisk_offset, ramdisk_size, ramdisk_pages;
-	uint32_t		min_img_size;
+	uint32_t		total_pages,total_size;
 	bool			kernel_is_mtk_file,ramdisk_is_mtk_file;
 	char*			ramdisk_file;
 	char 			syscmd[CMD_MAX_SIZE];
@@ -135,28 +135,32 @@ void repack(args_t* args)
 	kernel_size=file_size(data.kernel);
 	img_cfg.header.kernel_size=kernel_size + ( kernel_is_mtk_file ? 0 : sizeof(mtk_header_t) );
 	kernel_offset=img_cfg.header.page_size;
-	kernel_pages=(long)ceil(img_cfg.header.kernel_size/img_cfg.header.page_size)+1;
+	kernel_pages=(long)ceil(img_cfg.header.kernel_size/(double)img_cfg.header.page_size);
 	ramdisk_size=file_size(ramdisk_file);
 	img_cfg.header.ramdisk_size=ramdisk_size + ( ramdisk_is_mtk_file ? 0 : sizeof(mtk_header_t) );
 	ramdisk_offset=(kernel_pages+1)*img_cfg.header.page_size;
-	ramdisk_pages=(long)ceil(img_cfg.header.ramdisk_size/img_cfg.header.page_size);	
+	ramdisk_pages=(long)ceil(img_cfg.header.ramdisk_size/(double)img_cfg.header.page_size);
 	memcpy(&img_header,&img_cfg.header,sizeof(img_header_t));
-	min_img_size=(kernel_pages+ramdisk_pages+1)*img_header.page_size;
+	total_pages=kernel_pages+ramdisk_pages+1;
+	total_size=total_pages*img_header.page_size;
 	
 	// Show layout
 	if (app_data.debug){
 		img_header_show(&img_header);
-		printf("\nImage layout :\n\n");
+		printf("\nImage layout :\n\n");		
 		printf(" %-30s : %d bytes\n","Image size",img_cfg.size);
+		printf(" %-30s : 0x%08X\n","Header offset",0);
+		printf(" %-30s : %-20d (%d bytes)\n","Header pages",1,1*img_header.page_size);		
 		printf(" %-30s : 0x%08X\n","Kernel offset",kernel_offset);
 		printf(" %-30s : %-20d (%d bytes)\n","Kernel pages",kernel_pages,kernel_pages*img_header.page_size);
 		printf(" %-30s : 0x%08X\n","Ramdisk offset",ramdisk_offset);
-		printf(" %-30s : %-20d (%d bytes)\n","Ramdisk pages",ramdisk_pages,ramdisk_pages*img_header.page_size);
+		printf(" %-30s : %-20d (%d bytes)\n","Ramdisk pages",ramdisk_pages,ramdisk_pages*img_header.page_size);		
+		printf(" %-30s : %-20d (%d bytes)\n","Total pages",total_pages,total_size);
 		putchar('\n');
 	}
 	
 	// Check valid image size
-	if (min_img_size>img_cfg.size) die("Kernel and ramdisk are too big to fit into image !");
+	if (total_size>img_cfg.size) die("Kernel and/or ramdisk are too big to fit into image (%d bytes exceed) !",total_size-img_cfg.size);
 	
 	// Openning output file
 	fd=fopen(data.output,"wb");

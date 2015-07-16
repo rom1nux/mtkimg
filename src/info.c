@@ -34,7 +34,7 @@ void info(args_t* args)
 	FILE*			fs=NULL;	
 	uint32_t		kernel_offset,  kernel_pages;
 	uint32_t		ramdisk_offset,  ramdisk_pages;	
-	uint32_t 		img_size;
+	uint32_t 		img_size, total_pages, total_size;
 
 	// Init data
 	memset(&data,0x0,sizeof(info_data_t));
@@ -67,17 +67,23 @@ void info(args_t* args)
 
 	// Compute offsets
 	kernel_offset=img_header.page_size;
-	kernel_pages=(long)ceil(img_header.kernel_size/img_header.page_size)+1;	
+	kernel_pages=(long)ceil(img_header.kernel_size/(double)img_header.page_size);
 	ramdisk_offset=(kernel_pages+1)*img_header.page_size;
-	ramdisk_pages=(long)ceil(img_header.ramdisk_size/img_header.page_size);
+	ramdisk_pages=(long)ceil(img_header.ramdisk_size/(double)img_header.page_size);
+	total_pages=(kernel_pages+ramdisk_pages+1);
+	total_size=total_pages*img_header.page_size;
 	
 	// Show layout
-	printf("\nImage layout :\n\n");
+	printf("\nImage layout :\n\n");	
 	printf(" %-30s : %d bytes\n","Image size",img_size);
+	printf(" %-30s : 0x%08X\n","Header offset",0);
+	printf(" %-30s : %-20d (%d bytes)\n","Header pages",1,1*img_header.page_size);
 	printf(" %-30s : 0x%08X\n","Kernel offset",kernel_offset);
 	printf(" %-30s : %-20d (%d bytes)\n","Kernel pages",kernel_pages,kernel_pages*img_header.page_size);
 	printf(" %-30s : 0x%08X\n","Ramdisk offset",ramdisk_offset);
 	printf(" %-30s : %-20d (%d bytes)\n","Ramdisk pages",ramdisk_pages,ramdisk_pages*img_header.page_size);
+	printf(" %-30s : %-20d (%d bytes)\n","Total pages",total_pages,total_size);
+	
 
 	// Closing input filename
 	fclose(fs);

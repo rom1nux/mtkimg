@@ -63,6 +63,7 @@ void unpack_boot(unpack_data_t* data)
 	FILE*			fs=NULL;	
 	uint32_t		kernel_offset, kernel_size, kernel_pages;
 	uint32_t		ramdisk_offset, ramdisk_size, ramdisk_pages;
+	uint32_t		total_pages,total_size;
 	char*			ramdisk_file;
 	char 			syscmd[CMD_MAX_SIZE];
 	int				res;	
@@ -140,19 +141,24 @@ void unpack_boot(unpack_data_t* data)
 	// Compute offsets
 	kernel_offset=img_header.page_size;
 	kernel_size=img_header.kernel_size;
-	kernel_pages=(long)ceil(img_header.kernel_size/img_header.page_size)+1;	
+	kernel_pages=(long)ceil(img_header.kernel_size/(double)img_header.page_size);
 	ramdisk_offset=(kernel_pages+1)*img_header.page_size;
 	ramdisk_size=img_header.ramdisk_size;
-	ramdisk_pages=(long)ceil(img_header.ramdisk_size/img_header.page_size);
+	ramdisk_pages=(long)ceil(img_header.ramdisk_size/(double)img_header.page_size);
+	total_pages=kernel_pages+ramdisk_pages+1;
+	total_size=total_pages*img_header.page_size;
 	
 	// Show layout
 	if (app_data.debug){
-		printf("\nImage layout :\n\n");
+		printf("\nImage layout :\n\n");		
 		printf(" %-30s : %d bytes\n","Image size",img_cfg.size);
+		printf(" %-30s : 0x%08X\n","Header offset",0);
+		printf(" %-30s : %-20d (%d bytes)\n","Header pages",1,1*img_header.page_size);		
 		printf(" %-30s : 0x%08X\n","Kernel offset",kernel_offset);
 		printf(" %-30s : %-20d (%d bytes)\n","Kernel pages",kernel_pages,kernel_pages*img_header.page_size);
 		printf(" %-30s : 0x%08X\n","Ramdisk offset",ramdisk_offset);
-		printf(" %-30s : %-20d (%d bytes)\n","Ramdisk pages",ramdisk_pages,ramdisk_pages*img_header.page_size);
+		printf(" %-30s : %-20d (%d bytes)\n","Ramdisk pages",ramdisk_pages,ramdisk_pages*img_header.page_size);		
+		printf(" %-30s : %-20d (%d bytes)\n","Total pages",total_pages,total_size);		
 		putchar('\n');
 	}
 	

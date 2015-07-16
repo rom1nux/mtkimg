@@ -93,7 +93,7 @@ D - HOW TO BUILD SOURCE CODE
   and be sure /bin directory is in your PATH environment variable.  
   
   Second, MTKIMG use "zlib" and "libpng" for logo unpack/repack to work.
-  Be sure "zlib-devel" and "libpng-devel" are installed on your system.
+  Be sure "zlib-dev" (zlib-devel) and "libpng-dev" (libpng-devel) are installed on your system.
   
   Note for Windows:
    You need MinGW32 or MinGW64 (See UTILTIES FOR BUILDING SOURCE CODE section). 
@@ -196,6 +196,10 @@ G - WHERE TO SPEAK ABOUT
   
   
 H - CHANGELOG
+
+  * 2015-07-16 - V0.40 - rom1nux
+    - Fix kernel/ramdisk pages count
+    - Fix overflow detection if kernel and/or ramdisk is too big
 
   * 2015-07-16 - V0.38 - rom1nux
     - Unpack logo fully functional (Repack in progress)
