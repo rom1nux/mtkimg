@@ -199,8 +199,8 @@ H - CHANGELOG
 
   * 2015-07-16 - V0.38 - rom1nux
     - Unpack logo fully functional (Repack in progress)
-	- Add procedure to build zlib and libpng on Windows
-	- Makefile modification
+    - Add procedure to build zlib and libpng on Windows
+    - Makefile modification
 
   * 2015-07-15 - V0.36 - rom1nux
     - Begin to start Apple OSX port support (Thanks sambwel for your help)
