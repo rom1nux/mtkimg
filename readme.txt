@@ -30,17 +30,17 @@ A - INTRODUCTION
 
    * Write in C, open-source.
    * Portable (Linux, Cygwin, Windows, dont have MAC).
-   * Only one executable for unpack/repack.
-   * Easy to use, all parameters are defaulted.
+   * Only one executable for unpack/repack.   
    * Keep the original image size at repack time.
    * Automatic ramdisk decompression.
    * Option to keep or remove MTK headers.
    * Check for valid "ARM Linux zImage" kernel.
    * Check for valid "GZIP" ramdisk.
    * Check for overflow if kernel or ramdisk is too big at repack time.
-   * Option to set compression rate for ramdisk.
-   * Got simple test-suite.
+   * Option to set compression rate for ramdisk.   
+   * Easy to use, all parameters are defaulted.
    * Easy to build on every platform.
+   * Got simple test-suite.
    * Documentation available.
 
    
@@ -124,17 +124,21 @@ D - HOW TO BUILD SOURCE CODE
   
 E - HOW TO BUILD ZLIB AND LIBPNG ON WINDOWS
 
+  Understand "zlib" need to be build before "libpng".
+  Create the "externals" directory into MTKIMG source directory.
+  Respect the name of directories, MTKIMG Makefile use this path for building.
+
   For zlib :
-  
-   1 - Download and unpack the latest "zlib" into "externals/zlib" directory (rename the directory)
+     
+   1 - Download and unpack the latest "zlib" into "externals/zlib" directory.       
    2 - Click on "winterm.bat"
    3 - Execute : cd externals/zlib
    4 - Execute : make-ming32 -f win32/Makefile.gcc
-   5 - "zlib.h" and "libz.a" are ready into "externals/zlib" directory
+   5 - "zlib.h" and "libz.a" are ready into "externals/zlib" directory.
    
   For libpng :
-
-   1 - Download and unpack the latest "libpng" into "externals/libpng" directory (rename the directory)
+  
+   1 - Download and unpack the latest "libpng" into "externals/libpng" directory.
    2 - Edit "externals/libpng/scripts/Makefile.gcc" with text editor
        At line ~19 : Change "CP = cp" to "CP = copy" 
        At line ~35 : Change "scripts/pnglibconf.h.prebuilt" to "scripts\pnglibconf.h.prebuilt"
@@ -192,6 +196,11 @@ G - WHERE TO SPEAK ABOUT
   
   
 H - CHANGELOG
+
+  * 2015-07-16 - V0.38 - rom1nux
+    - Unpack logo fully functional (Repack in progress)
+	- Add procedure to build zlib and libpng on Windows
+	- Makefile modification
 
   * 2015-07-15 - V0.36 - rom1nux
     - Begin to start Apple OSX port support (Thanks sambwel for your help)

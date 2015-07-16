@@ -483,15 +483,15 @@ bool logo_db_find(logo_db_t* db, unsigned int npixels, char* label, unsigned int
  */
 void logo_db_debug(logo_db_t* db)
 {
-	unsigned int i;
-	debug("LOGO DATABASE (%d items)",db->nitems);
-	debug(" -------------------------");
+	unsigned int i;	
+	debug("\n -------------------------");
 	debug("  label  | width | height");
 	debug(" -------------------------");
 	for(i=0;i<db->nitems;i++){
 		debug("  %-6s | %5d | %5d",db->items[i].label,db->items[i].width,db->items[i].height);
 	}
 	debug(" -------------------------");
+	debug("               %3d items\n\n",db->nitems);
 }
 
 
@@ -764,7 +764,7 @@ void img_header_show(img_header_t* header)
 	printf(" %-30s : %d bytes\n","Second stage size",header->second_size);
 	printf(" %-30s : 0x%08X\n\n","Second stage load address",header->second_load_addr);	
 	printf(" %-30s : 0x%08X\n","Tags address",header->tags_addr);
-	printf(" %-30s : %d\n","Page size (bytes)",header->page_size);	
+	printf(" %-30s : %d bytes\n","Page size",header->page_size);	
 	printf(" %-30s : '","Product name"); putnchar(header->product,16); printf("'\n");
 	printf(" %-30s : '","Command line"); putnchar(header->cmdline,512); printf("'\n");	
 	printf(" %-30s : ","ID"); for(i=0;i<20;i++) printf("%02X",header->id[i]); putchar('\n');

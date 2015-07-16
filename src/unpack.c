@@ -354,13 +354,13 @@ void unpack_logo(unpack_data_t* data)
 	for(i=0;i<logo_count-1;i++)	sizes[i]=offsets[i+1]-offsets[i];
 	sizes[i]=bloc_size-offsets[i];
 	if (app_data.debug){
-		debug("IMAGE MAP (%d items)",logo_count);
-		debug("  picture |   offset   | size (bytes)");
+		//debug("\nImages map (%d items) :\n",logo_count);
+		debug("\n  picture |   offset   | size (bytes)");
 		debug(" -------------------------------------");
 		for(i=0;i<logo_count;i++){
 			debug("     %.2d   | 0x%08X |   %8d",i+1,offsets[i],sizes[i]);
 		}
-		debug(" -------------------------------------");
+		debug(" -------------------------------------\n");
 	}
 		
 		
@@ -369,7 +369,7 @@ void unpack_logo(unpack_data_t* data)
 	// Create directory
 	if (!dir_create(data->logos)) fail("Could not create directory '%s' !",data->logos);
 	for(i=0;i<logo_count;i++){
-		verbose("Upacking image %d...",i+1);
+		verbose("\nUpacking image %d...",i+1);
 		sprintf(src,"%s%cimg-%02d.bin",data->logos,FILESEP,(i+1));
 		sprintf(dest,"%s%cimg-%02d.rgb565",data->logos,FILESEP,(i+1));
 		offset=offsets[i]+512;		
@@ -410,6 +410,7 @@ void unpack_logo(unpack_data_t* data)
 		if (!rgb565_to_png(src,dest,width,height)){ error("Could not convert logo image '%s' to PNG !",src); continue; }
 		if (!file_remove(src)) die("Could not remove file '%s' !",src);	
 	}
+	putchar('\n');
 	
 	// Writing image configuration		
 	if (!img_cfg_write(&img_cfg,data->config)) fail("Could not write image configuration file '%s' !",data->config);	
@@ -424,8 +425,8 @@ failed:
 	// FAILED
 	// Closing input filename
 	if (fs) fclose(fs);	
-	//if (!dir_remove(data->logos)) error("Could not remove directory '%s' !",data->logos);	
-	//if (!file_remove(data->config)) error("Could not remove file '%s' !",data->config);	
+	if (!dir_remove(data->logos)) error("Could not remove directory '%s' !",data->logos);	
+	if (!file_remove(data->config)) error("Could not remove file '%s' !",data->config);	
 	exit(1);	
 #endif	
 }
