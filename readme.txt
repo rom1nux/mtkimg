@@ -159,7 +159,7 @@ E - HOW TO BUILD ZLIB AND LIBPNG ON WINDOWS
    1 - Download and unpack the latest "libpng" into "externals/libpng" directory.
    2 - Edit "externals/libpng/scripts/Makefile.gcc" with text editor
        At line ~19 : Change "CP = cp" to "CP = copy" 
-       At line ~35 : Change "scripts/pnglibconf.h.prebuilt" to "scripts\pnglibconf.h.prebuilt"
+       At line ~35 : Change the slash to backslash (scripts/... to scripts\...)
    3 - Click on "winterm.bat"
    4 - Execute : cd externals/libpng
    5 - Execute : make-ming32 -f scripts/Makefile.gcc   
