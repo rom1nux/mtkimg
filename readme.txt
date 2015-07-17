@@ -93,7 +93,8 @@ D - HOW TO BUILD SOURCE CODE
   and be sure /bin directory is in your PATH environment variable.  
   
   Second, MTKIMG use "zlib" and "libpng" for logo unpack/repack to work.
-  Be sure "zlib-dev" (zlib-devel) and "libpng-dev" (libpng-devel) are installed on your system.
+  Be sure "zlib-dev" (zlib-devel) and "libpng-dev" (libpng-devel) are installed on your
+  system.
   
   Note for Windows:
    You need MinGW32 or MinGW64 (See UTILTIES FOR BUILDING SOURCE CODE section). 
@@ -148,7 +149,7 @@ E - HOW TO BUILD ZLIB AND LIBPNG ON WINDOWS
    6 - "png.h" and "libpng.a" are ready into "externals/libpng" directory
   
   
-E - MAKEFILE COMMANDS
+F - MAKEFILE COMMANDS
 
   Makefile is used to manage the source code on all platform.
   (On Windows make.bat invoke and pass command to mingw32-make)
@@ -165,7 +166,7 @@ E - MAKEFILE COMMANDS
    make backup   : Create a source zip backup  into ../bkp
    
    
-F - UTILTIES FOR BUILDING SOURCE CODE
+G - UTILTIES FOR BUILDING SOURCE CODE
 
   * MINGW32 or MINGW64 (Windows GCC compiler port)
     http://sourceforge.net/projects/mingw-w64
@@ -183,7 +184,7 @@ F - UTILTIES FOR BUILDING SOURCE CODE
     http://http://www.7-zip.org
 
 
-G - WHERE TO SPEAK ABOUT
+H - WHERE TO SPEAK ABOUT
 
   * GitHub official repository
     https://github.com/rom1nux/mtkimg	
@@ -195,7 +196,7 @@ G - WHERE TO SPEAK ABOUT
     http://forum.frandroid.com/topic/223380-outils-unpackrepack-bootimg-mediatek
   
   
-H - CHANGELOG
+I - CHANGELOG
 
   * 2015-07-16 - V0.40 - rom1nux
     - Fix kernel/ramdisk pages count
