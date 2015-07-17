@@ -64,7 +64,7 @@ B - HOW TO USE
    Osx     : Use your package manager to download application.
    Cygwin  : Use Cygwin setup.exe to install packages.
    Windows : If you dont have the bundle version of MTKIMG, download 
-             "mtkimg-win64-utilities.zip" extract files in the same directory of "mtkimg.exe"
+             "mtkimg-win64-utilities.zip" extract files in the directory of "mtkimg.exe"
 
   Launch a terminal, cd into directory where "mtkimg" (mtkimg.exe) is, and execute MTKIMG 
   without arguments to see full help/usage. (On Windows bundle version, you can start 
