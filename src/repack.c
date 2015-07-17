@@ -93,6 +93,13 @@ void repack(args_t* args)
 	// Compress ramdisk
 	if (!data.no_compress){
 		output("Packing ramdisk content from '%s'...",data.ramdisk);
+#if defined(APP_WIN)		
+		// Ensure permission are OK on Windows platform
+		sprintf(syscmd,"%s 775 %s",CHMOD_BIN, data.ramdisk);
+		verbose("Changing ramdisk directory permission...");
+		verbose("%s",syscmd);
+		if (system(syscmd)) fail("Could not change ramdisk directory '%s' permission !",data.ramdisk);
+#endif		
 		// Entering directory
 		if (!dir_change(data.ramdisk)) fail("Could not change to directory '%s' !",data.ramdisk);
 		// Create compress command line

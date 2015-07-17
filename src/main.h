@@ -39,7 +39,7 @@
 // Application constantes
 #define	APP_TITLE						"MTKIMG"				//!< Application title
 #define	APP_NAME						"mtkimg"				//!< Application name
-#define	APP_VERSION						"0.40"					//!< Application version
+#define	APP_VERSION						"0.41"					//!< Application version
 #define	APP_AUTHOR						"rom1nux"				//!< Application author
 
 // Detect platform
@@ -72,6 +72,7 @@
 	#define	FIND_BIN 					"find.exe"				//!< find external utility
 	#define	GZIP_BIN 					"gzip.exe"				//!< gzip external utility
 	#define	CPIO_BIN 					"cpio.exe"				//!< cpio external utility
+	#define	CHMOD_BIN 					"chmod.exe"				//!< cpio external utility
 #else	
 	#define	FILESEP 					'/'						//!< File path separator
 	#define	FIND_BIN 					"find"					//!< find external utility

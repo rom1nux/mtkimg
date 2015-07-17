@@ -24,13 +24,15 @@
 A - INTRODUCTION
 
   MTKIMG is a simple and portable utility to manage MTK Android ROM image file
-  like boot.img or recovery.img. 
+  like boot.img, recovery.img or logo.bin. 
   
   Characteristics :
 
    * Write in C, open-source.
-   * Portable (Linux, Cygwin, Windows, dont have MAC).
+   * Portable : Linux, Cygwin, Windows (MAC is currently under port).
    * Only one executable for unpack/repack.   
+   * Support unpack/repack boot.img and recovery.img.
+   * Support unpack logo.bin (repack is currently under development)   
    * Keep the original image size at repack time.
    * Automatic ramdisk decompression.
    * Option to keep or remove MTK headers.
@@ -43,23 +45,38 @@ A - INTRODUCTION
    * Got simple test-suite.
    * Documentation available.
 
+  Releases :
+
+   * mtkimg-0.41-linux64.zip       : Linux 64 bits binaries
+   * mtkimg-0.41-cygwin64.zip      : Cygwin 64 bits binaries
+   * mtkimg-0.41-osx64.zip         : Mac OSX 64 bits binaries
+   * mtkimg-0.41-win64.zip         : Windows 64 bits binaries only
+   * mtkimg-0.41-win64-bundle.zip  : Windows 64 bits binaries with externals utilities
+   * mtkimg-win64-utilities.zip    : Windows 64 bits externals utilities only
+   
    
 B - HOW TO USE   
 
-  Be sure "find", "gzip" and "cpio" utilities are installed on your system and are 
-  in your PATH environment variable.
+  Be sure "find", "gzip", "cpio" and "chmod" utilities are installed on your system 
+  and are in your PATH environment variable :
 
-  Linux   : Use your package manager to download application
-  Cygwin  : Use Cygwin setup.exe to install packages
-  Windows : You can manually download package from gnuwin
-            http://gnuwin32.sourceforge.net/packages/findutils.htm
-            http://gnuwin32.sourceforge.net/packages/gzip.htm
-            http://gnuwin32.sourceforge.net/packages/cpio.htm
+   Linux   : Use your package manager to download application.
+   Osx     : Use your package manager to download application.
+   Cygwin  : Use Cygwin setup.exe to install packages.
+   Windows : If you dont have the bundle version of MTKIMG, download 
+             "mtkimg-win64-utilities.zip" extract files in the same directory of "mtkimg.exe"
+
+  Launch a terminal, cd into directory where "mtkimg" (mtkimg.exe) is, and execute MTKIMG 
+  without arguments to see full help/usage. (On Windows bundle version, you can start 
+  terminal by click on "winterm.bat" that add externals utilities automatically in your
+  PATH environment variable for the current session.
+
+  On Linux, Cygwin or Osx hit "./mtkimg", on Windows hit "mtkimg.exe" to see full help.  
+
+  Basically : 
   
-  To unpack image hit :   ./mtkimg unpack boot.img
-  To repack image hit :   ./mtkimg repack newboot.img
-
-  On Linux or Cygwin hit "./mtkimg", on Windows hit "mtkimg.exe" to see full help.   
+   To unpack image execute :   ./mtkimg unpack boot.img
+   To repack image execute :   ./mtkimg repack newboot.img
 
   
 C - SOURCE CODE   
@@ -99,7 +116,7 @@ D - HOW TO BUILD SOURCE CODE
   Note for Windows:
    You need MinGW32 or MinGW64 (See UTILTIES FOR BUILDING SOURCE CODE section). 
    MinGW contain a port of "make" utility named "ming32-make" invoked by "make.bat'. 
-   You need to manually build "zlib" and "libpng" first before building MTKIM.
+   You need to manually build "zlib" and "libpng" first before building MTKIMG.
    (see HOW TO BUILD ZLIB AND LIBPNG ON WINDOWS section) .
   
   Here is the few steps to follow to build MTKIMG on your platform :
@@ -175,7 +192,7 @@ G - UTILTIES FOR BUILDING SOURCE CODE
     http://www.zlib.net
 
   * LIBPNG (Compression library)
-    http://www.libpng.org	
+    http://www.libpng.org
    
   * DOXYGEN (Multiplatform source code documentation generator)
     http://www.doxygen.org  
@@ -187,7 +204,7 @@ G - UTILTIES FOR BUILDING SOURCE CODE
 H - WHERE TO SPEAK ABOUT
 
   * GitHub official repository
-    https://github.com/rom1nux/mtkimg	
+    https://github.com/rom1nux/mtkimg
 
   * XDA Developers forum
     http://forum.xda-developers.com/android/development/tools-unpack-repack-boot-img-utility-t3154621
@@ -198,28 +215,33 @@ H - WHERE TO SPEAK ABOUT
   
 I - CHANGELOG
 
-  * 2015-07-16 - V0.40 - rom1nux
-    - Fix kernel/ramdisk pages count
-    - Fix overflow detection if kernel and/or ramdisk is too big
+  * 2015-07-18 - V0.41 - rom1nux
+    - Fix permission issue after repack on Windows version.
+    - Replace GNU Windows utilities by Cygwin utilities to preserve permission.
+    - Minor corrections.
+  
+  * 2015-07-17 - V0.40 - rom1nux
+    - Fix kernel/ramdisk pages count.
+    - Fix overflow detection if kernel and/or ramdisk is too big.
 
   * 2015-07-16 - V0.38 - rom1nux
-    - Unpack logo fully functional (Repack in progress)
-    - Add procedure to build zlib and libpng on Windows
-    - Makefile modification
+    - Unpack logo fully functional. (Repack in progress)
+    - Add procedure to build zlib and libpng on Windows.
+    - Makefile modification.
 
   * 2015-07-15 - V0.36 - rom1nux
-    - Begin to start Apple OSX port support (Thanks sambwel for your help)
+    - Begin to start Apple OSX port support. (Thanks sambwel for your help)
   
   * 2015-07-13 - V0.34 - rom1nux
-    - Start logo unpacking function (not completed yet)
-    - Documentation correction	 
+    - Start logo unpacking function. (not completed yet)
+    - Documentation correction.
 
   * 2015-07-11 - V0.33 - rom1nux
-    - Create GitHub repository
-    - Add source code under GPL3 license
+    - Create GitHub repository.
+    - Add source code under GPL3 license.
 
   * 2015-07-10 - V0.32 - rom1nux
-    - Add "srcdist" and "bindist" to Makefile
+    - Add "srcdist" and "bindist" to Makefile.
  
   * 2015-07-09 - V0.31 - rom1nux
-    - First beta
+    - First beta.
