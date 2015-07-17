@@ -69,7 +69,7 @@ B - HOW TO USE
   Launch a terminal, cd into directory where "mtkimg" (mtkimg.exe) is, and execute MTKIMG 
   without arguments to see full help/usage. (On Windows bundle version, you can start 
   terminal by click on "winterm.bat" that add externals utilities automatically in your
-  PATH environment variable for the current session.
+  PATH environment variable for the current session.)
 
   On Linux, Cygwin or Osx hit "./mtkimg", on Windows hit "mtkimg.exe" to see full help.  
 
