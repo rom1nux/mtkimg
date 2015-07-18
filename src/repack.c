@@ -201,7 +201,7 @@ void repack(args_t* args)
 	// RAMDISK
 	
 	// Write ramdisk MTK header
-	if (!kernel_is_mtk_file){
+	if (!ramdisk_is_mtk_file){
 		memset(&mtk_header,0x0,sizeof(mtk_header_t));
 		mtk_header.magic[0]=0x88; mtk_header.magic[1]=0x16;	mtk_header.magic[2]=0x88; mtk_header.magic[3]=0x58;	
 		mtk_header.size=ramdisk_size;
