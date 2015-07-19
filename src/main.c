@@ -140,7 +140,7 @@ void show_usage()
 	printf(" * If you use '--no-compress', '--ramdisk' must be a file instead of directory\n");
 	printf("   and it will be packed directly to output image.\n\n");
 	printf(" * Using '--keep-mtk-header' implies using '--no-decompress' when unpack.\n\n");
-	printf(" * Unpack command automatically detect if kernel or ramdisk got MTK header.\n\n");
+	printf(" * Repack command automatically detect if kernel or ramdisk got MTK header.\n\n");
 	printf("Examples :\n\n"); 
 	printf(" %s info myboot.img\n",app_data.exename);
 	printf(" %s unpack\n",app_data.exename);

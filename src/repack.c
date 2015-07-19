@@ -175,18 +175,19 @@ void repack_boot(repack_data_t* data)
 	total_size=total_pages*img_header.page_size;
 	
 	// Show layout
-	if (app_data.debug){
+	if (app_data.verbose){
 		img_header_show(&img_header);
-		printf("\nImage layout :\n\n");		
-		printf(" %-30s : %d bytes\n","Image size",img_cfg.size);
-		printf(" %-30s : 0x%08X\n","Header offset",0);
-		printf(" %-30s : %-20d (%d bytes)\n","Header pages",1,1*img_header.page_size);		
-		printf(" %-30s : 0x%08X\n","Kernel offset",kernel_offset);
-		printf(" %-30s : %-20d (%d bytes)\n","Kernel pages",kernel_pages,kernel_pages*img_header.page_size);
-		printf(" %-30s : 0x%08X\n","Ramdisk offset",ramdisk_offset);
-		printf(" %-30s : %-20d (%d bytes)\n","Ramdisk pages",ramdisk_pages,ramdisk_pages*img_header.page_size);		
-		printf(" %-30s : %-20d (%d bytes)\n","Total pages",total_pages,total_size);
-		putchar('\n');
+		verbose("\nImage layout :\n");		
+		verbose(" %-10s %10s %10s %15s","Bloc","Offset","Pages", "Size (bytes)");		
+		verbose(" ------------------------------------------------");
+		verbose(" %-10s 0x%08X %10d %15d","Header",0,1,img_header.page_size);
+		verbose(" %-10s 0x%08X %10d %15d","Kernel",kernel_offset,kernel_pages,kernel_pages*img_header.page_size);
+		verbose(" %-10s 0x%08X %10d %15d","Ramdisk",ramdisk_offset,ramdisk_pages,ramdisk_pages*img_header.page_size);
+		verbose(" %-10s 0x%08X %10d %15d","Free",ramdisk_offset+(ramdisk_pages*img_header.page_size),(img_cfg.size/img_header.page_size)-total_pages,img_cfg.size-total_size);
+		verbose(" ------------------------------------------------");
+		verbose(" %-10s %10s %10d %15d","Total","",img_cfg.size/img_header.page_size,img_cfg.size);
+		verbose(" ------------------------------------------------");
+		verbose("");
 	}
 	
 	// Check valid image size
@@ -212,6 +213,7 @@ void repack_boot(repack_data_t* data)
 		memcpy(mtk_header.type,"KERNEL",6);
 		memset(&mtk_header.unused2,0xFF,472);
 		if (!mtk_header_write(&mtk_header, fd)) fail("Could not create kernel MTK header !");
+		if (app_data.verbose) mtk_header_show(&mtk_header);
 	}
 	
 	// Write kernel	
@@ -231,6 +233,7 @@ void repack_boot(repack_data_t* data)
 		memcpy(mtk_header.type,img_cfg.type,32);
 		memset(&mtk_header.unused2,0xFF,472);
 		if (!mtk_header_write(&mtk_header, fd)) fail("Could not create ramdisk MTK header !");
+		if (app_data.verbose) mtk_header_show(&mtk_header);
 	}
 	
 	// Write ramdisk
@@ -343,8 +346,7 @@ void repack_logo(repack_data_t* data)
 		logo_count++;
 	}
 	verbose("");
-	closedir(dir);
-	output("%d logo found !",logo_count);
+	closedir(dir);	
 	
 	// Create map
 	verbose("Create offsets map...");
@@ -361,15 +363,16 @@ void repack_logo(repack_data_t* data)
 		bloc_size+=sizes[i];
 		offset+=sizes[i];
 	}
-	if (app_data.debug){
-		//debug("\nImages map (%d items) :\n",logo_count);
-		debug("\n  picture |   offset   | size (bytes)");
-		debug(" -------------------------------------");
+	if (app_data.verbose){
+		verbose("\n    img   |   offset   | size (bytes)");
+		verbose(" -------------------------------------");
 		for(i=0;i<logo_count;i++){
-			debug("     %.2d   | 0x%08X |   %8d",i+1,offsets[i],sizes[i]);
+			verbose("     %.2d   | 0x%08X |   %8d",i+1,offsets[i],sizes[i]);
 		}
-		debug(" -------------------------------------\n");
-	}
+		verbose(" -------------------------------------");
+		verbose("                           %8d\n",bloc_size);		
+	}	
+	output("%d logo found !",logo_count);
 	
 	// Openning output file
 	fd=fopen(data->output,"wb");
@@ -382,6 +385,7 @@ void repack_logo(repack_data_t* data)
 	strcpy(mtk_header.type,"LOGO");
 	memset(&mtk_header.unused2,0xFF,472);
 	if (!mtk_header_write(&mtk_header, fd)) fail("Could not create logo MTK header !");
+	if (app_data.verbose) mtk_header_show(&mtk_header);
 			
 	// Offset map
 	verbose("Writing offsets map...");	
@@ -396,7 +400,7 @@ void repack_logo(repack_data_t* data)
 	verbose("Writing %d logos...",logo_count);	
 	for(i=0;i<logo_count;i++){
 		sprintf(src,"%s%c%s%02d.bin",TMP_LOGO_DIR,FILESEP,LOGOS_FILENAME_PREFIX,i+1);
-		verbose("Repacking '%s'...",src);
+		debug("Repacking '%s'...",src);
 		if (!repack_file(fd,src)) fail("Could not repack logo '%s' !",src);
 	}
 	

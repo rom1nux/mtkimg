@@ -102,56 +102,56 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="main_8h.html#af0b5cfa4242ae7f98ba80fd23ef8afa9">   41</a></span>&#160;<span class="preprocessor">#define APP_NAME                        &quot;mtkimg&quot;                </span></div>
 <div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="main_8h.html#a92673e33f27532767749b79edb8ef806">   42</a></span>&#160;<span class="preprocessor">#define APP_VERSION                     &quot;0.43&quot;                  </span></div>
 <div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="main_8h.html#a87832488ddb61266f75ab21e1b6402cb">   43</a></span>&#160;<span class="preprocessor">#define APP_AUTHOR                      &quot;rom1nux&quot;               </span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">//PNG_LIBPNG_VER_STRING </span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">//ZLIB_VERSION</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">// Detect platform</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#if defined(__WIN32__) || defined(__WIN64__)</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">    #define APP_PLATFORM                &quot;win&quot;                   </span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">    #define APP_WIN                     1                       </span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#elif defined(__CYGWIN__)</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">    #define APP_PLATFORM                &quot;cygwin&quot;                </span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">    #define APP_CYGWIN                  1                       </span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#elif defined(__APPLE__) || defined(__MACH__)</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">    #define APP_PLATFORM                &quot;osx&quot;                   </span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">    #define APP_OSX                     1                       </span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#elif defined(__linux__)</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">    #define APP_PLATFORM                &quot;linux&quot;                 </span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">    #define APP_LINUX                   1                       </span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">    #warning &quot;Unsupported platform !&quot;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">// Detect architecture  </span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#if defined(__x86_64__)</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">    #define APP_ARCH                    64                      </span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="main_8h.html#a0f79edc628fc148c9ac2a0607f02920f">   68</a></span>&#160;<span class="preprocessor">    #define APP_ARCH                    32                      </span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#endif  </span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">// Platform specifics</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#if defined(APP_WIN)</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">    #define FILESEP                     &#39;\\&#39;                    </span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">    #define FIND_BIN                    &quot;find.exe&quot;              </span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">    #define GZIP_BIN                    &quot;gzip.exe&quot;              </span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">    #define CPIO_BIN                    &quot;cpio.exe&quot;              </span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">    #define CHMOD_BIN                   &quot;chmod.exe&quot;             </span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#else   </span></div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="main_8h.html#a77031e1d2add2bfa07e04e0280fad374">   79</a></span>&#160;<span class="preprocessor">    #define FILESEP                     &#39;/&#39;                     </span></div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="main_8h.html#a458e36f75dce3074ee9e515c3fc6239b">   80</a></span>&#160;<span class="preprocessor">    #define FIND_BIN                    &quot;find&quot;                  </span></div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="main_8h.html#a779f6e839309b3ddc52963ba8283319b">   81</a></span>&#160;<span class="preprocessor">    #define GZIP_BIN                    &quot;gzip&quot;                  </span></div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="main_8h.html#a92307827150af01a80ecb3a972ab2caf">   82</a></span>&#160;<span class="preprocessor">    #define CPIO_BIN                    &quot;cpio&quot;                  </span></div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="main_8h.html#a02812b5f7c32e84a3f79bd374a7a09ed">   83</a></span>&#160;<span class="preprocessor">    #define DIR_CHMOD                   S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH </span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">// Usefull common constantes</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="main_8h.html#a965df5ba2db3f4ad3d1875ce90992b74">   87</a></span>&#160;<span class="preprocessor">#define PATH_MAX_SIZE                   256                     </span></div>
-<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="main_8h.html#a4a5ae9e2ea352380175b1aec9a5d6d1b">   88</a></span>&#160;<span class="preprocessor">#define STR_MAX_SIZE                    256                     </span></div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="main_8h.html#a0dee5da5b9d201c7443ebf5495189537">   89</a></span>&#160;<span class="preprocessor">#define CMD_MAX_SIZE                    512                     </span></div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="main_8h.html#a6b20d41d6252e9871430c242cb1a56e7">   90</a></span>&#160;<span class="preprocessor">#define BUFFER_SIZE                     4096                    </span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">// Commandes constantes</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="main_8h.html#a42553adbbb23a03ca876697c00ea44b1">   93</a></span>&#160;<span class="preprocessor">#define CMD_HELP                        &quot;help&quot;                  </span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">// Detect platform</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#if defined(__WIN32__) || defined(__WIN64__)</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">    #define APP_PLATFORM                &quot;win&quot;                   </span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">    #define APP_WIN                     1                       </span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#elif defined(__CYGWIN__)</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">    #define APP_PLATFORM                &quot;cygwin&quot;                </span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">    #define APP_CYGWIN                  1                       </span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#elif defined(__APPLE__) || defined(__MACH__)</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">    #define APP_PLATFORM                &quot;osx&quot;                   </span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">    #define APP_OSX                     1                       </span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#elif defined(__linux__)</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">    #define APP_PLATFORM                &quot;linux&quot;                 </span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">    #define APP_LINUX                   1                       </span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">    #warning &quot;Unsupported platform !&quot;</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">// Detect architecture  </span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#if defined(__x86_64__)</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">    #define APP_ARCH                    64                      </span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="main_8h.html#a0f79edc628fc148c9ac2a0607f02920f">   67</a></span>&#160;<span class="preprocessor">    #define APP_ARCH                    32                      </span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif  </span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">// Platform specifics</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#if defined(APP_WIN)</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">    #define FILESEP                     &#39;\\&#39;                    </span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">    #define FIND_BIN                    &quot;find.exe&quot;              </span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">    #define GZIP_BIN                    &quot;gzip.exe&quot;              </span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">    #define CPIO_BIN                    &quot;cpio.exe&quot;              </span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">    #define CHMOD_BIN                   &quot;chmod.exe&quot;             </span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#else   </span></div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="main_8h.html#a77031e1d2add2bfa07e04e0280fad374">   78</a></span>&#160;<span class="preprocessor">    #define FILESEP                     &#39;/&#39;                     </span></div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="main_8h.html#a458e36f75dce3074ee9e515c3fc6239b">   79</a></span>&#160;<span class="preprocessor">    #define FIND_BIN                    &quot;find&quot;                  </span></div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="main_8h.html#a779f6e839309b3ddc52963ba8283319b">   80</a></span>&#160;<span class="preprocessor">    #define GZIP_BIN                    &quot;gzip&quot;                  </span></div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="main_8h.html#a92307827150af01a80ecb3a972ab2caf">   81</a></span>&#160;<span class="preprocessor">    #define CPIO_BIN                    &quot;cpio&quot;                  </span></div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="main_8h.html#a02812b5f7c32e84a3f79bd374a7a09ed">   82</a></span>&#160;<span class="preprocessor">    #define DIR_CHMOD                   S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH </span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">// Usefull common constantes</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="main_8h.html#a965df5ba2db3f4ad3d1875ce90992b74">   86</a></span>&#160;<span class="preprocessor">#define PATH_MAX_SIZE                   256                     </span></div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="main_8h.html#a4a5ae9e2ea352380175b1aec9a5d6d1b">   87</a></span>&#160;<span class="preprocessor">#define STR_MAX_SIZE                    256                     </span></div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="main_8h.html#a0dee5da5b9d201c7443ebf5495189537">   88</a></span>&#160;<span class="preprocessor">#define CMD_MAX_SIZE                    512                     </span></div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="main_8h.html#a6b20d41d6252e9871430c242cb1a56e7">   89</a></span>&#160;<span class="preprocessor">#define BUFFER_SIZE                     4096                    </span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">// Commandes constantes</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="main_8h.html#a42553adbbb23a03ca876697c00ea44b1">   92</a></span>&#160;<span class="preprocessor">#define CMD_HELP                        &quot;help&quot;                  </span></div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="main_8h.html#ad64394fffb2b4f7b396494845b7a3508">   93</a></span>&#160;<span class="preprocessor">#define CMD_VERSION                     &quot;version&quot;               </span></div>
 <div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="main_8h.html#a42bf1fd637b1c921700bf479cc2f8533">   94</a></span>&#160;<span class="preprocessor">#define CMD_INFO                        &quot;info&quot;                  </span></div>
 <div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="main_8h.html#a025862eb7e8570616f33879d878eaf43">   95</a></span>&#160;<span class="preprocessor">#define CMD_UNPACK                      &quot;unpack&quot;                </span></div>
 <div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="main_8h.html#a336f84ffa00d7616be64011734257099">   96</a></span>&#160;<span class="preprocessor">#define CMD_REPACK                      &quot;repack&quot;                </span></div>
@@ -261,14 +261,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="comment">// Prototypes</span></div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="keywordtype">int</span> <a class="code" href="main_8h.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="keywordtype">void</span> <a class="code" href="main_8h.html#a78bf8646c074be1959943f73bd7458c0">show_usage</a>();</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="keywordtype">void</span> <a class="code" href="main_8h.html#af8f154bf210b7ff6d50433da876083e6">show_version</a>();</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="keywordtype">void</span> <a class="code" href="main_8h.html#a78bf8646c074be1959943f73bd7458c0">show_usage</a>();</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="structapp__data__t_html_a398527b3e9e358c345c5047b16871957"><div class="ttname"><a href="structapp__data__t.html#a398527b3e9e358c345c5047b16871957">app_data_t::debug</a></div><div class="ttdeci">bool debug</div><div class="ttdoc">Debug enable flag. </div><div class="ttdef"><b>Definition:</b> main.h:151</div></div>
 <div class="ttc" id="structlogo__db__t_html_a155d2f7c2171367e9a3800c5a190df18"><div class="ttname"><a href="structlogo__db__t.html#a155d2f7c2171367e9a3800c5a190df18">logo_db_t::nitems</a></div><div class="ttdeci">unsigned int nitems</div><div class="ttdoc">Resolutions count. </div><div class="ttdef"><b>Definition:</b> main.h:215</div></div>
 <div class="ttc" id="main_8h_html_a4ae428b999c307214d10245f0b0fddfb"><div class="ttname"><a href="main_8h.html#a4ae428b999c307214d10245f0b0fddfb">img_cfg_t</a></div><div class="ttdeci">struct img_cfg_t img_cfg_t</div><div class="ttdoc">Image configuration structure. </div></div>
 <div class="ttc" id="structimg__header__t_html_a79bc4044043abf4e87c8ced5ea4db847"><div class="ttname"><a href="structimg__header__t.html#a79bc4044043abf4e87c8ced5ea4db847">img_header_t::tags_addr</a></div><div class="ttdeci">uint32_t tags_addr</div><div class="ttdoc">Tags address (ex: 0x10000100) </div><div class="ttdef"><b>Definition:</b> main.h:173</div></div>
-<div class="ttc" id="main_8h_html_a4a5ae9e2ea352380175b1aec9a5d6d1b"><div class="ttname"><a href="main_8h.html#a4a5ae9e2ea352380175b1aec9a5d6d1b">STR_MAX_SIZE</a></div><div class="ttdeci">#define STR_MAX_SIZE</div><div class="ttdoc">Maximum size of common string. </div><div class="ttdef"><b>Definition:</b> main.h:88</div></div>
+<div class="ttc" id="main_8h_html_a4a5ae9e2ea352380175b1aec9a5d6d1b"><div class="ttname"><a href="main_8h.html#a4a5ae9e2ea352380175b1aec9a5d6d1b">STR_MAX_SIZE</a></div><div class="ttdeci">#define STR_MAX_SIZE</div><div class="ttdoc">Maximum size of common string. </div><div class="ttdef"><b>Definition:</b> main.h:87</div></div>
 <div class="ttc" id="structapp__data__t_html_a3b220e16914b029b3755dc41339c8ffe"><div class="ttname"><a href="structapp__data__t.html#a3b220e16914b029b3755dc41339c8ffe">app_data_t::exename</a></div><div class="ttdeci">char exename[PATH_MAX_SIZE]</div><div class="ttdoc">Executable filename (without path) </div><div class="ttdef"><b>Definition:</b> main.h:147</div></div>
 <div class="ttc" id="main_8h_html_a3e4e4434394af00b6501b60acfe570c0"><div class="ttname"><a href="main_8h.html#a3e4e4434394af00b6501b60acfe570c0">args_t</a></div><div class="ttdeci">struct args_t args_t</div><div class="ttdoc">Command arguments structure. </div></div>
 <div class="ttc" id="structimg__cfg__t_html_a9acf1fefc6ac2287c48bfac44b8f3b81"><div class="ttname"><a href="structimg__cfg__t.html#a9acf1fefc6ac2287c48bfac44b8f3b81">img_cfg_t::type</a></div><div class="ttdeci">char type[32]</div><div class="ttdoc">Payload type of ramdisk part. </div><div class="ttdef"><b>Definition:</b> main.h:197</div></div>
@@ -280,6 +281,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="structmtk__header__t_html_ab2c6b258f02add8fdf4cfc7c371dd772"><div class="ttname"><a href="structmtk__header__t.html#ab2c6b258f02add8fdf4cfc7c371dd772">mtk_header_t::size</a></div><div class="ttdeci">uint32_t size</div><div class="ttdoc">Payload size in bytes. </div><div class="ttdef"><b>Definition:</b> main.h:187</div></div>
 <div class="ttc" id="structimg__header__t_html"><div class="ttname"><a href="structimg__header__t.html">img_header_t</a></div><div class="ttdoc">Image header structure. </div><div class="ttdef"><b>Definition:</b> main.h:165</div></div>
 <div class="ttc" id="structlogo__db__item__t_html"><div class="ttname"><a href="structlogo__db__item__t.html">logo_db_item_t</a></div><div class="ttdoc">Logo size database item. </div><div class="ttdef"><b>Definition:</b> main.h:204</div></div>
+<div class="ttc" id="main_8h_html_af8f154bf210b7ff6d50433da876083e6"><div class="ttname"><a href="main_8h.html#af8f154bf210b7ff6d50433da876083e6">show_version</a></div><div class="ttdeci">void show_version()</div><div class="ttdoc">Display detailed application version. </div><div class="ttdef"><b>Definition:</b> main.c:94</div></div>
 <div class="ttc" id="structmtk__header__t_html_ac15390713881b6bd51a7a1b975181798"><div class="ttname"><a href="structmtk__header__t.html#ac15390713881b6bd51a7a1b975181798">mtk_header_t::unused2</a></div><div class="ttdeci">char unused2[472]</div><div class="ttdoc">Unused, filled with 0xFF. </div><div class="ttdef"><b>Definition:</b> main.h:189</div></div>
 <div class="ttc" id="structimg__header__t_html_a29e8924b3c7333f4927ec61d9516b69f"><div class="ttname"><a href="structimg__header__t.html#a29e8924b3c7333f4927ec61d9516b69f">img_header_t::second_size</a></div><div class="ttdeci">uint32_t second_size</div><div class="ttdoc">Second stage size in bytes (Can be 0) </div><div class="ttdef"><b>Definition:</b> main.h:171</div></div>
 <div class="ttc" id="structimg__header__t_html_af2c640e99f79fac40e17a3a55a70797f"><div class="ttname"><a href="structimg__header__t.html#af2c640e99f79fac40e17a3a55a70797f">img_header_t::ramdisk_size</a></div><div class="ttdeci">uint32_t ramdisk_size</div><div class="ttdoc">Ramdisk size in bytes. </div><div class="ttdef"><b>Definition:</b> main.h:169</div></div>
@@ -287,7 +289,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="structargs__t_html_ad1447518f4372828b8435ae82e48499e"><div class="ttname"><a href="structargs__t.html#ad1447518f4372828b8435ae82e48499e">args_t::argc</a></div><div class="ttdeci">int argc</div><div class="ttdoc">Arguments count. </div><div class="ttdef"><b>Definition:</b> main.h:158</div></div>
 <div class="ttc" id="structimg__header__t_html_a9dd3e47e968a8f6beb5d88c6d1b7ebe9"><div class="ttname"><a href="structimg__header__t.html#a9dd3e47e968a8f6beb5d88c6d1b7ebe9">img_header_t::page_size</a></div><div class="ttdeci">uint32_t page_size</div><div class="ttdoc">Page size in bytes (ex: 2048) </div><div class="ttdef"><b>Definition:</b> main.h:174</div></div>
 <div class="ttc" id="structapp__data__t_html_af5703d73f10e2c279d3a9f2a08f4485e"><div class="ttname"><a href="structapp__data__t.html#af5703d73f10e2c279d3a9f2a08f4485e">app_data_t::working_dir</a></div><div class="ttdeci">char working_dir[PATH_MAX_SIZE]</div><div class="ttdoc">Current working directory. </div><div class="ttdef"><b>Definition:</b> main.h:148</div></div>
-<div class="ttc" id="main_8h_html_a78bf8646c074be1959943f73bd7458c0"><div class="ttname"><a href="main_8h.html#a78bf8646c074be1959943f73bd7458c0">show_usage</a></div><div class="ttdeci">void show_usage()</div><div class="ttdoc">Display application usage. </div><div class="ttdef"><b>Definition:</b> main.c:91</div></div>
+<div class="ttc" id="main_8h_html_a78bf8646c074be1959943f73bd7458c0"><div class="ttname"><a href="main_8h.html#a78bf8646c074be1959943f73bd7458c0">show_usage</a></div><div class="ttdeci">void show_usage()</div><div class="ttdoc">Display application usage. </div><div class="ttdef"><b>Definition:</b> main.c:109</div></div>
 <div class="ttc" id="structmtk__header__t_html"><div class="ttname"><a href="structmtk__header__t.html">mtk_header_t</a></div><div class="ttdoc">MTK header structure. </div><div class="ttdef"><b>Definition:</b> main.h:185</div></div>
 <div class="ttc" id="main_8h_html_a244dd8d2d1e4e0734ab5d451132547a5"><div class="ttname"><a href="main_8h.html#a244dd8d2d1e4e0734ab5d451132547a5">img_header_t</a></div><div class="ttdeci">struct img_header_t img_header_t</div><div class="ttdoc">Image header structure. </div></div>
 <div class="ttc" id="structlogo__db__t_html"><div class="ttname"><a href="structlogo__db__t.html">logo_db_t</a></div><div class="ttdoc">Logo size database. </div><div class="ttdef"><b>Definition:</b> main.h:213</div></div>
@@ -302,7 +304,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="structimg__cfg__t_html_ab2c6b258f02add8fdf4cfc7c371dd772"><div class="ttname"><a href="structimg__cfg__t.html#ab2c6b258f02add8fdf4cfc7c371dd772">img_cfg_t::size</a></div><div class="ttdeci">uint32_t size</div><div class="ttdoc">Size of image. </div><div class="ttdef"><b>Definition:</b> main.h:198</div></div>
 <div class="ttc" id="info_8h_html"><div class="ttname"><a href="info_8h.html">info.h</a></div><div class="ttdoc">Info command header. </div></div>
 <div class="ttc" id="structlogo__db__item__t_html_aca34d28e3d8bcbcadb8edb4e3af24f8c"><div class="ttname"><a href="structlogo__db__item__t.html#aca34d28e3d8bcbcadb8edb4e3af24f8c">logo_db_item_t::width</a></div><div class="ttdeci">unsigned int width</div><div class="ttdoc">Resolution width. </div><div class="ttdef"><b>Definition:</b> main.h:206</div></div>
-<div class="ttc" id="main_8h_html_a965df5ba2db3f4ad3d1875ce90992b74"><div class="ttname"><a href="main_8h.html#a965df5ba2db3f4ad3d1875ce90992b74">PATH_MAX_SIZE</a></div><div class="ttdeci">#define PATH_MAX_SIZE</div><div class="ttdoc">Maximum size of path. </div><div class="ttdef"><b>Definition:</b> main.h:87</div></div>
+<div class="ttc" id="main_8h_html_a965df5ba2db3f4ad3d1875ce90992b74"><div class="ttname"><a href="main_8h.html#a965df5ba2db3f4ad3d1875ce90992b74">PATH_MAX_SIZE</a></div><div class="ttdeci">#define PATH_MAX_SIZE</div><div class="ttdoc">Maximum size of path. </div><div class="ttdef"><b>Definition:</b> main.h:86</div></div>
 <div class="ttc" id="main_8h_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="main_8h.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdoc">Main entry point. </div><div class="ttdef"><b>Definition:</b> main.c:34</div></div>
 <div class="ttc" id="structapp__data__t_html"><div class="ttname"><a href="structapp__data__t.html">app_data_t</a></div><div class="ttdoc">Application data structure. </div><div class="ttdef"><b>Definition:</b> main.h:146</div></div>
 <div class="ttc" id="repack_8h_html"><div class="ttname"><a href="repack_8h.html">repack.h</a></div><div class="ttdoc">Repack command header. </div></div>
@@ -323,7 +325,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 19 2015 22:07:08 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jul 20 2015 00:32:39 for MTKIMG by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

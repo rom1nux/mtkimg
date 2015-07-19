@@ -1274,7 +1274,7 @@ bool file_exists(char* filename)
 bool file_remove(char* filename)
 {
 	if (file_exists(filename)){
-		verbose("Removing file '%s'...",filename);
+		debug("Removing file '%s'...",filename);
 		return (!unlink(filename));
 	}
 	return true;
@@ -1329,7 +1329,7 @@ bool dir_exists(char* dirname)
  */
 bool dir_create(char* dirname)
 {
-	verbose("Create directory '%s'...",dirname);
+	debug("Create directory '%s'...",dirname);
 #if defined(APP_WIN)	
 	return (!mkdir(dirname));
 #else
@@ -1358,12 +1358,12 @@ bool dir_remove(char* dirname)
 		if (is_dir(filename)){			
 			if (!dir_remove(filename)){ error("Could not remove directory '%s' !",filename); break;}
 		}else{			
-			verbose("Removing file '%s'...",filename);
+			debug("Removing file '%s'...",filename);
 			if (unlink(filename)){ error("Could not remove file '%s' !",filename); break;}			
 		}
 	}
 	closedir(dir);
-	verbose("Removing directory '%s'...",dirname);
+	debug("Removing directory '%s'...",dirname);
 	return (!rmdir(dirname));		
 }
 

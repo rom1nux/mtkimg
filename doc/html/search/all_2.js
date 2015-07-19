@@ -8,6 +8,7 @@ var searchData=
   ['cmd_5ftype_5ft',['cmd_type_t',['../main_8h.html#a07a6a91973814c0c577756f699c1e34b',1,'cmd_type_t():&#160;main.h'],['../main_8h.html#ab026691a57bf3f99c3278ba97ce5466f',1,'cmd_type_t():&#160;main.h']]],
   ['cmd_5ftype_5fto_5fstr',['cmd_type_to_str',['../tools_8c.html#a2cea0a5df13777191dcc9ef57ad8db84',1,'cmd_type_to_str(cmd_type_t type):&#160;tools.c'],['../tools_8h.html#a2cea0a5df13777191dcc9ef57ad8db84',1,'cmd_type_to_str(cmd_type_t type):&#160;tools.c']]],
   ['cmd_5funpack',['CMD_UNPACK',['../main_8h.html#a025862eb7e8570616f33879d878eaf43',1,'main.h']]],
+  ['cmd_5fversion',['CMD_VERSION',['../main_8h.html#ad64394fffb2b4f7b396494845b7a3508',1,'main.h']]],
   ['cmdline',['cmdline',['../structimg__header__t.html#afa9851e68cd7f936af88f0e6ce926df2',1,'img_header_t']]],
   ['compress_5frate',['compress_rate',['../structrepack__data__t.html#a543845cdfa203cf5dd96b0b49c9a0032',1,'repack_data_t']]],
   ['config',['config',['../structrepack__data__t.html#a5b546a820b047538535921bad23ad9c2',1,'repack_data_t::config()'],['../structunpack__data__t.html#a5b546a820b047538535921bad23ad9c2',1,'unpack_data_t::config()']]],

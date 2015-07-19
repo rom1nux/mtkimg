@@ -134,7 +134,7 @@ void unpack_boot(unpack_data_t* data)
 	
 	// Reading image header	
 	if (!img_header_read(&img_header,fs)) fail("Could not read image header !");	
-	if (app_data.debug) img_header_show(&img_header);
+	if (app_data.verbose) img_header_show(&img_header);
 	if (!img_header_check_signature(&img_header)) fail("Android image signature is not valid !");
 	memcpy(&img_cfg.header,&img_header,sizeof(img_header_t));
 	
@@ -149,17 +149,18 @@ void unpack_boot(unpack_data_t* data)
 	total_size=total_pages*img_header.page_size;
 	
 	// Show layout
-	if (app_data.debug){
-		printf("\nImage layout :\n\n");		
-		printf(" %-30s : %d bytes\n","Image size",img_cfg.size);
-		printf(" %-30s : 0x%08X\n","Header offset",0);
-		printf(" %-30s : %-20d (%d bytes)\n","Header pages",1,1*img_header.page_size);		
-		printf(" %-30s : 0x%08X\n","Kernel offset",kernel_offset);
-		printf(" %-30s : %-20d (%d bytes)\n","Kernel pages",kernel_pages,kernel_pages*img_header.page_size);
-		printf(" %-30s : 0x%08X\n","Ramdisk offset",ramdisk_offset);
-		printf(" %-30s : %-20d (%d bytes)\n","Ramdisk pages",ramdisk_pages,ramdisk_pages*img_header.page_size);		
-		printf(" %-30s : %-20d (%d bytes)\n","Total pages",total_pages,total_size);		
-		putchar('\n');
+	if (app_data.verbose){
+		verbose("\nImage layout :\n");		
+		verbose(" %-10s %10s %10s %15s","Bloc","Offset","Pages", "Size (bytes)");
+		verbose(" ------------------------------------------------");
+		verbose(" %-10s 0x%08X %10d %15d","Header",0,1,img_header.page_size);
+		verbose(" %-10s 0x%08X %10d %15d","Kernel",kernel_offset,kernel_pages,kernel_pages*img_header.page_size);
+		verbose(" %-10s 0x%08X %10d %15d","Ramdisk",ramdisk_offset,ramdisk_pages,ramdisk_pages*img_header.page_size);
+		verbose(" %-10s 0x%08X %10d %15d","Free",ramdisk_offset+(ramdisk_pages*img_header.page_size),(img_cfg.size/img_header.page_size)-total_pages,img_cfg.size-total_size);
+		verbose(" ------------------------------------------------");
+		verbose(" %-10s %10s %10d %15d","Total","",img_cfg.size/img_header.page_size,img_cfg.size);
+		verbose(" ------------------------------------------------");
+		verbose("");
 	}
 	
 	// KERNEL
@@ -171,7 +172,7 @@ void unpack_boot(unpack_data_t* data)
 	if (!data->keep_mtk_header){
 		// Reading MTK header		
 		if (!mtk_header_read(&mtk_header,fs)) fail("Could not read kernel header !");	
-		if (app_data.debug) mtk_header_show(&mtk_header);
+		if (app_data.verbose) mtk_header_show(&mtk_header);
 		// Checking MTK header
 		if (!mtk_header_check_magic(&mtk_header)) fail("Kernel header magic is not valid !");
 		if (!mtk_header_check_type(&mtk_header,"KERNEL")) fail("Kernel header type is not valid !");
@@ -196,7 +197,7 @@ void unpack_boot(unpack_data_t* data)
 	if (!data->keep_mtk_header){			
 		// Reading MTK header		
 		if (!mtk_header_read(&mtk_header,fs)) fail("Could not read ramdisk header !");	
-		if (app_data.debug) mtk_header_show(&mtk_header);
+		if (app_data.verbose) mtk_header_show(&mtk_header);
 		// Checking MTK header
 		if (!mtk_header_check_magic(&mtk_header)) fail("Ramdisk header magic is not valid !");
 		if ((!mtk_header_check_type(&mtk_header,"ROOTFS")) && (!mtk_header_check_type(&mtk_header,"RECOVERY"))) fail("Ramdisk header type is not valid !");
@@ -358,16 +359,15 @@ void unpack_logo(unpack_data_t* data)
 	memset(sizes,0x0,bytes);	
 	for(i=0;i<logo_count-1;i++)	sizes[i]=offsets[i+1]-offsets[i];
 	sizes[i]=bloc_size-offsets[i];
-	if (app_data.debug){
-		//debug("\nImages map (%d items) :\n",logo_count);
-		debug("\n  picture |   offset   | size (bytes)");
-		debug(" -------------------------------------");
+	if (app_data.verbose){		
+		verbose("\n    img   |   offset   | size (bytes)");
+		verbose(" -------------------------------------");
 		for(i=0;i<logo_count;i++){
-			debug("     %.2d   | 0x%08X |   %8d",i+1,offsets[i],sizes[i]);
+			verbose("     %.2d   | 0x%08X |   %8d",i+1,offsets[i],sizes[i]);
 		}
-		debug(" -------------------------------------\n");
+		verbose(" -------------------------------------");
+		verbose("                           %8d\n",bloc_size);
 	}
-		
 		
 	// Unpack all images
 	output("Unpack logo content to '%s'...",data->logos);

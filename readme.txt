@@ -32,7 +32,7 @@ A - INTRODUCTION
    * Portable : Linux, Cygwin, Windows (MAC is currently under port).
    * Only one executable for unpack/repack.   
    * Support unpack/repack boot.img and recovery.img.
-   * Support unpack logo.bin (repack is currently under development)   
+   * Support unpack/repack logo.bin   
    * Keep the original image size at repack time.
    * Automatic ramdisk decompression.
    * Option to keep or remove MTK headers.
@@ -48,11 +48,11 @@ A - INTRODUCTION
 
   Releases :
 
-   * mtkimg-0.42-linux64.zip       : Linux 64 bits binaries
-   * mtkimg-0.42-cygwin64.zip      : Cygwin 64 bits binaries
-   * mtkimg-0.42-osx64.zip         : Mac OSX 64 bits binaries
-   * mtkimg-0.42-win64.zip         : Windows 64 bits binaries only
-   * mtkimg-0.42-win64-bundle.zip  : Windows 64 bits binaries with externals utilities
+   * mtkimg-0.43-linux64.zip       : Linux 64 bits binaries
+   * mtkimg-0.43-cygwin64.zip      : Cygwin 64 bits binaries
+   * mtkimg-0.43-osx64.zip         : Mac OSX 64 bits binaries
+   * mtkimg-0.43-win64.zip         : Windows 64 bits binaries only
+   * mtkimg-0.43-win64-bundle.zip  : Windows 64 bits binaries with externals utilities
    * mtkimg-win64-utilities.zip    : Windows 64 bits externals utilities only
    
    
@@ -76,10 +76,13 @@ B - HOW TO USE
 
   Basically : 
   
-   To unpack image execute :   ./mtkimg unpack boot.img
-   To repack image execute :   ./mtkimg repack newboot.img
+   To unpack boot image execute :   ./mtkimg unpack boot.img
+   To repack boot image execute :   ./mtkimg repack newboot.img
 
+   To unpack logo image execute :   ./mtkimg unpack -t logo logo.bin
+   To repack logo image execute :   ./mtkimg repack -t logo newlogo.bin
   
+    
 C - SOURCE CODE   
 
   Code source is multi-platform (Linux, Cygwin, Windows) and got several utilities
@@ -198,7 +201,7 @@ G - UTILTIES FOR BUILDING SOURCE CODE
   * DOXYGEN (Multiplatform source code documentation generator)
     http://www.doxygen.org  
 
-  * 7-ZIP (Windows compression/decompression utilities)	
+  * 7-ZIP (Windows compression/decompression utilities)
     http://http://www.7-zip.org
 
 
@@ -219,9 +222,11 @@ I - CHANGELOG
   * 2015-07-19 - V0.43 - rom1nux
     - Add Repack logo
     - Add image.cfg type checking before repack
-	- Replace --version by --release
-	- Add --version command and option to see detailed version
-	
+    - Replace --version by --release
+    - Add --version command and option to see detailed version
+    - Change verbose/debug behavior
+    - Change image layout presentation
+    
   * 2015-07-19 - V0.42 - rom1nux
     - Fix problem at repack when kernel already got MTK header
 

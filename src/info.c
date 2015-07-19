@@ -74,16 +74,17 @@ void info(args_t* args)
 	total_size=total_pages*img_header.page_size;
 	
 	// Show layout
-	printf("\nImage layout :\n\n");	
-	printf(" %-30s : %d bytes\n","Image size",img_size);
-	printf(" %-30s : 0x%08X\n","Header offset",0);
-	printf(" %-30s : %-20d (%d bytes)\n","Header pages",1,1*img_header.page_size);
-	printf(" %-30s : 0x%08X\n","Kernel offset",kernel_offset);
-	printf(" %-30s : %-20d (%d bytes)\n","Kernel pages",kernel_pages,kernel_pages*img_header.page_size);
-	printf(" %-30s : 0x%08X\n","Ramdisk offset",ramdisk_offset);
-	printf(" %-30s : %-20d (%d bytes)\n","Ramdisk pages",ramdisk_pages,ramdisk_pages*img_header.page_size);
-	printf(" %-30s : %-20d (%d bytes)\n","Total pages",total_pages,total_size);
-	
+	output("\nImage layout :\n");	
+	output(" %-10s %10s %10s %15s","Bloc","Offset","Pages", "Size (bytes)");		
+	output(" ------------------------------------------------");
+	output(" %-10s 0x%08X %10d %15d","Header",0,1,img_header.page_size);
+	output(" %-10s 0x%08X %10d %15d","Kernel",kernel_offset,kernel_pages,kernel_pages*img_header.page_size);
+	output(" %-10s 0x%08X %10d %15d","Ramdisk",ramdisk_offset,ramdisk_pages,ramdisk_pages*img_header.page_size);
+	output(" %-10s 0x%08X %10d %15d","Free",ramdisk_offset+(ramdisk_pages*img_header.page_size),(img_size/img_header.page_size)-total_pages,img_size-total_size);
+	output(" ------------------------------------------------");
+	output(" %-10s %10s %10d %15d","Total","",img_size/img_header.page_size,img_size);
+	output(" ------------------------------------------------");
+	output("\n");	
 
 	// Closing input filename
 	fclose(fs);
