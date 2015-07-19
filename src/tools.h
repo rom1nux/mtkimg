@@ -46,7 +46,7 @@
 #ifdef LOGO_SUPPORT
 // Image convertion
 bool png_to_rgb565(char* src, char *dest);
-bool rgb565_to_png(char* src, char *dest, unsigned int width, unsigned int height);
+bool rgb565_to_png(char* src, char *dest, uint32_t width, uint32_t height);
 
 // Inflate/Deflate
 bool deflate_file(char* src, char *dest, int rate);

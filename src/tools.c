@@ -45,7 +45,7 @@ bool png_to_rgb565(char* src, char *dest)
 	bool success=false;	
 	png_structp png_s;
 	png_infop png_i;
-	unsigned int width, height, x, y, towrite;
+	uint32_t width, height, x, y, towrite;
 	int bit_depth, color_type,npasses;
 		
 	fs=fopen(src,"rb");
@@ -119,7 +119,7 @@ failed:
  * \retval 		true			Success
  * \retval 		false			Error
  */	
-bool rgb565_to_png(char* src, char *dest, unsigned int width, unsigned int height)
+bool rgb565_to_png(char* src, char *dest, uint32_t width, uint32_t height)
 {
 	FILE* fs;
 	FILE* fd;
