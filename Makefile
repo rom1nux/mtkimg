@@ -198,18 +198,18 @@ doc: banner
 
 release: banner rebuild | $(RELEASES_DIR)
 	-$(RMDIR) $(TMP_DIR)
-	-$(RM) $(RELEASES_DIR)$(FSEP)$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version).zip
+	-$(RM) $(RELEASES_DIR)$(FSEP)$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --release).zip
 	$(MKDIR) $(TMP_DIR)
 	$(CP) $(BUILD_DIR)$(FSEP)$(EXEC) $(TMP_DIR)
 	$(CP) readme.txt $(TMP_DIR)
 	$(CD) $(TMP_DIR) && \
-	$(ZIP) $(CWD)$(FSEP)$(RELEASES_DIR)$(FSEP)$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version).zip . && \
+	$(ZIP) $(CWD)$(FSEP)$(RELEASES_DIR)$(FSEP)$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --release).zip . && \
 	$(CD) $(CWD)
 	$(RMDIR) $(TMP_DIR)
 	@echo Binary release package ready !	
 
 distro: banner rebuild | $(RELEASES_DIR)
-	$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --version > $(RELEASES_DIR)$(FSEP)version.txt)
+	$(shell $(BUILD_DIR)$(FSEP)$(EXEC) --release > $(RELEASES_DIR)$(FSEP)version.txt)
 	$(MAKE) mrproper
 	$(RM) $(RELEASES_DIR)$(FSEP)$(EXE)-$(word 2,$(subst -, ,$(shell $(CAT) $(RELEASES_DIR)$(FSEP)version.txt)))-src.zip
 	$(ZIP) $(RELEASES_DIR)$(FSEP)$(EXE)-$(word 2,$(subst -, ,$(shell $(CAT) $(RELEASES_DIR)$(FSEP)version.txt)))-src.zip . $(ZIPEX)

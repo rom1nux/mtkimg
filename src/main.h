@@ -41,8 +41,7 @@
 #define	APP_NAME						"mtkimg"				//!< Application name
 #define	APP_VERSION						"0.43"					//!< Application version
 #define	APP_AUTHOR						"rom1nux"				//!< Application author
-//PNG_LIBPNG_VER_STRING 
-//ZLIB_VERSION
+
 
 // Detect platform
 #if defined(__WIN32__) || defined(__WIN64__)
@@ -91,6 +90,7 @@
 
 // Commandes constantes
 #define CMD_HELP						"help"					//!< Help command
+#define CMD_VERSION						"version"				//!< Version command
 #define CMD_INFO						"info"					//!< Info command
 #define CMD_UNPACK						"unpack"				//!< Unpack command
 #define CMD_REPACK						"repack"				//!< Repack command
@@ -227,6 +227,7 @@ app_data_t	app_data;											//!< Global application datas
 
 // Prototypes
 int main(int argc, char** argv);
+void show_version();
 void show_usage();
 
 #endif

@@ -51,7 +51,8 @@ int main(int argc, char** argv)
 	for(i=1;i<argc;i++){
 		if (argv[i][0]=='-'){
 			if ((!strcmp(argv[i],"--help")) || (!strcmp(argv[i],"-h"))){ strcpy(app_data.cmd,CMD_HELP); break; }
-			else if ((!strcmp(argv[i],"--version")) || (!strcmp(argv[i],"-V"))){ printf("%s-%s-%s%d\n",APP_NAME,APP_VERSION,APP_PLATFORM,APP_ARCH); exit(0); }
+			else if ((!strcmp(argv[i],"--version")) || (!strcmp(argv[i],"-V"))){ strcpy(app_data.cmd,CMD_VERSION); break; }
+			else if ((!strcmp(argv[i],"--release")) || (!strcmp(argv[i],"-R"))){ printf("%s-%s-%s%d\n",APP_NAME,APP_VERSION,APP_PLATFORM,APP_ARCH); exit(0); }
 			else if ((!strcmp(argv[i],"--verbose")) || (!strcmp(argv[i],"-v"))) app_data.verbose=true;
 			else if ((!strcmp(argv[i],"--debug")) || (!strcmp(argv[i],"-d"))) app_data.debug=true;
 			else args_add(&args,argv[i]); 
@@ -64,12 +65,14 @@ int main(int argc, char** argv)
 	if (app_data.cmd[0]==0) strcpy(app_data.cmd,CMD_HELP);
 
 	// Banner
-	printf("%s V%s(%s%d) by %s\n",APP_TITLE,APP_VERSION,APP_PLATFORM,APP_ARCH,APP_AUTHOR);
+	output("%s V%s(%s%d) by %s",APP_TITLE,APP_VERSION,APP_PLATFORM,APP_ARCH,APP_AUTHOR);
 	
 	// Dispatch command
 	debug("Execute command '%s'...",app_data.cmd);
 	if (!strcmp(app_data.cmd,CMD_HELP)){
 		show_usage();
+	}else if (!strcmp(app_data.cmd,CMD_VERSION)){
+		show_version();
 	}else if (!strcmp(app_data.cmd,CMD_INFO)){
 		info(&args);
 	}else if (!strcmp(app_data.cmd,CMD_UNPACK)){
@@ -83,6 +86,21 @@ int main(int argc, char** argv)
 	// Free args
 	args_free(&args);	
 	return 0;
+}
+
+/**
+ * \brief		Display detailed application version
+ */	
+void show_version()
+{	
+	output("Build at %s %s by GCC %d.%d.%d",__DATE__,__TIME__,__GNUC__,__GNUC_MINOR__,__GNUC_PATCHLEVEL__);
+	output("https://github.com/rom1nux/mtkimg");
+#ifdef LOGO_SUPPORT	
+	output("zLib V%s, LibPng V%s",ZLIB_VERSION,PNG_LIBPNG_VER_STRING);
+#else
+	output("No logo support");
+#endif	
+	exit(0);
 }
 
 /**
@@ -100,7 +118,8 @@ void show_usage()
 	printf(" repack  : Repack image file\n");
 	printf("\nOptions :\n\n"); 
 	printf(" --help            -h        : Show this help\n");
-	printf(" --version         -V        : Show numerical version\n");
+	printf(" --version         -V        : Show detailed version\n");
+	printf(" --release         -R        : Show release full name\n");
 	printf(" --verbose         -v        : Show details\n");
 	printf(" --debug           -d        : Show debug messages\n");
 	printf(" --overwrite       -o        : Overwrite existing file and directory\n");

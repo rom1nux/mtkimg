@@ -96,7 +96,8 @@ bool png_to_rgb565(char* src, char *dest)
 		}		
 		if (fwrite(destbuff,1,towrite,fd)!=towrite) { error("Could not write to '%s' !",dest); goto failed; }		
 	}
-	
+	//png_read_end(png_s, png_i);
+	 
 	success=true;
 failed:
 	png_destroy_read_struct(&png_s, &png_i,NULL);
@@ -161,8 +162,7 @@ bool rgb565_to_png(char* src, char *dest, unsigned int width, unsigned int heigh
 		for(i=0;i<nread;i++){		
 			destptr[0] = (uint8_t)((*srcptr & 0xF800) >> 11)<<3;
 			destptr[1] = (uint8_t)((*srcptr & 0x07E0) >> 5)<<2;
-			destptr[2] = (uint8_t)(*srcptr & 0x001F)<<3;	
-			
+			destptr[2] = (uint8_t)(*srcptr & 0x001F)<<3;				
 			srcptr++;
 			destptr+=3;
 		}		
