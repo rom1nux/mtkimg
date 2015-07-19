@@ -34,11 +34,11 @@ A - INTRODUCTION
    * Support unpack/repack boot.img and recovery.img.
    * Support unpack/repack logo.bin   
    * Keep the original image size at repack time.
+   * Handle kernel and ramdisk with or without MTK header.
    * Automatic ramdisk decompression.
    * Option to keep or remove MTK headers.
    * Check for valid "ARM Linux zImage" kernel.
-   * Check for valid "GZIP" ramdisk.
-   * Handle kernel and ramdisk with or without MTK header.
+   * Check for valid "GZIP" ramdisk.   
    * Check for overflow if kernel or ramdisk is too big at repack time.
    * Option to set compression rate for ramdisk.   
    * Easy to use, all parameters are defaulted.
@@ -82,7 +82,10 @@ B - HOW TO USE
    To unpack logo image execute :   ./mtkimg unpack -t logo logo.bin
    To repack logo image execute :   ./mtkimg repack -t logo newlogo.bin
   
+  At each unpack, MTKIMG create an image configuration file (image.cfg by default) that
+  keep the original image configuration for next repack.
     
+
 C - SOURCE CODE   
 
   Code source is multi-platform (Linux, Cygwin, Windows) and got several utilities
@@ -192,13 +195,13 @@ G - UTILTIES FOR BUILDING SOURCE CODE
   * MINGW32 or MINGW64 (Windows GCC compiler port)
     http://sourceforge.net/projects/mingw-w64
 
-  * ZLIB (Compression library)
+  * ZLIB (Multi-platform Compression library)
     http://www.zlib.net
 
-  * LIBPNG (Compression library)
+  * LIBPNG (Multi-platform Compression library)
     http://www.libpng.org
    
-  * DOXYGEN (Multiplatform source code documentation generator)
+  * DOXYGEN (Multi-platform source code documentation generator)
     http://www.doxygen.org  
 
   * 7-ZIP (Windows compression/decompression utilities)
