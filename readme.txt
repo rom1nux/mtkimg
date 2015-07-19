@@ -38,6 +38,7 @@ A - INTRODUCTION
    * Option to keep or remove MTK headers.
    * Check for valid "ARM Linux zImage" kernel.
    * Check for valid "GZIP" ramdisk.
+   * Handle kernel and ramdisk with or without MTK header.
    * Check for overflow if kernel or ramdisk is too big at repack time.
    * Option to set compression rate for ramdisk.   
    * Easy to use, all parameters are defaulted.
@@ -47,11 +48,11 @@ A - INTRODUCTION
 
   Releases :
 
-   * mtkimg-0.41-linux64.zip       : Linux 64 bits binaries
-   * mtkimg-0.41-cygwin64.zip      : Cygwin 64 bits binaries
-   * mtkimg-0.41-osx64.zip         : Mac OSX 64 bits binaries
-   * mtkimg-0.41-win64.zip         : Windows 64 bits binaries only
-   * mtkimg-0.41-win64-bundle.zip  : Windows 64 bits binaries with externals utilities
+   * mtkimg-0.42-linux64.zip       : Linux 64 bits binaries
+   * mtkimg-0.42-cygwin64.zip      : Cygwin 64 bits binaries
+   * mtkimg-0.42-osx64.zip         : Mac OSX 64 bits binaries
+   * mtkimg-0.42-win64.zip         : Windows 64 bits binaries only
+   * mtkimg-0.42-win64-bundle.zip  : Windows 64 bits binaries with externals utilities
    * mtkimg-win64-utilities.zip    : Windows 64 bits externals utilities only
    
    
