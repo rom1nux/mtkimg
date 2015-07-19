@@ -13,5 +13,6 @@ var searchData=
   ['logo_5fdb_5fread',['logo_db_read',['../tools_8c.html#a70bf9f80aaba3582356ae73c4b99a889',1,'logo_db_read(logo_db_t *db, char *filename):&#160;tools.c'],['../tools_8h.html#a70bf9f80aaba3582356ae73c4b99a889',1,'logo_db_read(logo_db_t *db, char *filename):&#160;tools.c']]],
   ['logo_5fdb_5ft',['logo_db_t',['../structlogo__db__t.html',1,'logo_db_t'],['../main_8h.html#ae813f0cc2d8bc033868e6bbbfd242e36',1,'logo_db_t():&#160;main.h']]],
   ['logo_5fdb_5fwrite',['logo_db_write',['../tools_8c.html#ab0ef34d574c2ade4d7c0a697409eb1ab',1,'logo_db_write(logo_db_t *db, char *filename):&#160;tools.c'],['../tools_8h.html#ab0ef34d574c2ade4d7c0a697409eb1ab',1,'logo_db_write(logo_db_t *db, char *filename):&#160;tools.c']]],
-  ['logos',['logos',['../structunpack__data__t.html#ab5751b061da18ebae1a7dfb44ece2acc',1,'unpack_data_t']]]
+  ['logos',['logos',['../structrepack__data__t.html#ab5751b061da18ebae1a7dfb44ece2acc',1,'repack_data_t::logos()'],['../structunpack__data__t.html#ab5751b061da18ebae1a7dfb44ece2acc',1,'unpack_data_t::logos()']]],
+  ['logos_5ffilename_5fprefix',['LOGOS_FILENAME_PREFIX',['../main_8h.html#a797fd4a20cdb794c4e138965f20a61fe',1,'main.h']]]
 ];
