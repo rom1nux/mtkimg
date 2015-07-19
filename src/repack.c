@@ -27,9 +27,34 @@
  * \brief		Repack command
  * \param		args 		Command line arguments
  */	
-void repack(args_t* args)
-{
-	repack_data_t	data;	
+void repack(args_t* args){
+	repack_data_t	data;
+
+	// Init	
+	memset(&data,0x0,sizeof(repack_data_t));
+	
+	// Parse data
+	repack_parse_args(&data, args);
+	
+	// Defaulting
+	if (data.type==CMD_TYPE_UNKNOWN) data.type=CMD_TYPE_BOOT;
+	
+	// Dispatch command
+	if (data.type==CMD_TYPE_BOOT){
+		// Repack boot.img		
+		repack_boot(&data);
+	}else{	
+		// Repack logo.bin
+		repack_logo(&data);		
+	}
+}
+ 
+ /**
+ * \brief		Repack 'boot.img' command
+ * \param		data 		Repack command data
+ */	 
+void repack_boot(repack_data_t* data)
+{	
 	img_cfg_t		img_cfg;		
 	img_header_t	img_header;
 	mtk_header_t	mtk_header;	
@@ -41,88 +66,89 @@ void repack(args_t* args)
 	char*			ramdisk_file;
 	char 			syscmd[CMD_MAX_SIZE];
 	int				res;	
-		
 	
-	// Init
-	memset(&data,0x0,sizeof(repack_data_t));
+	// Init	
 	memset(&img_cfg,0x0,sizeof(img_cfg_t));
 	memset(&img_header,0x0,sizeof(img_header_t));
 	
-	// Parse data
-	repack_parse_args(&data, args);
-	
 	// Defaulting
-	if (!data.compress_rate) data.compress_rate=DEFAULT_COMPRESS_RATE;
-	if (!data.output[0]) strcpy(data.output,DEFAULT_BOOT_IMG_FILENAME);			
-	if (!data.config[0]) strcpy(data.config,DEFAULT_CONFIG_FILENAME);	
-	if (!data.kernel[0]) strcpy(data.kernel,DEFAULT_KERNEL_FILENAME);		
-	if (!data.ramdisk[0]) strcpy(data.ramdisk,( data.no_compress ? DEFAULT_RAMDISK_FILENAME : DEFAULT_RAMDISK_DIR ));
+	if (!data->compress_rate) data->compress_rate=DEFAULT_COMPRESS_RATE;
+	if (!data->output[0]) strcpy(data->output,DEFAULT_BOOT_IMG_FILENAME);			
+	if (!data->config[0]) strcpy(data->config,DEFAULT_CONFIG_FILENAME);	
+	if (!data->kernel[0]) strcpy(data->kernel,DEFAULT_KERNEL_FILENAME);		
+	if (!data->ramdisk[0]) strcpy(data->ramdisk,( data->no_compress ? DEFAULT_RAMDISK_FILENAME : DEFAULT_RAMDISK_DIR ));
 	
 	// Debug parsing/defaulting
 	debug("%-20s : %s","verbose",bool2yn(app_data.verbose));
 	debug("%-20s : %s","debug",bool2yn(app_data.debug));	
-	debug("%-20s : %s","overwrite",bool2yn(data.overwrite));
-	debug("%-20s : %s","output",data.output);
-	debug("%-20s : %s","kernel",data.kernel);
-	debug("%-20s : %s","ramdisk",data.ramdisk);
-	debug("%-20s : %s","config",data.config);	
-	debug("%-20s : %s","no-compress",bool2yn(data.no_compress));	
-	debug("%-20s : %d","compress-rate",data.compress_rate);	
+	debug("%-20s : %s","overwrite",bool2yn(data->overwrite));
+	debug("%-20s : %s","output",data->output);
+	debug("%-20s : %s","kernel",data->kernel);
+	debug("%-20s : %s","ramdisk",data->ramdisk);
+	debug("%-20s : %s","config",data->config);	
+	debug("%-20s : %s","no-compress",bool2yn(data->no_compress));	
+	debug("%-20s : %d","compress-rate",data->compress_rate);	
 	
 	// Check input file
-	if (!file_exists(data.kernel)) die("Input file '%s' not found !",data.kernel);
-	if (data.no_compress){
-		if (!dir_exists(data.ramdisk)) die("Input directory '%s' not found !",data.ramdisk);
+	if (!file_exists(data->kernel)) die("Input file '%s' not found !",data->kernel);
+	if (data->no_compress){
+		if (!dir_exists(data->ramdisk)) die("Input directory '%s' not found !",data->ramdisk);
 	}else{
-		if (!file_exists(data.ramdisk)) die("Input file '%s' not found !",data.ramdisk);
+		if (!file_exists(data->ramdisk)) die("Input file '%s' not found !",data->ramdisk);
 	}		
-	if (!file_exists(data.config)) die("Input file '%s' not found !",data.config);
+	if (!file_exists(data->config)) die("Input file '%s' not found !",data->config);
 
 	// Check for existing output files
-	if (!data.overwrite){			
-		if (file_exists(data.output)) die("File '%s' already exist !",data.output);
+	if (!data->overwrite){			
+		if (file_exists(data->output)) die("File '%s' already exist !",data->output);
 	}
 	
 	// Clean previous output files
 	if (!file_remove(TMP_RAMDISK_FILENAME)) die("Could not remove file '%s' !",TMP_RAMDISK_FILENAME);
-	if (!file_remove(data.output)) die("Could not remove file '%s' !",data.output);
+	if (!file_remove(data->output)) die("Could not remove file '%s' !",data->output);
 	
 	// Banner
-	output("Repacking image to '%s'...",data.output);
+	output("Repacking image to '%s'...",data->output);
+	
+	// Loading image configuration
+	if (!img_cfg_read(&img_cfg, data->config)) fail("Could not load image configuration file '%s' !",data->config);	
+	
+	// Check for config file type for 'LOGO'
+	if 	(strcmp(img_cfg.type,"ROOTFS") && strcmp(img_cfg.type,"RECOVERY")) die("Configuration file '%s' is not a valid 'ROOTFS' or 'RECOVERY' image descriptor !",data->config);	
 	
 	// Compress ramdisk
-	if (!data.no_compress){
-		output("Packing ramdisk content from '%s'...",data.ramdisk);
+	if (!data->no_compress){
+		output("Packing ramdisk content from '%s'...",data->ramdisk);
 #if defined(APP_WIN)		
 		// Ensure permission are OK on Windows platform
-		sprintf(syscmd,"%s 775 %s",CHMOD_BIN, data.ramdisk);
+		sprintf(syscmd,"%s 775 %s",CHMOD_BIN, data->ramdisk);
 		verbose("Changing ramdisk directory permission...");
 		verbose("%s",syscmd);
-		if (system(syscmd)) fail("Could not change ramdisk directory '%s' permission !",data.ramdisk);
+		if (system(syscmd)) fail("Could not change ramdisk directory '%s' permission !",data->ramdisk);
 #endif		
 		// Entering directory
-		if (!dir_change(data.ramdisk)) fail("Could not change to directory '%s' !",data.ramdisk);
+		if (!dir_change(data->ramdisk)) fail("Could not change to directory '%s' !",data->ramdisk);
 		// Create compress command line
-		sprintf(syscmd,"%s . | %s -o -H newc --quiet | %s -%d -n > ..%c%s",FIND_BIN,CPIO_BIN,GZIP_BIN,data.compress_rate,FILESEP,TMP_RAMDISK_FILENAME); 
+		sprintf(syscmd,"%s . | %s -o -H newc --quiet | %s -%d -n > ..%c%s",FIND_BIN,CPIO_BIN,GZIP_BIN,data->compress_rate,FILESEP,TMP_RAMDISK_FILENAME); 
 		// Decompression
-		verbose("Packing ramdisk content (compression rate : %d)...",data.compress_rate);
+		verbose("Packing ramdisk content (compression rate : %d)...",data->compress_rate);
 		verbose("%s",syscmd);
 		res=system(syscmd);
 		// Returning to previous directory
-		if (!dir_change(app_data.working_dir)) fail("Could not change to directory '%s' !",data.ramdisk);
-		if (res) fail("Could not pack ramdisk content from directory '%s' !",data.ramdisk);		
+		if (!dir_change(app_data.working_dir)) fail("Could not change to directory '%s' !",data->ramdisk);
+		if (res) fail("Could not pack ramdisk content from directory '%s' !",data->ramdisk);		
 	}
 	
 	// Ramdisk filename helper
-	ramdisk_file=(data.no_compress?data.ramdisk:TMP_RAMDISK_FILENAME);
+	ramdisk_file=(data->no_compress?data->ramdisk:TMP_RAMDISK_FILENAME);
 	
 	// Detect kernel MTK header or ARM Linux zImage
-	kernel_is_mtk_file=is_valid_mtk_file(data.kernel);	
+	kernel_is_mtk_file=is_valid_mtk_file(data->kernel);	
 	if (kernel_is_mtk_file){
-		verbose("File '%s' is MTK file !",data.kernel);		
+		verbose("File '%s' is MTK file !",data->kernel);		
 	}else{
-		if (!is_valid_zimage_file(data.kernel)) fail("Kernel file '%s' is not a valid ARM Linux zImage file !",data.kernel);
-		verbose("File '%s' is ARM Linux zImage file !",data.kernel);		
+		if (!is_valid_zimage_file(data->kernel)) fail("Kernel file '%s' is not a valid ARM Linux zImage file !",data->kernel);
+		verbose("File '%s' is ARM Linux zImage file !",data->kernel);		
 	}
 	
 	// Detect ramdisk MTK header
@@ -134,12 +160,9 @@ void repack(args_t* args)
 		if (!is_valid_gzip_file(ramdisk_file)) fail("Ramdisk file '%s' is not a valid gzip file !",ramdisk_file);
 		verbose("File '%s' is GZIP file !",ramdisk_file);	
 	}
-	
-	// Loading image configuration
-	if (!img_cfg_read(&img_cfg, data.config)) fail("Could not load image configuration file '%s' !",data.config);	
-	
+		
 	// Update image header from configuration	
-	kernel_size=file_size(data.kernel);
+	kernel_size=file_size(data->kernel);
 	img_cfg.header.kernel_size=kernel_size + ( kernel_is_mtk_file ? 0 : sizeof(mtk_header_t) );
 	kernel_offset=img_cfg.header.page_size;
 	kernel_pages=(long)ceil(img_cfg.header.kernel_size/(double)img_cfg.header.page_size);
@@ -170,8 +193,8 @@ void repack(args_t* args)
 	if (total_size>img_cfg.size) die("Kernel and/or ramdisk are too big to fit into image (%d bytes exceed) !",total_size-img_cfg.size);
 	
 	// Openning output file
-	fd=fopen(data.output,"wb");
-	if (fd==NULL) fail("Could not open output file '%s' !",data.output);
+	fd=fopen(data->output,"wb");
+	if (fd==NULL) fail("Could not open output file '%s' !",data->output);
 		
 	// Write image header
 	if (!img_header_write(&img_header,fd)) fail("Could not write image header !"); 
@@ -192,8 +215,8 @@ void repack(args_t* args)
 	}
 	
 	// Write kernel	
-	output("Repacking kernel '%s' (%d bytes)...",data.kernel,kernel_size);
-	if (!repack_file(fd,data.kernel)) fail("Could not repack kernel '%s' !",data.kernel);
+	output("Repacking kernel '%s' (%d bytes)...",data->kernel,kernel_size);
+	if (!repack_file(fd,data->kernel)) fail("Could not repack kernel '%s' !",data->kernel);
 
 	// Pad
 	if (!pad_file(fd,(kernel_pages*img_header.page_size)-img_header.kernel_size,0x0)) fail("Could not pad file !");	
@@ -222,17 +245,180 @@ void repack(args_t* args)
 
 	if (!file_remove(TMP_RAMDISK_FILENAME)) fail("Could not remove file '%s' !",TMP_RAMDISK_FILENAME);
 	
-	output("Image successfully repacked !");	
+	output("Boot image successfully repacked !");	
 	return;
 	
 failed:
-	// FAILED
 	// Closing input file
 	if (fd) fclose(fd);
 	// Cleaning outputs	
-	if (!file_remove(data.output)) error("Could not remove file '%s' !",data.output);
+	if (!file_remove(data->output)) error("Could not remove file '%s' !",data->output);
 	if (!file_remove(TMP_RAMDISK_FILENAME)) error("Could not remove file '%s' !",TMP_RAMDISK_FILENAME);	
 	exit(1);
+}
+
+/**
+  * \brief		Repack 'logo.bin' command
+  * \param		data 		Repack command data
+  */	
+void repack_logo(repack_data_t* data)
+{
+#ifndef LOGO_SUPPORT	
+	error("Logo support is not enabled !");
+#else
+	img_cfg_t		img_cfg;		
+	mtk_header_t	mtk_header;	
+	FILE*			fd=NULL;
+	struct dirent* 	dent = NULL;
+	DIR* 			dir;
+	char			src[PATH_MAX_SIZE];
+	char			dest[PATH_MAX_SIZE];	
+	uint32_t		i,logo_count,bloc_size,offset;
+	uint32_t*		offsets;
+	uint32_t*		sizes;
+	
+	// Defaulting
+	if (!data->compress_rate) data->compress_rate=DEFAULT_COMPRESS_RATE;
+	if (!data->output[0]) strcpy(data->output,DEFAULT_LOGO_IMG_FILENAME);	
+	if (!data->logos[0]) strcpy(data->logos,DEFAULT_LOGOS_DIR);
+	if (!data->config[0]) strcpy(data->config,DEFAULT_CONFIG_FILENAME);		
+	
+	// Debug parsing/defaulting
+	debug("%-20s : %s","verbose",bool2yn(app_data.verbose));
+	debug("%-20s : %s","debug",bool2yn(app_data.debug));	
+	debug("%-20s : %s","overwrite",bool2yn(data->overwrite));
+	debug("%-20s : %s","output",data->output);
+	debug("%-20s : %s","logos",data->logos);	
+	debug("%-20s : %s","config",data->config);		
+	
+	// Check input file
+	if (!dir_exists(data->logos)) die("Input directory '%s' not found !",data->logos);	
+	if (!file_exists(data->config)) die("Input file '%s' not found !",data->config);
+	
+	// Check for existing output files
+	if (!data->overwrite){			
+		if (file_exists(data->output)) die("File '%s' already exist !",data->output);
+	}
+	
+	// Clean previous output files
+	if (!file_remove(data->output)) die("Could not remove file '%s' !",data->output);
+	if (!dir_remove(TMP_LOGO_DIR)) die("Could not remove directory '%s' !",TMP_LOGO_DIR);
+	
+	// Loading image configuration
+	if (!img_cfg_read(&img_cfg, data->config)) die("Could not load image configuration file '%s' !",data->config);	
+		
+	// Check for config file type for 'LOGO'
+	if 	(strcmp(img_cfg.type,"LOGO")) die("Configuration file '%s' is not a valid 'LOGO' image descriptor !",data->config);
+		
+	// Banner
+	output("Repacking logo to '%s'...",data->output);	
+	
+	// Create temporary directory
+	if (!dir_create(TMP_LOGO_DIR)) die("Could not create directory '%s' !",TMP_LOGO_DIR);
+	
+	// Convert all images
+	output("Loading logo from '%s'...",data->logos);
+	dir=opendir(data->logos);
+	if (dir==NULL) fail("Could not open directory '%s' !",data->logos);
+	logo_count=0;
+	while ((dent=readdir(dir))!=NULL){
+		if ((!strcmp(dent->d_name,"."))||(!strcmp(dent->d_name,".."))) continue;
+		sprintf(src,"%s%c%s",data->logos,FILESEP,dent->d_name);		
+		if (!is_file(src)) continue;
+		if (strlen(dent->d_name)<strlen(LOGOS_FILENAME_PREFIX)) continue;
+		if (strncmp(dent->d_name,LOGOS_FILENAME_PREFIX,strlen(LOGOS_FILENAME_PREFIX))) continue;
+		verbose("\nRepacking image %d (%s)...",logo_count+1, src);
+		// Converting png image to rgb565 if need
+		if (!strncmp(&src[strlen(src)-4],".png",4)){
+			sprintf(dest,"%s%c%s%02d.rgb565",TMP_LOGO_DIR,FILESEP,LOGOS_FILENAME_PREFIX,(logo_count+1));
+			verbose("Converting PNG to RGB565 to '%s'...",dest); 			
+			if (!png_to_rgb565(src,dest)) fail("Could not convert logo image '%s' to RGB565 !",src);
+			strcpy(src,dest);
+		}else if (strncmp(&src[strlen(src)-7],".rgb565",7)){
+			fail("Unknown logo image '%s' format !",src);		
+		}
+		sprintf(dest,"%s%c%s%02d.bin",TMP_LOGO_DIR,FILESEP,LOGOS_FILENAME_PREFIX,(logo_count+1));
+		verbose("Deflating image to '%s'...",dest); 
+		if (!deflate_file(src,dest,data->compress_rate)) fail("Could not deflate logo image file '%s' !",src);
+		logo_count++;
+	}
+	verbose("");
+	closedir(dir);
+	output("%d logo found !",logo_count);
+	
+	// Create map
+	verbose("Create offsets map...");
+	offsets=malloc(logo_count*sizeof(uint32_t));
+	if (!offsets) fail("Could not allocate %d bytes !",logo_count*sizeof(uint32_t));
+	sizes=malloc(logo_count*sizeof(uint32_t));
+	if (!sizes) fail("Could not allocate %d bytes !",logo_count*sizeof(uint32_t));	
+	offset=8+(logo_count*sizeof(uint32_t));
+	bloc_size=offset;
+	for(i=0;i<logo_count;i++){
+		sprintf(src,"%s%c%s%02d.bin",TMP_LOGO_DIR,FILESEP,LOGOS_FILENAME_PREFIX,i+1);		
+		offsets[i]=offset;
+		sizes[i]=file_size(src);
+		bloc_size+=sizes[i];
+		offset+=sizes[i];
+	}
+	if (app_data.debug){
+		//debug("\nImages map (%d items) :\n",logo_count);
+		debug("\n  picture |   offset   | size (bytes)");
+		debug(" -------------------------------------");
+		for(i=0;i<logo_count;i++){
+			debug("     %.2d   | 0x%08X |   %8d",i+1,offsets[i],sizes[i]);
+		}
+		debug(" -------------------------------------\n");
+	}
+	
+	// Openning output file
+	fd=fopen(data->output,"wb");
+	if (fd==NULL) fail("Could not open output file '%s' !",data->output);	
+
+	// Write MTK Header
+	memset(&mtk_header,0x0,sizeof(mtk_header_t));
+	mtk_header.magic[0]=0x88; mtk_header.magic[1]=0x16;	mtk_header.magic[2]=0x88; mtk_header.magic[3]=0x58;	
+	mtk_header.size=bloc_size;
+	strcpy(mtk_header.type,"LOGO");
+	memset(&mtk_header.unused2,0xFF,472);
+	if (!mtk_header_write(&mtk_header, fd)) fail("Could not create logo MTK header !");
+			
+	// Offset map
+	verbose("Writing offsets map...");	
+	// Write logo count
+	if (fwrite(&logo_count,1,4,fd)!=4) fail("Could not write logo count !");             
+	// Write bloc count
+	if (fwrite(&bloc_size,1,4,fd)!=4) fail("Could not write bloc size !");             
+	// Write offset map
+	if (fwrite(offsets,1,logo_count*sizeof(uint32_t),fd)!=logo_count*sizeof(uint32_t)) fail("Could not write offset map size !");             
+		
+	// Repack all
+	verbose("Writing %d logos...",logo_count);	
+	for(i=0;i<logo_count;i++){
+		sprintf(src,"%s%c%s%02d.bin",TMP_LOGO_DIR,FILESEP,LOGOS_FILENAME_PREFIX,i+1);
+		verbose("Repacking '%s'...",src);
+		if (!repack_file(fd,src)) fail("Could not repack logo '%s' !",src);
+	}
+	
+	// Pad
+	if (!pad_file(fd,img_cfg.size-(bloc_size+sizeof(mtk_header_t)),0x0)) fail("Could not pad file !");
+	
+	// Cleaning
+	if (!dir_remove(TMP_LOGO_DIR)) die("Could not remove directory '%s' !",TMP_LOGO_DIR);
+	
+	// Closing output file
+	fclose(fd);	
+	
+	output("Logo image successfully repacked !");	
+	return;
+	
+failed:
+	// Closing input file
+	if (fd) fclose(fd);
+	// Cleaning outputs	
+	if (!file_remove(data->output)) error("Could not remove file '%s' !",data->output);	
+	if (!dir_remove(TMP_LOGO_DIR)) die("Could not remove directory '%s' !",TMP_LOGO_DIR);	
+#endif		
 }
 
 /**
@@ -248,7 +434,13 @@ void repack_parse_args(repack_data_t* data, args_t* args)
 	for(i=0;i<args->argc;i++){
 		if (args->argv[i][0]=='-'){
 			// Options
-			if ((!strcmp(args->argv[i],"--overwrite")) || (!strcmp(args->argv[i],"-o"))){
+			if ((!strcmp(args->argv[i],"--type")) || (!strcmp(args->argv[i],"-t"))){
+				if ((i+1)>=args->argc) die("Argument needed after option '%s' !",args->argv[i]);
+				if (!strcmp(args->argv[i+1],"boot")) data->type=CMD_TYPE_BOOT;
+				else if (!strcmp(args->argv[i+1],"logo")) data->type=CMD_TYPE_LOGO;
+				else die("Unknown --type '%s' !",args->argv[i+1]);				
+				i++;			
+			}else if ((!strcmp(args->argv[i],"--overwrite")) || (!strcmp(args->argv[i],"-o"))){
 				data->overwrite=true;
 			}else if ((!strcmp(args->argv[i],"--kernel")) || (!strcmp(args->argv[i],"-k"))){
 				if ((i+1)>=args->argc) die("Argument needed after option '%s' !",args->argv[i]);
@@ -275,3 +467,4 @@ void repack_parse_args(repack_data_t* data, args_t* args)
 		}
 	}
 }
+

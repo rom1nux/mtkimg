@@ -39,8 +39,10 @@
 // Application constantes
 #define	APP_TITLE						"MTKIMG"				//!< Application title
 #define	APP_NAME						"mtkimg"				//!< Application name
-#define	APP_VERSION						"0.42"					//!< Application version
+#define	APP_VERSION						"0.43"					//!< Application version
 #define	APP_AUTHOR						"rom1nux"				//!< Application author
+//PNG_LIBPNG_VER_STRING 
+//ZLIB_VERSION
 
 // Detect platform
 #if defined(__WIN32__) || defined(__WIN64__)
@@ -99,7 +101,7 @@
 typedef enum cmd_type_t{CMD_TYPE_UNKNOWN, CMD_TYPE_BOOT, CMD_TYPE_LOGO}cmd_type_t;
 
 // Default
-#define DEFAULT_COMPRESS_RATE			6						//!< Default compression rate
+#define DEFAULT_COMPRESS_RATE			9						//!< Default compression rate
 #define DEFAULT_BOOT_IMG_FILENAME		"boot.img"				//!< Default boot input/output filename
 #define DEFAULT_LOGO_IMG_FILENAME		"logo.bin"				//!< Default logo input/output filename
 #define DEFAULT_KERNEL_FILENAME			"kernel.img"			//!< Default kernel filename
@@ -115,13 +117,14 @@ typedef enum cmd_type_t{CMD_TYPE_UNKNOWN, CMD_TYPE_BOOT, CMD_TYPE_LOGO}cmd_type_
 #endif
 
 // Usefull constantes
-#define TMP_RAMDISK_FILENAME			"ramdisk-tmp.cpio.gz"	//!< Temporary ramdisk filename
+#define TMP_RAMDISK_FILENAME			"tmp-ramdisk.cpio.gz"	//!< Temporary ramdisk filename
+#define TMP_LOGO_DIR					"tmp-logo.d"			//!< Temporary logo directory
 #if defined(APP_LINUX)
 	#define LOGO_DB_FILENAME			"mtkimg-logos.cfg"		//!< Logo database filename
 #else
 	#define LOGO_DB_FILENAME			"mtkimg-logos.ini"		//!< Logo database filename
 #endif
-
+#define LOGOS_FILENAME_PREFIX			"img-"					//!< Logos filename prefix
 
 
 // Boolean type definition

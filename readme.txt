@@ -216,6 +216,13 @@ H - WHERE TO SPEAK ABOUT
   
 I - CHANGELOG
 
+  * 2015-07-19 - V0.43 - rom1nux
+    - Add Repack logo
+    - Add image.cfg type checking before repack
+	
+  * 2015-07-19 - V0.42 - rom1nux
+    - Fix problem at repack when kernel already got MTK header
+
   * 2015-07-18 - V0.41 - rom1nux
     - Fix permission issue after repack on Windows version.
     - Replace GNU Windows utilities by Cygwin utilities to preserve permission.

@@ -245,7 +245,6 @@ void unpack_boot(unpack_data_t* data)
 	return;
 	
 failed:
-	// FAILED
 	// Closing input filename
 	if (fs) fclose(fs);
 	// Cleaning outputs	
@@ -267,7 +266,7 @@ failed:
 void unpack_logo(unpack_data_t* data)
 {
 #ifndef LOGO_SUPPORT	
-	warning("Logo support is not enabled !");
+	error("Logo support is not enabled !");
 #else
 	img_cfg_t		img_cfg;	
 	mtk_header_t	mtk_header;		
@@ -376,8 +375,8 @@ void unpack_logo(unpack_data_t* data)
 	if (!dir_create(data->logos)) fail("Could not create directory '%s' !",data->logos);
 	for(i=0;i<logo_count;i++){
 		verbose("\nUpacking image %d...",i+1);
-		sprintf(src,"%s%cimg-%02d.bin",data->logos,FILESEP,(i+1));
-		sprintf(dest,"%s%cimg-%02d.rgb565",data->logos,FILESEP,(i+1));
+		sprintf(src,"%s%c%s%02d.bin",data->logos,FILESEP,LOGOS_FILENAME_PREFIX,(i+1));
+		sprintf(dest,"%s%c%s%02d.rgb565",data->logos,FILESEP,LOGOS_FILENAME_PREFIX,(i+1));
 		offset=offsets[i]+512;		
 		// Extracting image
 		verbose("Seeking to start of image (0x%08X)...",offset); 
@@ -410,13 +409,13 @@ void unpack_logo(unpack_data_t* data)
 		}
 		verbose("Image size '%s' found (%d x %d) !",label,width,height);
 		// Converting to PNG
-		sprintf(src,"%s%cimg-%02d.rgb565",data->logos,FILESEP,(i+1));
-		sprintf(dest,"%s%cimg-%02d.png",data->logos,FILESEP,(i+1));		
-		verbose("Converting to PNG to '%s'...",dest); 
+		sprintf(src,"%s%c%s%02d.rgb565",data->logos,FILESEP,LOGOS_FILENAME_PREFIX,(i+1));
+		sprintf(dest,"%s%c%s%02d.png",data->logos,FILESEP,LOGOS_FILENAME_PREFIX,(i+1));		
+		verbose("Converting RGB565 to PNG to '%s'...",dest); 
 		if (!rgb565_to_png(src,dest,width,height)){ error("Could not convert logo image '%s' to PNG !",src); continue; }
 		if (!file_remove(src)) die("Could not remove file '%s' !",src);	
 	}
-	putchar('\n');
+	verbose("");
 	
 	// Writing image configuration		
 	if (!img_cfg_write(&img_cfg,data->config)) fail("Could not write image configuration file '%s' !",data->config);	
@@ -428,7 +427,6 @@ void unpack_logo(unpack_data_t* data)
 	return;
 	
 failed:
-	// FAILED
 	// Closing input filename
 	if (fs) fclose(fs);	
 	if (!dir_remove(data->logos)) error("Could not remove directory '%s' !",data->logos);	

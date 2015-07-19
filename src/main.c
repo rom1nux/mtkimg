@@ -125,18 +125,23 @@ void show_usage()
 	printf("Examples :\n\n"); 
 	printf(" %s info myboot.img\n",app_data.exename);
 	printf(" %s unpack\n",app_data.exename);
+	printf(" %s unpack -t boot\n",app_data.exename);
 	printf(" %s unpack myboot.img -v\n",app_data.exename);
 	printf(" %s unpack myboot.img -k mykernel.img -r myramdisk\n",app_data.exename);
 	printf(" %s unpack myboot.img -n -k mykernel.img -r myramdisk.cpio.gz\n",app_data.exename);
 	printf(" %s unpack myboot.img -n -m -k mykernel.mtk -r myramdisk.mtk\n",app_data.exename);
 	printf(" %s unpack -t logo\n",app_data.exename);
 	printf(" %s unpack -t logo mylogo.bin\n",app_data.exename);
-	printf(" %s unpack -t logo mylogo.bin -l mylogos\n",app_data.exename);
+	printf(" %s unpack -t logo mylogo.bin -l mylogos.d\n",app_data.exename);
 	printf(" %s repack\n",app_data.exename);
+	printf(" %s repack -t boot\n",app_data.exename);
 	printf(" %s repack newboot.img -v\n",app_data.exename);
 	printf(" %s repack newboot.img -k mykernel.img -r myramdisk\n",app_data.exename);
 	printf(" %s repack newboot.img -n -k mykernel.img -r myramdisk.cpio.gz\n",app_data.exename);
 	printf(" %s repack newboot.img -n -k mykernel.img.mtk -r myramdisk.cpio.gz.mtk\n",app_data.exename);
+	printf(" %s repack -t logo\n",app_data.exename);
+	printf(" %s repack -t logo newlogo.bin\n",app_data.exename);
+	printf(" %s repack -t logo newlogo.bin -l mylogos.d\n",app_data.exename);
 	exit(1);
 }
 

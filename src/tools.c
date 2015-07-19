@@ -26,9 +26,94 @@
 #ifdef LOGO_SUPPORT
 
 /**
- * \brief		Convert RGB565 file to png 
+ * \brief		Convert PNG file to RGB565
  * \param		src		Source file
  * \param		dest	Destination file
+ * \return 		Operation status
+ * \retval 		true			Success
+ * \retval 		false			Error
+ */	
+bool png_to_rgb565(char* src, char *dest)
+{
+	unsigned char header[8];
+	FILE* fs;
+	FILE* fd;
+	uint8_t* srcbuff;	
+	uint8_t* destbuff;	
+	uint8_t* srcptr=NULL;
+	uint16_t* destptr=NULL;	
+	bool success=false;	
+	png_structp png_s;
+	png_infop png_i;
+	unsigned int width, height, x, y, towrite;
+	int bit_depth, color_type,npasses;
+		
+	fs=fopen(src,"rb");
+	if (!fs){ error("Could not open file '%s' !",src); goto failed; }
+	fd=fopen(dest,"wb");
+	if (!fd){ fclose(fs); error("Could not open file '%s' !",dest); goto failed; }
+	
+	fread(header, 1, 8, fs);
+    if (png_sig_cmp(header, 0, 8)){ fclose(fs); fclose(fs); error("File '%s' is not a valid PNG file !",src); goto failed; }
+	
+	png_s = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);	
+	if (!png_s){ fclose(fs); fclose(fs); error("png_create_read_struct failed !"); goto failed; }
+	png_i = png_create_info_struct(png_s);
+    if (!png_i){ fclose(fs); fclose(fs); error("png_create_info_struct failed !"); goto failed; }
+	if (setjmp(png_jmpbuf(png_s))){ fclose(fs); fclose(fs); error("png_init_io failed !"); goto failed; }
+	png_init_io(png_s, fs);
+	
+	png_set_sig_bytes(png_s,8);
+		
+	png_read_info(png_s, png_i);
+	png_get_IHDR(png_s, png_i, &width, &height, &bit_depth, &color_type, NULL, NULL, NULL);
+	debug("PNG width: %d, height: %d, bit-depth: %d, color-type: %d",width,height,bit_depth,color_type);
+		
+	if (color_type & PNG_COLOR_MASK_ALPHA) png_set_strip_alpha(png_s);
+	if (color_type == PNG_COLOR_TYPE_GRAY_ALPHA) png_set_gray_to_rgb(png_s);
+	if (bit_depth == 16) png_set_strip_16(png_s);	
+		
+	npasses = png_set_interlace_handling(png_s);
+	if (npasses>1) { error("Could not handle interleaved/progressive PNG !"); goto failed; }
+		
+	png_read_update_info(png_s, png_i);
+	
+	srcbuff=malloc(width*3);
+	if (srcbuff==NULL){ error("Could not allocate %d bytes !",width*3); goto failed; }
+	destbuff=malloc(width*2);
+	if (destbuff==NULL){ error("Could not allocate %d bytes !",width*2); goto failed; }
+		
+	towrite=width*2;
+	for (y=0;y<height;y++){		
+		srcptr=srcbuff;
+		destptr=(uint16_t *)destbuff;
+		if (setjmp(png_jmpbuf(png_s))){ error("png_read_row failed !"); goto failed; }
+		png_read_row(png_s,srcbuff,NULL);		
+		for (x=0;x<width;x++){		
+			*destptr=((srcptr[0]>>3)<<11) | ((srcptr[1]>>2)<<5) | ((srcptr[2]>>3));		
+			srcptr+=3;
+			destptr++;
+		}		
+		if (fwrite(destbuff,1,towrite,fd)!=towrite) { error("Could not write to '%s' !",dest); goto failed; }		
+	}
+	
+	success=true;
+failed:
+	png_destroy_read_struct(&png_s, &png_i,NULL);
+	if (srcbuff) free(srcbuff);
+	if (destbuff) free(destbuff);		
+	fclose(fd);
+	fclose(fs);		
+	if (success==false) file_remove(dest);
+	return success;	
+}
+
+/**
+ * \brief		Convert RGB565 file to PNG 
+ * \param		src		Source file
+ * \param		dest	Destination file
+ * \param		width	Image width
+ * \param		height	Image height
  * \return 		Operation status
  * \retval 		true			Success
  * \retval 		false			Error
@@ -67,9 +152,7 @@ bool rgb565_to_png(char* src, char *dest, unsigned int width, unsigned int heigh
     png_set_IHDR(png_s, png_i, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
 	if (setjmp(png_jmpbuf(png_s))){ fclose(fs); fclose(fs); error("png_write_info failed !"); goto failed; }
     png_write_info(png_s, png_i);
-	
 
-	
 	while(!feof(fs)){
 		nread=fread(srcbuff,2,width,fs);
 		if ((nread!=width) && (nread!=0)){ error("Could not read from '%s' !",src); goto failed; }
@@ -93,13 +176,58 @@ bool rgb565_to_png(char* src, char *dest, unsigned int width, unsigned int heigh
 		
 failed:
 	png_destroy_write_struct(&png_s, &png_i);
-	//if (srcptr) free(srcptr);
-	//if (destptr) free(destptr);		
+	if (srcbuff) free(srcbuff);	
+	if (destbuff) free(destbuff);			
 	fclose(fd);
 	fclose(fs);		
 	if (success==false) file_remove(dest);
 	return success;
 
+}
+
+/**
+ * \brief		Compress file
+ * \param		src		Source file
+ * \param		dest	Destination file
+ * \return 		Operation status
+ * \retval 		true			Success
+ * \retval 		false			Error
+ */	
+bool deflate_file(char* src, char *dest, int rate)
+{
+	z_stream strm;
+	FILE* fs;
+	FILE* fd;
+	uint8_t srcbuff[BUFFER_SIZE];
+	uint8_t destbuff[BUFFER_SIZE];
+	unsigned int towrite, flag;
+	bool sucess=true;
+    strm.zalloc = Z_NULL;
+    strm.zfree = Z_NULL;
+    strm.opaque = Z_NULL;
+    if (deflateInit(&strm,rate) != Z_OK){ error("Could not init zlib !"); return false; }
+	fs=fopen(src,"rb");
+	if (!fs){ error("Could not open file '%s' !",src); return false; }
+	fd=fopen(dest,"wb");
+	if (!fd){ fclose(fs); error("Could not open file '%s' !",dest); return false; }
+	
+	while(!feof(fs)){
+		strm.avail_in = fread(srcbuff,1,BUFFER_SIZE,fs);
+		strm.next_in = srcbuff;
+		do{
+            strm.avail_out=BUFFER_SIZE;
+            strm.next_out=destbuff;
+			flag=(feof(fs) ? Z_FINISH : Z_NO_FLUSH);
+            if (deflate(&strm, flag)==Z_STREAM_ERROR){ sucess=false; error("Error during deflate !"); break; }
+            towrite=BUFFER_SIZE-strm.avail_out;
+            if (fwrite(destbuff,1,towrite,fd)!=towrite){ sucess=false; error("Could not write to '%s' file !",dest); break; }               
+        }while (strm.avail_out == 0);
+	}		
+	
+	deflateEnd(&strm);
+	fclose(fd);
+	fclose(fs);
+	return sucess;	
 }
 
 /**
