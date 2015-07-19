@@ -219,7 +219,7 @@ H - WHERE TO SPEAK ABOUT
   
 I - CHANGELOG
 
-  * 2015-07-19 - V0.43 - rom1nux
+  * 2015-07-20 - V0.43 - rom1nux
     - Add Repack logo
     - Add image.cfg type checking before repack
     - Replace --version by --release
