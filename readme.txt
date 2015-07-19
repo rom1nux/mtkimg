@@ -220,7 +220,7 @@ I - CHANGELOG
     - Add Repack logo
     - Add image.cfg type checking before repack
 	- Replace --version by --release
-	- Add --version to see detailed version
+	- Add --version command and option to see detailed version
 	
   * 2015-07-19 - V0.42 - rom1nux
     - Fix problem at repack when kernel already got MTK header
