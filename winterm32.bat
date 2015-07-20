@@ -22,5 +22,7 @@ rem You should have received a copy of the GNU General Public License
 rem along with this program.  If not, see <http://www.gnu.org/licenses/>.
 rem ***************************************************************************
 
+rem Set MINGW path
+set PATH=E:\mingw32\bin;%PATH%
 rem Launching WINDOWS terminal
 cmd

@@ -78,8 +78,13 @@ ifeq ($(PLATFORM),WINDOWS)
 	FSEP=\\
 	TIMESTAMP=$(subst $(SPACE),0,$(shell echo %date:~6,4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%))
 	CWD=$(shell echo %CD%)
-	CFLAGS+=-Iexternals/zlib -Iexternals/libpng
-	LDFLAGS+=-Lexternals/zlib -Lexternals/libpng --static
+	ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+		ARCH=64
+	else
+		ARCH=32
+    endif
+	CFLAGS+=-Ilibs/win$(ARCH)/zlib -Ilibs/win$(ARCH)/libpng
+	LDFLAGS+=-Llibs/win$(ARCH)/zlib -Llibs/win$(ARCH)/libpng --static
 else
 	# LINUX/CYGWIN/OSX	
 	CC=gcc
