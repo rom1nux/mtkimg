@@ -117,7 +117,7 @@ C - SOURCE CODE
     |- readme.txt          : This help file
     |- winterm32.bat       : Windows 64 bits terminal launcher
     `- winterm64.bat       : Windows 32 bits terminal launcher
-
+   
   
 D - HOW TO BUILD SOURCE CODE 
 
@@ -133,6 +133,9 @@ D - HOW TO BUILD SOURCE CODE
    MinGW contain a port of "make" utility named "ming32-make" invoked by "make.bat'. 
    You need to manually build "zlib" and "libpng" first before building MTKIMG.
    (see HOW TO BUILD ZLIB AND LIBPNG ON WINDOWS section) .
+   
+  You can adjust  "cygterm32.bat", "cygterm64.bat", "winterm32.bat" or "winterm64.bat"
+  terminal launcher to your platform.
   
   Here is the few steps to follow to build MTKIMG on your platform :
 
