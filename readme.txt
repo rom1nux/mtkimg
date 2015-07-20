@@ -49,11 +49,11 @@ A - INTRODUCTION
   Releases :
 
    * mtkimg-0.44-linux32.zip       : Linux 32 bits binaries
-   * mtkimg-0.44-linux64.zip       : Linux 64 bits binaries (not yet available)
+   * mtkimg-0.44-linux64.zip       : Linux 64 bits binaries (not available yet)
    * mtkimg-0.44-cygwin32.zip      : Cygwin 32 bits binaries
    * mtkimg-0.44-cygwin64.zip      : Cygwin 64 bits binaries   
-   * mtkimg-0.44-osx32.zip         : Mac OSX 32 bits binaries (not yet available)
-   * mtkimg-0.44-osx64.zip         : Mac OSX 64 bits binaries (not yet available)
+   * mtkimg-0.44-osx32.zip         : Mac OSX 32 bits binaries (not available yet)
+   * mtkimg-0.44-osx64.zip         : Mac OSX 64 bits binaries (not available yet)
    * mtkimg-0.44-win32.zip         : Windows 32 bits binaries only
    * mtkimg-0.44-win32-bundle.zip  : Windows 32 bits binaries with externals utilities
    * mtkimg-0.44-win64.zip         : Windows 64 bits binaries only
