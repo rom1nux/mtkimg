@@ -23,7 +23,7 @@
   
 A - INTRODUCTION
 
-  MTKIMG is a simple and portable utility to manage Meditek Android ROM
+  MTKIMG is a simple and portable utility to manage Mediatek Android ROM
   image file like boot.img, recovery.img or logo.bin. 
   
   Characteristics :
