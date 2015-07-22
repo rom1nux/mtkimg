@@ -48,8 +48,8 @@ A - INTRODUCTION
 
   Releases :
 
-   * mtkimg-0.44-linux32.zip       : Linux 32 bits binaries
-   * mtkimg-0.44-linux64.zip       : Linux 64 bits binaries (not available yet)
+   * mtkimg-0.44-linux32.zip       : Linux 32 bits binaries (not available yet)
+   * mtkimg-0.44-linux64.zip       : Linux 64 bits binaries
    * mtkimg-0.44-cygwin32.zip      : Cygwin 32 bits binaries
    * mtkimg-0.44-cygwin64.zip      : Cygwin 64 bits binaries   
    * mtkimg-0.44-osx32.zip         : Mac OSX 32 bits binaries (not available yet)
@@ -92,7 +92,40 @@ B - HOW TO USE
   keep the original image configuration for next repack.
     
 
-C - SOURCE CODE   
+C - TUTORIALS
+
+  Here you can find some usefull tutorials (with screen shot) about how to use 
+  MTKIMG and more.
+  
+  * Dump/Download your ROM from device
+    http://www.china-devices.com/topic/5180-how-to-dumpbackup-mediatek-rom
+     
+  * Customize your ROM boot.img or recovery.img
+    http://www.china-devices.com/topic/5197-how-to-customize-mediatek-bootrecovery-images/
+     
+  * Customize your ROM logos
+    http://www.china-devices.com/topic/5182-how-to-customize-mediatek-logo-images
+     
+  * Flash your ROM to device
+    http://www.china-devices.com/topic/5181-how-to-flash-mediatek-rom
+
+
+D - WHERE TO SPEAK ABOUT
+
+  * GitHub official repository
+    https://github.com/rom1nux/mtkimg
+
+  * XDA Developers forum
+    http://forum.xda-developers.com/android/development/tools-unpack-repack-boot-img-utility-t3154621
+
+  * FrAndroid forum
+    http://forum.frandroid.com/topic/223380-outils-unpackrepack-bootimg-mediatek
+  
+  * China Devices forum
+    http://www.china-devices.com/topic/5176-tool-unpack-and-repack-bootimg-recoveryimg-and-logobin-for-mediatek	
+	
+
+E - SOURCE CODE   
 
   Code source is multi-platform (Linux, Cygwin, Windows) and got several utilities
   to build, test, backup and distribute executable. It can be download from :
@@ -119,7 +152,7 @@ C - SOURCE CODE
     `- winterm64.bat       : Windows 32 bits terminal launcher
    
   
-D - HOW TO BUILD SOURCE CODE 
+F - HOW TO BUILD SOURCE CODE 
 
   First, be sure you got a "gcc" compiler and "make" utility are installed on your system 
   and be sure /bin directory is in your PATH environment variable.  
@@ -158,7 +191,7 @@ D - HOW TO BUILD SOURCE CODE
   Look at "src/readme.txt" for more information about using mtkimg.
 
   
-E - HOW TO BUILD ZLIB AND LIBPNG ON WINDOWS
+G - HOW TO BUILD ZLIB AND LIBPNG ON WINDOWS
 
   Understand "zlib" need to be build before "libpng".
   Create the "libs" directory into MTKIMG source directory and create "win32" 
@@ -186,7 +219,7 @@ E - HOW TO BUILD ZLIB AND LIBPNG ON WINDOWS
    6 - "png.h" and "libpng.a" are ready into "libs\win64\libpng" directory
   
   
-F - MAKEFILE COMMANDS
+H - MAKEFILE COMMANDS
 
   Makefile is used to manage the source code on all platform.
   (On Windows make.bat invoke and pass command to mingw32-make)
@@ -203,7 +236,7 @@ F - MAKEFILE COMMANDS
    make backup   : Create a source zip backup  into ../bkp
    
    
-G - UTILTIES FOR BUILDING SOURCE CODE
+I - UTILTIES FOR BUILDING SOURCE CODE
 
   * MINGW32 or MINGW64 (Windows GCC compiler port)
     http://sourceforge.net/projects/mingw-w64
@@ -219,21 +252,9 @@ G - UTILTIES FOR BUILDING SOURCE CODE
 
   * 7-ZIP (Windows compression/decompression utilities)
     http://http://www.7-zip.org
-
-
-H - WHERE TO SPEAK ABOUT
-
-  * GitHub official repository
-    https://github.com/rom1nux/mtkimg
-
-  * XDA Developers forum
-    http://forum.xda-developers.com/android/development/tools-unpack-repack-boot-img-utility-t3154621
-
-  * FrAndroid forum
-    http://forum.frandroid.com/topic/223380-outils-unpackrepack-bootimg-mediatek
-  
-  
-I - CHANGELOG
+	
+ 
+J - CHANGELOG
 
   * 2015-07-20 - V0.44 - rom1nux
     - Add 32 bits OS support to build scripts
