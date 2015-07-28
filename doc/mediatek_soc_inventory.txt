@@ -238,7 +238,7 @@ MT6582
  Gpu         : Mali-400 MP2 (500 MHz)
  Memory      :
  Radio       : R8 HSPA+/TD-SCDMA, Wi-Fi, FM, Bluetooth, GPS
- Rom layout  : MTK-V1
+ Rom layout  : MTK-V1 / STD
  Rom sample  :
 
  
