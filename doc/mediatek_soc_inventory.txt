@@ -238,7 +238,7 @@ MT6582
  Gpu         : Mali-400 MP2 (500 MHz)
  Memory      :
  Radio       : R8 HSPA+/TD-SCDMA, Wi-Fi, FM, Bluetooth, GPS
- Rom layout  : MTK-V1 / STD
+ Rom layout  : STD
  Rom sample  :
 
  
@@ -462,8 +462,8 @@ MT6795 (HelioX10)
  Gpu         : PowerVR G6200 (700 MHz)
  Memory      : LPDDR3
  Radio       : GSM, UMTS, GPRS, HSPA+, HSUPA, TD-SCDMA, LTE Cat 4
- Rom layout  :
- Rom sample  :
+ Rom layout  : STD
+ Rom sample  : https://app.box.com/s/koh1vi1qynrxbqzjojjlpn1tf6mlkbm0
 
  
 MT8125
